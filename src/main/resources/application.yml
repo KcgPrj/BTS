@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    jdbc-url: jdbc:h2:file:./database.db;Mode=MySQL
+    driverClassName: org.h2.Driver
