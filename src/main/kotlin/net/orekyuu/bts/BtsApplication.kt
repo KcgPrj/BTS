@@ -20,6 +20,6 @@ fun connectDatabase(jdbcUrl: String, driver: String) {
     Database.connect(jdbcUrl, driver)
     transaction {
         logger.addLogger(StdOutSqlLogger())
-        //TODO テーブルを作成
+        SchemaUtils.create(*BtsApplicationConfig.TABLE_LIST)
     }
 }
