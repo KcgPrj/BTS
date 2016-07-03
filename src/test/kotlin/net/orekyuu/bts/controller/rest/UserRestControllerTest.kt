@@ -11,6 +11,7 @@ import org.junit.Test
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.junit.runner.RunWith
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.security.core.Authentication
@@ -58,7 +59,6 @@ class UserRestControllerTest {
         mvc.perform(get("/api/user/me").principal(principal))
                 .andExpect(status().isUnauthorized)
 
-
         //モック作りたい...
         val oauthReq = OAuth2Request(
                 mapOf<String, String>(),
@@ -70,24 +70,10 @@ class UserRestControllerTest {
                 arrayListOf("responseTypes").toSet(),
                 mapOf<String, Serializable>())
 
-        val authentication = object : Authentication {
-            override fun setAuthenticated(isAuthenticated: Boolean) {
-
-            }
-
-            override fun getCredentials(): Any = "hoge"
-
-            override fun isAuthenticated(): Boolean = true
-
-            override fun getDetails(): Any = "hoge"
-
-            override fun getAuthorities(): MutableCollection<out GrantedAuthority> = oauthReq.authorities
-
-
-            override fun getPrincipal() = principal
-
-            override fun getName() = principal.name
-        }
+        val authentication = Mockito.mock(Authentication::class.java)
+        Mockito.`when`(authentication.principal).thenReturn(principal)
+        Mockito.`when`(authentication.name).thenReturn(principal.name)
+        Mockito.`when`(authentication.isAuthenticated).thenReturn(true)
 
         val oauth = OAuth2Authentication(oauthReq, authentication)
 
