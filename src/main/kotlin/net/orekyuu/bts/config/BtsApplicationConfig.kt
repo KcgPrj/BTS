@@ -1,6 +1,7 @@
 package net.orekyuu.bts.config
 
 import net.orekyuu.bts.domain.UserTable
+import net.orekyuu.bts.service.UserService
 import net.orekyuu.bts.service.UserServiceImpl
 import org.jetbrains.exposed.sql.Table
 import org.springframework.beans.factory.annotation.Value
@@ -19,6 +20,6 @@ open class BtsApplicationConfig {
     }
 
     @Bean
-    open fun userService() = UserServiceImpl()
+    open fun userService(): UserService = UserServiceImpl()
 
 }
