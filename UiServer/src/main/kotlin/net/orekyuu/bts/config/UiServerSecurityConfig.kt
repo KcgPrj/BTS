@@ -3,7 +3,9 @@ package net.orekyuu.bts.config
 import net.orekyuu.bts.message.user.CreateUserMessage
 import net.orekyuu.bts.message.user.UserInfo
 import net.orekyuu.bts.message.user.UserType
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices
 import org.springframework.boot.context.embedded.FilterRegistrationBean
@@ -18,9 +20,10 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.filter.CompositeFilter
 import javax.servlet.Filter
 import javax.servlet.http.Cookie
@@ -37,6 +40,7 @@ open class UiServerSecurityConfig : WebSecurityConfigurerAdapter() {
         http!!.authorizeRequests()
                 .antMatchers("/login**", "/ico/favicon.ico", "/webjars/**", "/error/**").permitAll()
                 .anyRequest().authenticated()
+                .and().exceptionHandling().authenticationEntryPoint(LoginUrlAuthenticationEntryPoint("/"))
                 .and().logout().logoutSuccessUrl("/").permitAll()
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter::class.java)
     }
@@ -49,7 +53,7 @@ open class UiServerSecurityConfig : WebSecurityConfigurerAdapter() {
 
     fun githubFilter(): Filter {
         val resources = github()
-        val template = OAuth2RestTemplate(resources.client, oauth2ClientContext)
+        val template = githubRestTemplate(resources)
 
         val filter = OAuth2ClientAuthenticationProcessingFilter("/login/github")
         filter.setAuthenticationSuccessHandler(GithubSuccessHandler(template))
@@ -57,6 +61,10 @@ open class UiServerSecurityConfig : WebSecurityConfigurerAdapter() {
         filter.setTokenServices(UserInfoTokenServices(resources.resource.userInfoUri, resources.client.clientId))
         return filter
     }
+
+    @Bean
+    @Qualifier("github")
+    open internal fun githubRestTemplate(resource: ClientResources) = OAuth2RestTemplate(resource.client, oauth2ClientContext)
 
     @Bean
     @ConfigurationProperties("github")
@@ -82,43 +90,43 @@ abstract class AbstractSuccessHandler(
 ) : SavedRequestAwareAuthenticationSuccessHandler() {
 
     override fun handle(request: HttpServletRequest?, response: HttpServletResponse?, authentication: Authentication?) {
-        super.handle(request, response, authentication)
-
-        if(response == null) {
-            return
-        }
-        if(authentication == null) {
+        if(response == null || authentication == null) {
+            logger.warn("response or authentication is null [response=$response, authentication=$authentication]")
+            super.handle(request, response, authentication)
             return
         }
 
         val userInfo: UserInfo
         try {
-            val userInfoEndpoint = "http://localhost:18080/user/github"
+            val userInfoEndpoint = "http://localhost:18080/user/${endpointPostfix(userType)}"
             userInfo = restTemplate.getForEntity(userInfoEndpoint, UserInfo::class.java).body
-        } catch(e: Exception) {
-            e.printStackTrace()
-            val url = "http://localhost:18080/open/user/create/${endpointPostfix(userType)}"
-            userInfo = restTemplate.postForEntity(url, CreateUserMessage(authentication.name!!), UserInfo::class.java).body
+        } catch(e: HttpServerErrorException) {
+            //500エラーならユーザーが見つからなかったので新しく作成
+            if(e.statusCode.is5xxServerError) {
+                val url = "http://localhost:18080/open/user/create/${endpointPostfix(userType)}"
+                val name = authentication.name
+                userInfo = restTemplate.postForEntity(url, CreateUserMessage(name), UserInfo::class.java).body
+            } else {
+                //その他のエラーは想定していないのでスタックトレースを出してスロー
+                e.printStackTrace()
+                throw RuntimeException(e)
+            }
         }
 
-        //クッキーでアクセストークンとユーザーのタイプを送る
-        response.addCookie(Cookie("access_token", restTemplate.accessToken.value).apply {
-            path = "/"
-            maxAge = Integer.MAX_VALUE
-        })
-        response.addCookie(Cookie("user_type", userType.name).apply {
-            path = "/"
-            maxAge = Integer.MAX_VALUE
-        })
-        response.addCookie(Cookie("user_id", userInfo.id.toString()).apply {
-            path = "/"
-            maxAge = Integer.MAX_VALUE
-        })
-        response.addCookie(Cookie("user_name", userInfo.name).apply {
-            path = "/"
-            maxAge = Integer.MAX_VALUE
-        })
+        //クッキーでアクセストークンとユーザーの情報を送る
+        response.addCookie(createCookie("access_token", restTemplate.accessToken.value))
+        response.addCookie(createCookie("user_type", userType.name))
+        response.addCookie(createCookie("user_id", userInfo.id.toString()))
+        response.addCookie(createCookie("user_name", userInfo.name))
+
+        //ログインしたらトップページへリダイレクト
+        response.sendRedirect("/top")
+
+        //Cookieを保存する前にhandleを呼ばないと保存されない
+        super.handle(request, response, authentication)
     }
+
+    fun createCookie(name: String, value: String) = Cookie(name, value).apply { path = "/" }
 
     fun endpointPostfix(userType: UserType)
             = when(userType) {

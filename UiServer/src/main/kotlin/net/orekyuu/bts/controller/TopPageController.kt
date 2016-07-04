@@ -13,13 +13,12 @@ import javax.servlet.http.HttpServletResponse
 class TopPageController {
 
     @Autowired
-    private lateinit var restTemplate: OAuth2RestTemplate
+    lateinit var restTemplate: OAuth2RestTemplate
 
-    @RequestMapping("/")
-    fun home(model: Model, resp: HttpServletResponse): String {
-        println(restTemplate.accessToken)
-        val data = restTemplate.getForEntity("http://localhost:18080/test", TestData::class.java)
-        model.addAttribute("data", data.body)
+    @RequestMapping("/top")
+    fun home(model: Model): String {
+        val data = restTemplate.getForEntity("http://localhost:18080/test", TestData::class.java).body
+        model.addAttribute("data", data)
         return "index"
     }
 }
