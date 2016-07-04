@@ -1,0 +1,3 @@
+rootProject.name = 'BTS'
+include 'Message', 'UiServer', 'ApiServer'
+
