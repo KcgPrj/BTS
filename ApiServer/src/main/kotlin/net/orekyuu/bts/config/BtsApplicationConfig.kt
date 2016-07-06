@@ -1,7 +1,8 @@
 package net.orekyuu.bts.config
 
-import net.orekyuu.bts.domain.AppUserTable
-import net.orekyuu.bts.domain.GithubUserTable
+import net.orekyuu.bts.domain.*
+import net.orekyuu.bts.service.TeamService
+import net.orekyuu.bts.service.TeamServiceImpl
 import net.orekyuu.bts.service.UserServiceImpl
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -17,9 +18,12 @@ open class BtsApplicationConfig {
     lateinit var driver: String
 
     companion object {
-        val TABLE_LIST = arrayOf(AppUserTable, GithubUserTable)
+        val TABLE_LIST = arrayOf(AppUserTable, GithubUserTable, ProductTable, ReportTable, TeamTable, TeamUserTable)
     }
 
     @Bean
     open fun userService() = UserServiceImpl()
+
+    @Bean
+    open fun teamService() = TeamServiceImpl()
 }
