@@ -29,6 +29,7 @@ class TeamServiceTest {
 
     lateinit var user1: AppUser
     lateinit var user2: AppUser
+    lateinit var user3: AppUser
     @Before
     fun setUp() {
         transaction {
@@ -37,6 +38,7 @@ class TeamServiceTest {
 
         user1 = userService.createAppUserFromGithub("user1")
         user2 = userService.createAppUserFromGithub("user2")
+        user3 = userService.createAppUserFromGithub("user3")
     }
 
     @After
@@ -54,4 +56,85 @@ class TeamServiceTest {
         assertThat(result.member.count()).isEqualTo(1)
         assertThat(result.product.count()).isEqualTo(0)
     }
+
+    @Test
+    fun joinTeam() {
+        val teamId = "joinTeamTest"
+        teamService.createTeam(user1, teamId, "team")
+        val result = teamService.joinTeam(user1, teamId, user2)
+        assertThat(result.member.count()).isEqualTo(2)
+        exceptionTest(TeamServiceImpl.TeamNotFoundException::class.java) {
+            teamService.joinTeam(user2, "hogehoge", user2)
+        }
+        exceptionTest(TeamServiceImpl.TeamAccessAuthorityNotException::class.java) {
+            teamService.joinTeam(user3, teamId, user3)
+        }
+    }
+
+    @Test
+    fun defectionTeam() {
+        val teamId = "defectionTeamTest"
+        teamService.createTeam(user1, teamId, "team")
+        teamService.joinTeam(user1, teamId, user2)
+        val result = teamService.joinTeam(user1, teamId, user3)
+        assertThat(result.member.count()).isEqualTo(3)
+        val result2 = teamService.defectionTeam(teamId, user3)
+        assertThat(result2.member.count()).isEqualTo(2)
+        exceptionTest(TeamServiceImpl.NotJoinTeamMemberException::class.java) {
+            teamService.defectionTeam(teamId, user3)
+        }
+        exceptionTest(TeamServiceImpl.TeamNotFoundException::class.java) {
+            teamService.defectionTeam("hogehoge", user3)
+        }
+    }
+
+    @Test
+    fun showTeam() {
+        val teamId = "showTeamTest"
+        val name = "name"
+        teamService.createTeam(user1, teamId, name)
+        val result = teamService.showTeamInfo(teamId, user1)
+        assertThat(result.teamName).isEqualTo(name)
+        assertThat(result.member.count()).isEqualTo(1)
+        assertThat(result.product.count()).isEqualTo(0)
+
+        exceptionTest(TeamServiceImpl.TeamNotFoundException::class.java) {
+            teamService.showTeamInfo("hogehoge", user1)
+        }
+
+        exceptionTest(TeamServiceImpl.TeamAccessAuthorityNotException::class.java) {
+            teamService.showTeamInfo(teamId, user2)
+        }
+    }
+
+    @Test
+    fun showTeamMember() {
+        val teamId = "showTeamMember"
+        teamService.createTeam(user1, teamId, "team")
+        val result = teamService.showTeamMember(teamId, user1)
+        assertThat(result.count()).isEqualTo(1)
+        teamService.joinTeam(user1, teamId, user2)
+        val result2 = teamService.showTeamMember(teamId, user1)
+        assertThat(result2.count()).isEqualTo(2)
+        exceptionTest(TeamServiceImpl.TeamNotFoundException::class.java) {
+            teamService.showTeamMember("hogehoge", user1)
+        }
+
+        exceptionTest(TeamServiceImpl.TeamAccessAuthorityNotException::class.java) {
+            teamService.showTeamMember(teamId, user3)
+        }
+    }
+
+
+    private fun <E : Exception> exceptionTest(exception: Class<E>, func: () -> Unit) {
+        try {
+            func()
+            fail("No exception is thrown")
+        } catch (e: E) {
+            if (!exception.isInstance(e))
+                fail("different from the expected exception")
+        }
+    }
+
+
 }
