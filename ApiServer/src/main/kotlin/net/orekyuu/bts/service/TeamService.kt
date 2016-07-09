@@ -49,6 +49,7 @@ class TeamServiceImpl : TeamService {
     }
 
     override fun joinTeam(introduceUser: AppUser, teamId: String, joinUser: AppUser): TeamInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         //introduceUserはチームに含まれているか？
         if (!team.member.any { it.id == introduceUser.id })
@@ -62,6 +63,7 @@ class TeamServiceImpl : TeamService {
     }
 
     override fun defectionTeam(teamId: String, defectionUser: AppUser): TeamInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         if (!team.member.any { it.id == defectionUser.id })
             throw NotJoinTeamMemberException(defectionUser, team)
@@ -72,6 +74,7 @@ class TeamServiceImpl : TeamService {
     }
 
     override fun showTeamInfo(teamId: String, requestUser: AppUser): TeamInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val team: Team = Team.findById(teamId) ?: throw  TeamNotFoundException(teamId)
         if (!team.member.any { it.id == requestUser.id })
             throw TeamAccessAuthorityNotException(requestUser, team)
@@ -79,6 +82,7 @@ class TeamServiceImpl : TeamService {
     }
 
     override fun showTeamMember(teamId: String, requestUser: AppUser): List<AppUser> = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         if (!team.member.any { it.id == requestUser.id })
             throw TeamAccessAuthorityNotException(requestUser, team)
