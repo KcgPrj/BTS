@@ -63,10 +63,10 @@ class TeamServiceTest {
         teamService.createTeam(user1, teamId, "team")
         val result = teamService.joinTeam(user1, teamId, user2)
         assertThat(result.member.count()).isEqualTo(2)
-        exceptionTest(TeamServiceImpl.TeamNotFoundException::class.java) {
+        exceptionTest(TeamNotFoundException::class.java) {
             teamService.joinTeam(user2, "hogehoge", user2)
         }
-        exceptionTest(TeamServiceImpl.TeamAccessAuthorityNotException::class.java) {
+        exceptionTest(TeamAccessAuthorityNotException::class.java) {
             teamService.joinTeam(user3, teamId, user3)
         }
     }
@@ -80,10 +80,10 @@ class TeamServiceTest {
         assertThat(result.member.count()).isEqualTo(3)
         val result2 = teamService.defectionTeam(teamId, user3)
         assertThat(result2.member.count()).isEqualTo(2)
-        exceptionTest(TeamServiceImpl.NotJoinTeamMemberException::class.java) {
+        exceptionTest(NotJoinTeamMemberException::class.java) {
             teamService.defectionTeam(teamId, user3)
         }
-        exceptionTest(TeamServiceImpl.TeamNotFoundException::class.java) {
+        exceptionTest(TeamNotFoundException::class.java) {
             teamService.defectionTeam("hogehoge", user3)
         }
     }
@@ -98,11 +98,11 @@ class TeamServiceTest {
         assertThat(result.member.count()).isEqualTo(1)
         assertThat(result.product.count()).isEqualTo(0)
 
-        exceptionTest(TeamServiceImpl.TeamNotFoundException::class.java) {
+        exceptionTest(TeamNotFoundException::class.java) {
             teamService.showTeamInfo("hogehoge", user1)
         }
 
-        exceptionTest(TeamServiceImpl.TeamAccessAuthorityNotException::class.java) {
+        exceptionTest(TeamAccessAuthorityNotException::class.java) {
             teamService.showTeamInfo(teamId, user2)
         }
     }
@@ -116,11 +116,11 @@ class TeamServiceTest {
         teamService.joinTeam(user1, teamId, user2)
         val result2 = teamService.showTeamMember(teamId, user1)
         assertThat(result2.count()).isEqualTo(2)
-        exceptionTest(TeamServiceImpl.TeamNotFoundException::class.java) {
+        exceptionTest(TeamNotFoundException::class.java) {
             teamService.showTeamMember("hogehoge", user1)
         }
 
-        exceptionTest(TeamServiceImpl.TeamAccessAuthorityNotException::class.java) {
+        exceptionTest(TeamAccessAuthorityNotException::class.java) {
             teamService.showTeamMember(teamId, user3)
         }
     }
@@ -131,10 +131,9 @@ class TeamServiceTest {
             func()
             fail("No exception is thrown")
         } catch (e: E) {
-            if (!exception.isInstance(e))
+            if (!e.javaClass.equals(exception))
                 fail("different from the expected exception")
         }
     }
-
 
 }

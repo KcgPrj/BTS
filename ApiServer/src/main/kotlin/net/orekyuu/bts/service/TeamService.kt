@@ -49,9 +49,10 @@ class TeamServiceImpl : TeamService {
     }
 
     override fun joinTeam(introduceUser: AppUser, teamId: String, joinUser: AppUser): TeamInfo = transaction {
-        val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException()
+        val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         //introduceUserはチームに含まれているか？
-        team.member.asSequence().find { it.id == introduceUser.id } ?: throw TeamAccessAuthorityNotException()
+        if (!team.member.any { it.id == introduceUser.id })
+            throw TeamAccessAuthorityNotException(introduceUser, team)
 
         if (!team.member.any { it.id == joinUser.id }) {
             val newMember = team.member.asSequence().plusElement(joinUser).toList()
@@ -61,37 +62,26 @@ class TeamServiceImpl : TeamService {
     }
 
     override fun defectionTeam(teamId: String, defectionUser: AppUser): TeamInfo = transaction {
-        val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException()
-        team.member.asSequence().find { it.id == defectionUser.id } ?: throw NotJoinTeamMemberException()
+        val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
+        if (!team.member.any { it.id == defectionUser.id })
+            throw NotJoinTeamMemberException(defectionUser, team)
+
         val newMember = team.member.asSequence().filterNot { it.id == defectionUser.id }.toList()
         team.member = SizedCollection(newMember)
         ofTeamInfo(team)
     }
 
     override fun showTeamInfo(teamId: String, requestUser: AppUser): TeamInfo = transaction {
-        val team: Team = Team.findById(teamId) ?: throw  TeamNotFoundException()
-        team.member.asSequence().find { requestUser.id == it.id } ?: throw TeamAccessAuthorityNotException()
+        val team: Team = Team.findById(teamId) ?: throw  TeamNotFoundException(teamId)
+        if (!team.member.any { it.id == requestUser.id })
+            throw TeamAccessAuthorityNotException(requestUser, team)
         ofTeamInfo(team)
     }
 
     override fun showTeamMember(teamId: String, requestUser: AppUser): List<AppUser> = transaction {
-        val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException()
-        team.member.asSequence().find { it.id == requestUser.id } ?: throw TeamAccessAuthorityNotException()
+        val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
+        if (!team.member.any { it.id == requestUser.id })
+            throw TeamAccessAuthorityNotException(requestUser, team)
         team.member.toList()
     }
-
-    /**
-     * Teamが見つからない時に投げられる
-     */
-    class TeamNotFoundException(statusText: String = "specified team does not exist") : NotFoundException(statusText)
-
-    /**
-     * 指定したuserがTeamに参加していない時に投げられる
-     */
-    class NotJoinTeamMemberException(statusText: String = "specified user does not join team") : NotFoundException(statusText)
-
-    /**
-     * Teamへのアクセス権が必要なときに投げられる?
-     */
-    class TeamAccessAuthorityNotException(statusText: String = "there is no access authority to the specified team") : ForbiddenException(statusText)
 }
