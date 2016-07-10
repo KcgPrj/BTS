@@ -57,7 +57,7 @@ class TeamServiceImpl : TeamService {
 
         if (!team.member.any { it.id == joinUser.id }) {
             val newMember = team.member.asSequence().plusElement(joinUser).toList()
-            team.member = SizedCollection(newMember)
+            team.member = SizedCollection(newMember)//memberの更新にかかる時間が重いのかと思ったが処理にかかる時間はは約1.4ms
         }
         ofTeamInfo(team)
     }

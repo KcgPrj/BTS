@@ -4,6 +4,7 @@ import net.orekyuu.bts.ApiServerApplication
 import net.orekyuu.bts.config.BTSResourceServerConfigurer
 import net.orekyuu.bts.config.BtsApplicationConfig
 import net.orekyuu.bts.domain.AppUser
+import net.orekyuu.bts.message.team.TeamInfo
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.After
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
 
 import org.assertj.core.api.Assertions.*
+import kotlin.system.measureNanoTime
 
 @RunWith(SpringJUnit4ClassRunner::class)
 @SpringApplicationConfiguration(classes = arrayOf(ApiServerApplication::class, BtsApplicationConfig::class, BTSResourceServerConfigurer::class))
@@ -53,7 +55,10 @@ class TeamServiceTest {
         val result = teamService.createTeam(user1, "team1_id", "team1")
         assertThat(result.teamId).isEqualTo("team1_id")
         assertThat(result.teamName).isEqualTo("team1")
-        assertThat(result.member.count()).isEqualTo(1)
+        val time = measureNanoTime {
+            assertThat(result.member.count()).isEqualTo(1)//0.009msとか
+        }
+        println("${time * 0.000001}ms")
         assertThat(result.product.count()).isEqualTo(0)
     }
 
@@ -61,8 +66,15 @@ class TeamServiceTest {
     fun joinTeam() {
         val teamId = "joinTeamTest"
         teamService.createTeam(user1, teamId, "team")
-        val result = teamService.joinTeam(user1, teamId, user2)
-        assertThat(result.member.count()).isEqualTo(2)
+        var result: TeamInfo? = null
+        val time = measureNanoTime {
+            result = teamService.joinTeam(user1, teamId, user2)//10~20ms
+        }
+        println("${time * 0.000001}ms")
+        val time2 = measureNanoTime {
+            assertThat(result!!.member.count()).isEqualTo(2)//なぜかこいつは70~100msくらいかかってる...
+        }
+        println("${time2 * 0.000001}ms")
         exceptionTest(TeamNotFoundException::class.java) {
             teamService.joinTeam(user2, "hogehoge", user2)
         }
@@ -77,9 +89,15 @@ class TeamServiceTest {
         teamService.createTeam(user1, teamId, "team")
         teamService.joinTeam(user1, teamId, user2)
         val result = teamService.joinTeam(user1, teamId, user3)
-        assertThat(result.member.count()).isEqualTo(3)
+        val time = measureNanoTime {
+            assertThat(result.member.count()).isEqualTo(3)//0.01msとか
+        }
+        println("${time * 0.000001} ms ")
         val result2 = teamService.defectionTeam(teamId, user3)
-        assertThat(result2.member.count()).isEqualTo(2)
+        val time2 = measureNanoTime {
+            assertThat(result2.member.count()).isEqualTo(2)//0.01msとか
+        }
+        println("${time2 * 0.000001} ms ")
         exceptionTest(NotJoinTeamMemberException::class.java) {
             teamService.defectionTeam(teamId, user3)
         }
