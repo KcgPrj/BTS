@@ -98,7 +98,7 @@ abstract class AbstractSuccessHandler(
 
         val userInfo: UserInfo
         try {
-            val userInfoEndpoint = "http://localhost:18080/user/${endpointPostfix(userType)}"
+            val userInfoEndpoint = "http://localhost:18080/user/"
             userInfo = restTemplate.getForEntity(userInfoEndpoint, UserInfo::class.java).body
         } catch(e: HttpServerErrorException) {
             //500エラーならユーザーが見つからなかったので新しく作成
