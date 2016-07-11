@@ -106,9 +106,10 @@ class ProductServiceTest {
 
     @Test
     fun showProductsFromTeam() {
-        productService.registerToTeam(user1, exceptionTestTeamInfo.teamId, "product1")
-        productService.registerToTeam(user1, exceptionTestTeamInfo.teamId, "product2")
-        val result2 = productService.showProductsFromTeam(user1, exceptionTestTeamInfo.teamId)
+        val teamInfo = teamService.createTeam(user1, "showProductsFromTeam", "name")
+        productService.registerToTeam(user1, teamInfo.teamId, "product1")
+        productService.registerToTeam(user1, teamInfo.teamId, "product2")
+        val result2 = productService.showProductsFromTeam(user1, teamInfo.teamId)
         assert(result2.size == 2)
     }
 
@@ -150,10 +151,11 @@ class ProductServiceTest {
 
     @Test
     fun regenerateProductToken() {
+        val teamInfo = teamService.createTeam(user1, "regenerateProductToken", "name")
         val name = "regenerateProductToken"
-        val result = productService.registerToTeam(user1, exceptionTestTeamInfo.teamId, name)
+        val result = productService.registerToTeam(user1, teamInfo.teamId, name)
         val product = result.product.find { it.productName == name }!!
-        val tokenRegeneratedProduct = productService.regenerateProductToken(user1, exceptionTestTeamInfo.teamId, product.productId)
+        val tokenRegeneratedProduct = productService.regenerateProductToken(user1, teamInfo.teamId, product.productId)
         assert(product.token != tokenRegeneratedProduct.token)
     }
 
