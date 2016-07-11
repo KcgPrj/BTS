@@ -88,8 +88,8 @@ class ProductServiceImpl : ProductService {
 
     private fun checkAuthority(team: Team, appUser: AppUser) {
         println("---start checkAuthority---")
-    //if (!team.member.any { appUser.id == it.id })
-      if (TeamUserTable.select { TeamUserTable.team.eq(team.id).and(TeamUserTable.user.eq(appUser.id)) }.empty())
+        //if (!team.member.any { appUser.id == it.id })
+        if (TeamUserTable.select { TeamUserTable.team.eq(team.id).and(TeamUserTable.user.eq(appUser.id)) }.empty())
             throw TeamAccessAuthorityNotException(appUser, team)
         println("---end checkAuthority---")
     }
