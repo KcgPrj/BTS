@@ -1,9 +1,7 @@
 package net.orekyuu.bts.config
 
 import net.orekyuu.bts.domain.*
-import net.orekyuu.bts.service.AppUserServiceImpl
-import net.orekyuu.bts.service.TeamServiceImpl
-import net.orekyuu.bts.service.UserServiceImpl
+import net.orekyuu.bts.service.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -26,6 +24,9 @@ open class BtsApplicationConfig {
 
     @Bean
     open fun teamService() = TeamServiceImpl()
+
+    @Bean
+    open fun productService() = ProductServiceImpl()
 
     @Bean
     open fun appUserService() = AppUserServiceImpl()

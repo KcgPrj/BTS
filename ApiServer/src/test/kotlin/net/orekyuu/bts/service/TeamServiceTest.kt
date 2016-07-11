@@ -32,6 +32,8 @@ class TeamServiceTest {
     lateinit var user1: AppUser
     lateinit var user2: AppUser
     lateinit var user3: AppUser
+
+    lateinit var teamInfo: TeamInfo
     @Before
     fun setUp() {
         transaction {
@@ -41,6 +43,8 @@ class TeamServiceTest {
         user1 = userService.createAppUserFromGithub("user1")
         user2 = userService.createAppUserFromGithub("user2")
         user3 = userService.createAppUserFromGithub("user3")
+
+        teamInfo = teamService.createTeam(user1, "teamInfo", "name")
     }
 
     @After
@@ -75,12 +79,16 @@ class TeamServiceTest {
             assertThat(result!!.member.count()).isEqualTo(2)//なぜかこいつは70~100msくらいかかってる...
         }
         println("${time2 * 0.000001}ms")
-        exceptionTest(TeamNotFoundException::class.java) {
-            teamService.joinTeam(user2, "hogehoge", user2)
-        }
-        exceptionTest(TeamAccessAuthorityNotException::class.java) {
-            teamService.joinTeam(user3, teamId, user3)
-        }
+    }
+
+    @Test(expected = TeamNotFoundException::class)
+    fun joinTeamThrownTeamThrownNotFoundException() {
+        teamService.joinTeam(user2, "hogehoge", user2)
+    }
+
+    @Test(expected = TeamAccessAuthorityNotException::class)
+    fun joinTeamThrownTeamAccessAuthorityNotException() {
+        teamService.joinTeam(user3, teamInfo.teamId, user3)
     }
 
     @Test
@@ -98,12 +106,16 @@ class TeamServiceTest {
             assertThat(result2.member.count()).isEqualTo(2)//0.01msとか
         }
         println("${time2 * 0.000001} ms ")
-        exceptionTest(NotJoinTeamMemberException::class.java) {
-            teamService.defectionTeam(teamId, user3)
-        }
-        exceptionTest(TeamNotFoundException::class.java) {
-            teamService.defectionTeam("hogehoge", user3)
-        }
+    }
+
+    @Test(expected = NotJoinTeamMemberException::class)
+    fun defectionTeamThrownNotJoinTeamMemberException() {
+        teamService.defectionTeam(teamInfo.teamId, user3)
+    }
+
+    @Test(expected = TeamNotFoundException::class)
+    fun defectionTeamThrownTeamNotFoundException() {
+        teamService.defectionTeam("hogehoge", user3)
     }
 
     @Test
@@ -116,13 +128,17 @@ class TeamServiceTest {
         assertThat(result.member.count()).isEqualTo(1)
         assertThat(result.product.count()).isEqualTo(0)
 
-        exceptionTest(TeamNotFoundException::class.java) {
-            teamService.showTeamInfo("hogehoge", user1)
-        }
 
-        exceptionTest(TeamAccessAuthorityNotException::class.java) {
-            teamService.showTeamInfo(teamId, user2)
-        }
+    }
+
+    @Test(expected = TeamNotFoundException::class)
+    fun showTeamInfoThrownTeamNotFoundException() {
+        teamService.showTeamInfo("hogehoge", user1)
+    }
+
+    @Test(expected = TeamAccessAuthorityNotException::class)
+    fun showTeamInfoThrownTeamAccessAuthorityNotException() {
+        teamService.showTeamInfo(teamInfo.teamId, user2)
     }
 
     @Test
@@ -134,24 +150,15 @@ class TeamServiceTest {
         teamService.joinTeam(user1, teamId, user2)
         val result2 = teamService.showTeamMember(teamId, user1)
         assertThat(result2.count()).isEqualTo(2)
-        exceptionTest(TeamNotFoundException::class.java) {
-            teamService.showTeamMember("hogehoge", user1)
-        }
-
-        exceptionTest(TeamAccessAuthorityNotException::class.java) {
-            teamService.showTeamMember(teamId, user3)
-        }
     }
 
-
-    private fun <E : Exception> exceptionTest(exception: Class<E>, func: () -> Unit) {
-        try {
-            func()
-            fail("No exception is thrown")
-        } catch (e: E) {
-            if (!e.javaClass.equals(exception))
-                fail("different from the expected exception")
-        }
+    @Test(expected = TeamNotFoundException::class)
+    fun showTeamMemberThrownTeamNotFoundException() {
+        teamService.showTeamMember("hogehoge", user1)
     }
 
+    @Test(expected = TeamAccessAuthorityNotException::class)
+    fun showTeamMemberThrownTeamAccessAuthorityNotException() {
+        teamService.showTeamMember(teamInfo.teamId, user3)
+    }
 }
