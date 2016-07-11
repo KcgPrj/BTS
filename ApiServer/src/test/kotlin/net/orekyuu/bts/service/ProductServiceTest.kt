@@ -119,11 +119,6 @@ class ProductServiceTest {
         productService.showProductsFromTeam(user1, "hogehoge")
     }
 
-    @Test(expected = ProductNotFoundException::class)
-    fun showProductInfoThrownProductNotFoundException() {
-        productService.showProductsFromTeam(user1, teamInfo3.teamId)
-    }
-
     @Test(expected = TeamAccessAuthorityNotException::class)
     fun showProductInfoThrownTeamAccessAuthorityNotException() {
         productService.showProductsFromTeam(user2, teamInfo3.teamId)
