@@ -1,11 +1,11 @@
 package net.orekyuu.bts.service
 
-import net.orekyuu.bts.domain.AppUser
-import net.orekyuu.bts.domain.Product
-import net.orekyuu.bts.domain.ProductTable
-import net.orekyuu.bts.domain.Team
+import net.orekyuu.bts.domain.*
 import net.orekyuu.bts.message.product.ProductInfo
 import net.orekyuu.bts.message.team.TeamInfo
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -40,6 +40,7 @@ interface ProductService {
 class ProductServiceImpl : ProductService {
 
     override fun registerToTeam(requestUser: AppUser, teamId: String, productName: String): TeamInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         checkAuthority(team, requestUser)
         val product = Product.new {
@@ -50,6 +51,7 @@ class ProductServiceImpl : ProductService {
     }
 
     override fun deleteFromTeam(requestUser: AppUser, teamId: String, productId: Int): TeamInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         checkAuthority(team, requestUser)
         val product = Product.findById(productId) ?: throw ProductNotFoundException(team, productId)
@@ -58,6 +60,7 @@ class ProductServiceImpl : ProductService {
     }
 
     override fun showProductsFromTeam(requestUser: AppUser, teamId: String): List<ProductInfo> = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         checkAuthority(team, requestUser)
         val products = Product.find { ProductTable.team.eq(team.id) }
@@ -66,6 +69,7 @@ class ProductServiceImpl : ProductService {
 
     override fun modifyProductName(requestUser: AppUser, teamId: String,
                                    productId: Int, productName: String): ProductInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         checkAuthority(team, requestUser)
         val product = Product.findById(productId) ?: throw ProductNotFoundException(team, productId)
@@ -74,6 +78,7 @@ class ProductServiceImpl : ProductService {
     }
 
     override fun regenerateProductToken(requestUser: AppUser, teamId: String, productId: Int): ProductInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         checkAuthority(team, requestUser)
         val product = Product.findById(productId) ?: throw ProductNotFoundException(team, productId)
@@ -82,7 +87,10 @@ class ProductServiceImpl : ProductService {
     }
 
     private fun checkAuthority(team: Team, appUser: AppUser) {
-        if (!team.member.any { it.id == appUser.id })
+        println("---start checkAuthority---")
+    //if (!team.member.any { appUser.id == it.id })
+      if (TeamUserTable.select { TeamUserTable.team.eq(team.id).and(TeamUserTable.user.eq(appUser.id)) }.empty())
             throw TeamAccessAuthorityNotException(appUser, team)
+        println("---end checkAuthority---")
     }
 }
