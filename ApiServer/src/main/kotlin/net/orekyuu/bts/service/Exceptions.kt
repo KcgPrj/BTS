@@ -29,3 +29,7 @@ class NotJoinTeamMemberException(appUser: AppUser, team: Team) : NotFoundExcepti
  */
 class TeamAccessAuthorityNotException(appUser: AppUser, team: Team) :
         ForbiddenException("user[id=${appUser.id},name=${appUser.userName}] is no access authority to the specified team[id=${team.id},name=${team.teamName}]")
+
+//Product関係
+class ProductNotFoundException(team: Team, productId: Int) :
+        NotFoundException("is not registered product[id=$productId] in this team[id=${team.id},name=${team.teamName}]")
