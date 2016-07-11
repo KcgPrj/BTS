@@ -107,24 +107,25 @@ class ProductServiceTest {
     }
 
     @Test
-    fun showProductInfo() {
-        val result1 = productService.registerToTeam(user1, teamInfo3.teamId, "product")
-        val result2 = productService.showProductInfo(user1, teamInfo3.teamId, result1.product[0].productId)
-        assert(result2.productName == "product")
+    fun showProductsFromTeam() {
+        productService.registerToTeam(user1, teamInfo3.teamId, "product1")
+        productService.registerToTeam(user1, teamInfo3.teamId, "product2")
+        val result2 = productService.showProductsFromTeam(user1, teamInfo3.teamId)
+        assert(result2.size == 2)
     }
 
     @Test(expected = TeamNotFoundException::class)
     fun showProductInfoThrownTeamNotFoundException() {
-        productService.showProductInfo(user1, "hogehoge", 0)
+        productService.showProductsFromTeam(user1, "hogehoge")
     }
 
     @Test(expected = ProductNotFoundException::class)
     fun showProductInfoThrownProductNotFoundException() {
-        productService.showProductInfo(user1, teamInfo3.teamId, 0)
+        productService.showProductsFromTeam(user1, teamInfo3.teamId)
     }
 
     @Test(expected = TeamAccessAuthorityNotException::class)
     fun showProductInfoThrownTeamAccessAuthorityNotException() {
-        productService.showProductInfo(user2, teamInfo3.teamId, 0)
+        productService.showProductsFromTeam(user2, teamInfo3.teamId)
     }
 }

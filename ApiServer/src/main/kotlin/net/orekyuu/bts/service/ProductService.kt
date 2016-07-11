@@ -2,9 +2,11 @@ package net.orekyuu.bts.service
 
 import net.orekyuu.bts.domain.AppUser
 import net.orekyuu.bts.domain.Product
+import net.orekyuu.bts.domain.ProductTable
 import net.orekyuu.bts.domain.Team
 import net.orekyuu.bts.message.product.ProductInfo
 import net.orekyuu.bts.message.team.TeamInfo
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 interface ProductService {
@@ -22,7 +24,7 @@ interface ProductService {
     /**
      * プロダクトの情報を取得
      */
-    fun showProductInfo(requestUser: AppUser, teamId: String, productId: Int): ProductInfo
+    fun showProductsFromTeam(requestUser: AppUser, teamId: String): List<ProductInfo>
 }
 
 class ProductServiceImpl : ProductService {
@@ -45,11 +47,11 @@ class ProductServiceImpl : ProductService {
         ofTeamInfo(team)
     }
 
-    override fun showProductInfo(requestUser: AppUser, teamId: String, productId: Int): ProductInfo = transaction {
+    override fun showProductsFromTeam(requestUser: AppUser, teamId: String): List<ProductInfo> = transaction {
         val team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         checkAuthority(team, requestUser)
-        val product = Product.findById(productId) ?: throw ProductNotFoundException(team, productId)
-        ofProductInfo(product)
+        val products = Product.find { ProductTable.team.eq(team.id) }
+        products.asSequence().map { ofProductInfo(it) }.toList()
     }
 
     private fun checkAuthority(team: Team, appUser: AppUser) {
