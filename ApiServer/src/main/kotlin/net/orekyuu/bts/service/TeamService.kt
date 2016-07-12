@@ -51,9 +51,7 @@ class TeamServiceImpl : TeamService {
     override fun joinTeam(introduceUser: AppUser, teamId: String, joinUser: AppUser): TeamInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
         val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
-        //introduceUserはチームに含まれているか？
-        if (!team.member.any { it.id == introduceUser.id })
-            throw TeamAccessAuthorityNotException(introduceUser, team)
+        checkAuthority(team,introduceUser)
 
         if (!team.member.any { it.id == joinUser.id }) {
             val newMember = team.member.asSequence().plusElement(joinUser).toList()
@@ -76,16 +74,16 @@ class TeamServiceImpl : TeamService {
     override fun showTeamInfo(teamId: String, requestUser: AppUser): TeamInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
         val team: Team = Team.findById(teamId) ?: throw  TeamNotFoundException(teamId)
-        if (!team.member.any { it.id == requestUser.id })
-            throw TeamAccessAuthorityNotException(requestUser, team)
+        checkAuthority(team,requestUser)
+
         ofTeamInfo(team)
     }
 
     override fun showTeamMember(teamId: String, requestUser: AppUser): List<AppUser> = transaction {
         logger.addLogger(StdOutSqlLogger())
         val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
-        if (!team.member.any { it.id == requestUser.id })
-            throw TeamAccessAuthorityNotException(requestUser, team)
+        checkAuthority(team,requestUser)
+
         team.member.toList()
     }
 }
