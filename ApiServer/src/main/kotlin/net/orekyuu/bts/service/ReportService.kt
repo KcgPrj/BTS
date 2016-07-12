@@ -5,6 +5,7 @@ import net.orekyuu.bts.message.report.ReportInfo
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.util.*
 
 /**
  */
@@ -27,8 +28,12 @@ interface ReportService {
 
 class ReportServiceImpl : ReportService {
     override fun createReport(reportModel: ReportModel): ReportInfo = transaction {
-        val productId = reportModel.productId
-        val product = Product.findById(productId) ?: throw ProductNotFoundException(productId)
+        val productToken = reportModel.productToken
+        val product = Product
+                .find {
+                    ProductTable.productToken.eq(UUID.fromString(productToken))
+                }
+                .singleOrNull() ?: throw ProductNotFoundException(productToken)
         val assignUserId = reportModel.assignUserId
         val assign = AppUser.findById(assignUserId) ?: throw AppUserNotFoundException(assignUserId)
         checkAuthority(product.team, assign)
@@ -72,4 +77,4 @@ class ReportServiceImpl : ReportService {
 
 class ReportModel(val title: String, val description: String,
                   val assignUserId: Int, val version: String, val stackTrace: String,
-                  val log: String, val runtimeInfo: String, val productId: Int)
+                  val log: String, val runtimeInfo: String, val productToken: String)
