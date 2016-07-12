@@ -11,14 +11,14 @@ import net.orekyuu.bts.message.report.SimpleReportInfo
 import net.orekyuu.bts.message.team.TeamInfo
 import net.orekyuu.bts.message.user.UserInfo
 
-fun ofTeamInfo(team: Team): TeamInfo {
+fun ofTeamInfo(team: Team, member: Iterable<AppUser> = team.member): TeamInfo {
     val teamProduct = Product.find{ ProductTable.team.eq(team.id) }
 
     return TeamInfo(
             teamId = team.id.value,
             teamName = team.teamName,
             product = teamProduct.map { ofSimpleProductInfo(it) }.toList(),
-            member = team.member.map { ofUserInfo(it) }.toList()
+            member = member.map { ofUserInfo(it) }.toList()
     )
 }
 

@@ -101,7 +101,7 @@ class TeamServiceTest {
             assertThat(result.member.count()).isEqualTo(3)//0.01msとか
         }
         println("${time * 0.000001} ms ")
-        val result2 = teamService.defectionTeam(teamId, user3)
+        val result2 = teamService.defectionTeam(user1, teamId, user3)
         val time2 = measureNanoTime {
             assertThat(result2.member.count()).isEqualTo(2)//0.01msとか
         }

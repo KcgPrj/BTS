@@ -27,6 +27,7 @@ dependencies {
 
 	compile project(":Message")
 	runtime('com.h2database:h2')
+	runtime group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
 
 	testCompile('org.springframework.boot:spring-boot-starter-test') 
 	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
