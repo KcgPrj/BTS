@@ -5,6 +5,7 @@ import net.orekyuu.bts.message.report.ReportInfo
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -19,8 +20,9 @@ interface ReportService {
     /**
      * レポートをProductIdから検索
      */
-    fun findFromProduct(requestUser: AppUser, productId: Int): List<ReportInfo>
+    fun findFromProductId(requestUser: AppUser, productId: Int): List<ReportInfo>
 
+    fun findFromProductToken(requestUser: AppUser, productToken: String): List<ReportInfo>
     /**
      * レポートの更新
      */
@@ -28,6 +30,7 @@ interface ReportService {
 }
 
 class ReportServiceImpl : ReportService {
+
     override fun createReport(reportModel: ReportModel): ReportInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
         val productToken = reportModel.productToken
@@ -51,9 +54,21 @@ class ReportServiceImpl : ReportService {
         ofReportInfo(report)
     }
 
-    override fun findFromProduct(requestUser: AppUser, productId: Int): List<ReportInfo> = transaction {
+    override fun findFromProductId(requestUser: AppUser, productId: Int): List<ReportInfo> = transaction {
         logger.addLogger(StdOutSqlLogger())
         val product = Product.findById(productId) ?: throw ProductNotFoundException(productId)
+        checkAuthority(product.team, requestUser)
+        Report.find { ReportTable.product eq product.id }.map { ofReportInfo(it) }
+    }
+
+    override fun findFromProductToken(requestUser: AppUser, productToken: String): List<ReportInfo> = transaction {
+        logger.addLogger(StdOutSqlLogger())
+        val product = Product
+                .find {
+                    ProductTable.productToken.eq(UUID.fromString(productToken))
+                }
+                .singleOrNull() ?: throw ProductNotFoundException(productToken)
+
         checkAuthority(product.team, requestUser)
         Report.find { ReportTable.product eq product.id }.map { ofReportInfo(it) }
     }
@@ -70,12 +85,13 @@ class ReportServiceImpl : ReportService {
     }
 
     private fun getMember(userId: Int, team: Team): AppUser {
-        return AppUser.find {
+        val teamUser = TeamUserTable.select {
             TeamUserTable.user
                     .eq(EntityID(userId, AppUserTable))
                     .and(TeamUserTable.team.eq(team.id))
 
         }.singleOrNull() ?: throw NotJoinTeamMemberException(userId, team)
+        return AppUser[teamUser[TeamUserTable.user]]
     }
 }
 
