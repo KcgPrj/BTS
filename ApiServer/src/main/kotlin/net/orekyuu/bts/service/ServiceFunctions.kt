@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.select
 /**
  * AppUserがそのチームにアクセスする権限(チームメンバーであるか)を持っているかをチェック
  * transaction内で使用
+ *
  * @param team Team
  * @param appUser AppUser
  * @throws TeamAccessAuthorityNotException [appUser]が[team]に含まれていなかった場合
@@ -16,7 +17,7 @@ import org.jetbrains.exposed.sql.select
 fun checkAuthority(team: Team, appUser: AppUser) {
     println("---start checkAuthority---")
     //if (!team.member.any { appUser.id == it.id })
-    if (TeamUserTable.select { TeamUserTable.team.eq(team.id).and(TeamUserTable.user.eq(appUser.id)) }.empty())
+    if (TeamUserTable.select { TeamUserTable.team.eq(team.id).and(TeamUserTable.user.eq(appUser.id)) }.limit(1).empty())
         throw TeamAccessAuthorityNotException(appUser, team)
     println("---end checkAuthority---")
 }

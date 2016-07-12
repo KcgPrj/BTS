@@ -5,7 +5,11 @@ import net.orekyuu.bts.config.BTSResourceServerConfigurer
 import net.orekyuu.bts.config.BtsApplicationConfig
 import net.orekyuu.bts.domain.AppUser
 import net.orekyuu.bts.message.product.ProductInfo
+import net.orekyuu.bts.message.product.SimpleProductInfo
+import net.orekyuu.bts.message.report.ReportInfo
 import net.orekyuu.bts.message.team.TeamInfo
+import net.orekyuu.bts.message.user.UserInfo
+import org.assertj.core.api.Assertions.*
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.After
@@ -44,7 +48,7 @@ class ReportServiceTest {
     private lateinit var product1: ProductInfo
     private lateinit var product2: ProductInfo
     private lateinit var product3: ProductInfo
-    private lateinit var reportModel: ReportModel
+    private lateinit var reportModel: ReportInfo
 
     @Before
     fun setup() {
@@ -63,14 +67,14 @@ class ReportServiceTest {
         product1 = products[0]
         product2 = products[1]
         product3 = products[2]
-        reportModel = ReportModel(
+        reportModel = ReportInfo(
                 title = "title",
                 description = "description",
-                assignUserId = user1.id.value,
+                assign = UserInfo(id = user1.id.value),
                 log = "log",
-                productToken = product1.token,
+                product = SimpleProductInfo(productId = product1.productId, token = product1.token),
                 runtimeInfo = "nougat",
-                stackTrace = "stackTrace",
+                stacktrace = "stackTrace",
                 version = "1.0.3")
 
     }
@@ -87,82 +91,81 @@ class ReportServiceTest {
     @Test
     fun createReport() {
         val reportInfo = reportService.createReport(reportModel)
-        assert(reportInfo.title == reportModel.title)
-        assert(reportInfo.description == reportModel.description)
-        assert(reportInfo.assign.id == reportModel.assignUserId)
-        assert(reportInfo.log == reportModel.log)
-        assert(reportInfo.product.token == reportModel.productToken)
-        assert(reportInfo.runtimeInfo == reportModel.runtimeInfo)
-        assert(reportInfo.stacktrace == reportModel.stackTrace)
-        assert(reportInfo.version == reportModel.version)
+        assertThat(reportInfo.title).isEqualTo(reportModel.title)
+        assertThat(reportInfo.assign.id).isEqualTo(reportModel.assign.id)
+        assertThat(reportInfo.version).isEqualTo(reportModel.version)
+        assertThat(reportInfo.description).isEqualTo(reportModel.description)
+        assertThat(reportInfo.log).isEqualTo(reportModel.log)
+        assertThat(reportInfo.product.productId).isEqualTo(reportModel.product.productId)
+
     }
 
     @Test(expected = ProductNotFoundException::class)
     fun createReportThrownProductNotFoundException() {
-        val reportModel = ReportModel(
+        val reportModel = ReportInfo(
                 title = "title",
                 description = "description",
-                assignUserId = user1.id.value,
+                assign = UserInfo(id = user1.id.value),
                 log = "log",
-                productToken = UUID.randomUUID().toString(),
+                product = SimpleProductInfo(token = UUID.randomUUID().toString()),
                 runtimeInfo = "nougat",
-                stackTrace = "stackTrace",
+                stacktrace = "stackTrace",
                 version = "1.0.3")
         reportService.createReport(reportModel)
     }
 
     @Test(expected = NotJoinTeamMemberException::class)
     fun createReportThrownTeamNotJoinTeamMemberException() {
-        val reportModel = ReportModel(
+        val reportModel = ReportInfo(
                 title = "title",
                 description = "description",
-                assignUserId = user3.id.value,
+                assign = UserInfo(id = user3.id.value),
                 log = "log",
-                productToken = product1.token,
+                product = SimpleProductInfo(token = product1.token),
                 runtimeInfo = "nougat",
-                stackTrace = "stackTrace",
+                stacktrace = "stackTrace",
                 version = "1.0.3")
         reportService.createReport(reportModel)
     }
 
     @Test
     fun findFromProductId() {
-        val model1 = ReportModel(
+        val model1 = ReportInfo(
                 title = "title1",
                 description = "description1",
-                assignUserId = user1.id.value,
+                assign = UserInfo(id = user1.id.value),
                 log = "log1",
-                productToken = product1.token,
+                product = SimpleProductInfo(token = product1.token),
                 runtimeInfo = "nougat",
-                stackTrace = "stackTrace1",
+                stacktrace = "stackTrace1",
                 version = "1.0.3")
 
-        val model2 = ReportModel(
+        val model2 = ReportInfo(
                 title = "title2",
                 description = "description2",
-                assignUserId = user2.id.value,
+                assign = UserInfo(id = user2.id.value),
                 log = "log2",
-                productToken = product1.token,
+                product = SimpleProductInfo(token = product1.token),
                 runtimeInfo = "nougat",
-                stackTrace = "stackTrace2",
+                stacktrace = "stackTrace2",
                 version = "1.0.3")
 
-        val model3 = ReportModel(
+        val model3 = ReportInfo(
                 title = "title3",
                 description = "description3",
-                assignUserId = user2.id.value,
+                assign = UserInfo(id = user2.id.value),
                 log = "log3",
-                productToken = product2.token,
+                product = SimpleProductInfo(token = product2.token),
                 runtimeInfo = "nougat",
-                stackTrace = "stackTrace3",
+                stacktrace = "stackTrace3",
                 version = "1.0.3")
         val reportInfo1 = reportService.createReport(model1)
         reportService.createReport(model2)
         val reportInfo2 = reportService.createReport(model3)
         val reportInfoList1 = reportService.findFromProductId(user1, reportInfo1.product.productId)
-        assert(reportInfoList1.size == 2)
+        assertThat(reportInfoList1.size).isEqualTo(2)
         val reportInfoList2 = reportService.findFromProductId(user1, reportInfo2.product.productId)
-        assert(reportInfoList2.size == 1)
+        assertThat(reportInfoList2.size).isEqualTo(1)
     }
 
     @Test(expected = ProductNotFoundException::class)
@@ -177,42 +180,42 @@ class ReportServiceTest {
 
     @Test
     fun findFromProductToken() {
-        val model1 = ReportModel(
+        val model1 = ReportInfo(
                 title = "title1",
                 description = "description1",
-                assignUserId = user1.id.value,
+                assign = UserInfo(id = user1.id.value),
                 log = "log1",
-                productToken = product1.token,
+                product = SimpleProductInfo(token = product1.token),
                 runtimeInfo = "nougat",
-                stackTrace = "stackTrace1",
+                stacktrace = "stackTrace1",
                 version = "1.0.3")
 
-        val model2 = ReportModel(
+        val model2 = ReportInfo(
                 title = "title2",
                 description = "description2",
-                assignUserId = user2.id.value,
+                assign = UserInfo(id = user2.id.value),
                 log = "log2",
-                productToken = product1.token,
+                product = SimpleProductInfo(token = product1.token),
                 runtimeInfo = "nougat",
-                stackTrace = "stackTrace2",
+                stacktrace = "stackTrace2",
                 version = "1.0.3")
 
-        val model3 = ReportModel(
+        val model3 = ReportInfo(
                 title = "title3",
                 description = "description3",
-                assignUserId = user2.id.value,
+                assign = UserInfo(id = user2.id.value),
                 log = "log3",
-                productToken = product2.token,
+                product = SimpleProductInfo(token = product2.token),
                 runtimeInfo = "nougat",
-                stackTrace = "stackTrace3",
+                stacktrace = "stackTrace3",
                 version = "1.0.3")
         val reportInfo1 = reportService.createReport(model1)
         reportService.createReport(model2)
         val reportInfo2 = reportService.createReport(model3)
         val reportInfoList1 = reportService.findFromProductToken(user1, reportInfo1.product.token)
-        assert(reportInfoList1.size == 2)
+        assertThat(reportInfoList1.size).isEqualTo(2)
         val reportInfoList2 = reportService.findFromProductToken(user1, reportInfo2.product.token)
-        assert(reportInfoList2.size == 1)
+        assertThat(reportInfoList2.size).isEqualTo(1)
     }
 
     @Test(expected = ProductNotFoundException::class)
@@ -230,8 +233,8 @@ class ReportServiceTest {
         val reportInfo1 = reportService.createReport(reportModel)
         val newDescription = "newDescription"
         val reportInfo2 = reportService.updateReport(user1, reportInfo1.reportId, newDescription, user2.id.value)
-        assert(reportInfo2.description == newDescription)
-        assert(reportInfo2.assign.id == user2.id.value)
+        assertThat(reportInfo2.description).isEqualTo(newDescription)
+        assertThat(reportInfo2.assign.id).isEqualTo(user2.id.value)
     }
 
     @Test(expected = ReportNotFoundException::class)
@@ -249,5 +252,26 @@ class ReportServiceTest {
     fun updateReportThrownNotJoinTeamMemberException() {
         val reportId = reportService.createReport(reportModel).reportId
         reportService.updateReport(user1, reportId, "", user3.id.value)
+    }
+
+    @Test
+    fun showReport() {
+        val reportInfo = reportService.createReport(reportModel)
+        val reportInfo2 = reportService.showReport(user1, reportInfo.reportId)
+        assertThat(reportInfo.reportId).isEqualTo(reportInfo2.reportId)
+        assertThat(reportInfo.product.productId).isEqualTo(reportInfo2.product.productId)
+        assertThat(reportInfo.description).isEqualTo(reportInfo2.description)
+        assertThat(reportInfo.assign.id).isEqualTo(reportInfo2.assign.id)
+    }
+
+    @Test(expected = ReportNotFoundException::class)
+    fun showReportThrownReportNotFoundException() {
+        reportService.showReport(user1, 1010)
+    }
+
+    @Test(expected = TeamAccessAuthorityNotException::class)
+    fun showReportThrown() {
+        val reportId = reportService.createReport(reportModel).reportId
+        reportService.showReport(user3, reportId)
     }
 }
