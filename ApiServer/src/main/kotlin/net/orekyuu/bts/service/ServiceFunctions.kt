@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.select
 
 /**
- * AppUserがTeamに含まれているか確認
+ * AppUserがそのチームにアクセスする権限(チームメンバーであるか)を持っているかをチェック
  * transaction内で使用
  * @param team Team
  * @param appUser AppUser
