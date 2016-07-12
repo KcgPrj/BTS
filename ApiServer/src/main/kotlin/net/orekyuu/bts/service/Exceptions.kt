@@ -43,11 +43,5 @@ class ProductNotFoundException : NotFoundException {
     constructor(productToken: String) : super("specified product[token=$productToken] does not exist")
 }
 
-//AppUser関係
-/**
- * 指定したAppUserが見つからない時に投げられる
- */
-class AppUserNotFoundException(userId: Int) : NotFoundException("specified user[id=$userId] does not exist")
-
 //Report関係
 class ReportNotFoundException(reportId: Int) : NotFoundException("specified report[id=$reportId] does not exist")
