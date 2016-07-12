@@ -3,6 +3,7 @@ package net.orekyuu.bts.service
 import net.orekyuu.bts.domain.*
 import net.orekyuu.bts.message.report.ReportInfo
 import org.jetbrains.exposed.dao.EntityID
+import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
@@ -28,6 +29,7 @@ interface ReportService {
 
 class ReportServiceImpl : ReportService {
     override fun createReport(reportModel: ReportModel): ReportInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val productToken = reportModel.productToken
         val product = Product
                 .find {
@@ -35,9 +37,7 @@ class ReportServiceImpl : ReportService {
                 }
                 .singleOrNull() ?: throw ProductNotFoundException(productToken)
         val assignUserId = reportModel.assignUserId
-        val assign = AppUser.findById(assignUserId) ?: throw AppUserNotFoundException(assignUserId)
-        checkAuthority(product.team, assign)
-
+        val assign = getMember(assignUserId, product.team)
         val report = Report.new {
             this.title = reportModel.title
             this.description = reportModel.description
@@ -52,28 +52,33 @@ class ReportServiceImpl : ReportService {
     }
 
     override fun findFromProduct(requestUser: AppUser, productId: Int): List<ReportInfo> = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val product = Product.findById(productId) ?: throw ProductNotFoundException(productId)
         checkAuthority(product.team, requestUser)
         Report.find { ReportTable.product eq product.id }.map { ofReportInfo(it) }
     }
 
     override fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newAssignUserId: Int): ReportInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
         val team = report.product.team
         checkAuthority(team, requestUser)
-        val newAssignUser = AppUser
-                .find {
-                    TeamUserTable.user
-                            .eq(EntityID(newAssignUserId, AppUserTable))
-                            .and(TeamUserTable.team.eq(team.id))
-                }
-                .singleOrNull() ?: throw NotJoinTeamMemberException(newAssignUserId, team)
-
+        val newAssignUser = getMember(newAssignUserId, team)
         report.description = newDescription
         report.assign = newAssignUser
         ofReportInfo(report)
     }
+
+    private fun getMember(userId: Int, team: Team): AppUser {
+        return AppUser.find {
+            TeamUserTable.user
+                    .eq(EntityID(userId, AppUserTable))
+                    .and(TeamUserTable.team.eq(team.id))
+
+        }.singleOrNull() ?: throw NotJoinTeamMemberException(userId, team)
+    }
 }
+
 
 class ReportModel(val title: String, val description: String,
                   val assignUserId: Int, val version: String, val stackTrace: String,
