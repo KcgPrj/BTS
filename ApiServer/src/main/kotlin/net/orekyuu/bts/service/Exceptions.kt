@@ -22,7 +22,10 @@ class TeamNotFoundException(id: String) : NotFoundException("specified team[id=$
 /**
  * 指定したuserがTeamに参加していない時に投げられる
  */
-class NotJoinTeamMemberException(appUser: AppUser, team: Team) : NotFoundException("${appUser.userName} does not join team[id=${team.id},name=${team.teamName}]")
+class NotJoinTeamMemberException : NotFoundException {
+    constructor(appUser: AppUser, team: Team) : super("${appUser.userName} does not join team[id=${team.id},name=${team.teamName}]")
+    constructor(userId: Int, team: Team) : super("specified user[$userId] does not join team[id=${team.id},name=${team.teamName}]")
+}
 
 /**
  * Teamへのアクセス権が必要なときに投げられる
@@ -31,5 +34,19 @@ class TeamAccessAuthorityNotException(appUser: AppUser, team: Team) :
         ForbiddenException("user[id=${appUser.id},name=${appUser.userName}] is no access authority to the specified team[id=${team.id},name=${team.teamName}]")
 
 //Product関係
-class ProductNotFoundException(team: Team, productId: Int) :
-        NotFoundException("is not registered product[id=$productId] in this team[id=${team.id},name=${team.teamName}]")
+/**
+ * 指定したProductが見つからない時に投げられる
+ */
+class ProductNotFoundException : NotFoundException {
+    constructor(team: Team, productId: Int) : super("is not registered product[id=$productId] in this team[id=${team.id},name=${team.teamName}]")
+    constructor(productId: Int) : super("specified product[id=$productId] does not exist")
+}
+
+//AppUser関係
+/**
+ * 指定したAppUserが見つからない時に投げられる
+ */
+class AppUserNotFoundException(userId: Int) : NotFoundException("specified user[id=$userId] does not exist")
+
+//Report関係
+class ReportNotFoundException(reportId: Int) : NotFoundException("specified report[id=$reportId] does not exist")
