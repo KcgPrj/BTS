@@ -40,6 +40,7 @@ class TeamAccessAuthorityNotException(appUser: AppUser, team: Team) :
 class ProductNotFoundException : NotFoundException {
     constructor(team: Team, productId: Int) : super("is not registered product[id=$productId] in this team[id=${team.id},name=${team.teamName}]")
     constructor(productId: Int) : super("specified product[id=$productId] does not exist")
+    constructor(productToken: String) : super("specified product[token=$productToken] does not exist")
 }
 
 //AppUser関係
