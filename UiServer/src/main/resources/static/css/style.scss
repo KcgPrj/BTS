@@ -128,6 +128,12 @@ body,html{
     
     label{
         cursor: pointer;
+        
+        img{
+            height: 25px;
+            width: 25px;
+            transition: all 0.3s;
+        }
     }
     
     span{
@@ -524,6 +530,11 @@ input[type="checkbox"].on-off:checked + ol{
     }
     .side_title{
         font-size: 25px;
+        
+        label img{
+            height: 20px;
+            width: 20px;
+        }
     }
     
     #products,
@@ -557,6 +568,11 @@ input[type="checkbox"].on-off:checked + ol{
     }
     .side_title{
         font-size: 18px;
+        
+        label img{
+            height: 15px;
+            width: 15px;
+        }
     }
 
     #products,
