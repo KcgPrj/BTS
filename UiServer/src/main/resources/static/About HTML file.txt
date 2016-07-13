@@ -1,0 +1,11 @@
+﻿select_team.html
+	チーム選択前のサイドバー
+
+side_team.html
+	チーム選択後、Product・teamのサイドバー
+
+main_content.html
+	チーム選択、プロダクト選択後のメインコンテンツエリア
+
+wait.html
+	待機アニメーション

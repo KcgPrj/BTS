@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>TOP</title>
+        <link rel="stylesheet" href="css/base.css" th:href="@{'/css/base.css'}">
+        <link rel="stylesheet" href="css/style.css" th:href="@{'/css/style.css'}">
+        
+        <!--import font-->
+        <link href='https://fonts.googleapis.com/css?family=Fjalla+One'
+              th:href="@{'https://fonts.googleapis.com/css?family=Fjalla+One'}" rel='stylesheet' type='text/css' />
+        <link href='https://fonts.googleapis.com/css?family=Abel'
+              th:href="@{'https://fonts.googleapis.com/css?family=Abel'}" rel='stylesheet' type='text/css' />
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300'
+              th:href="@{'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300'}" rel='stylesheet' type='text/css' />
+        <link href='https://fonts.googleapis.com/css?family=Ubuntu+Condensed'
+              th:href="@{'https://fonts.googleapis.com/css?family=Ubuntu+Condensed'}" rel='stylesheet' type='text/css' />
+    </head>
+    <body>
+        <div class="full_bg pst-f">
+           <div class="polygon_img">
+               <img src="img/Polygon_bg.png" th:href="@{'img/Polygon_bg.png'}" alt="polygon_bg" />
+           </div>
+        </div>
+            <div id="wrapper" class="pst-a">
+               
+                <!--main content-->
+                <div id="main">
+                    <div class="main_inner">
+                        
+                        <!--
+
+                        プロダクト選択中のメインコンテンツ部分ここから
+
+                        -->
+                        
+                        <div class="plz_select">Please select team.</div>
+                        
+                        <!--
+                        
+                        チーム選択中のメインコンテンツ部分ここまで
+                        
+                        -->
+                    </div>
+                </div>
+                <div id="side" class="pst-f">
+                    <div class="side_inner">
+                        <div class="site_logo"><!--サイドバー中身-->
+                            <img src="img/site_logo.png" th:href="@{'img/site_logo.png'}" alt="Site_logo" />
+                        </div>
+                        <!--ロゴ下ボーダー-->
+                        <div class="border"></div>
+                        
+                        
+                        <!--
+                        
+                        サイドメニュー
+                        
+                        -->
+                        
+                        
+                        <div class="side_title ml50 mt30">
+                            <label for="">TEAM</label>
+                            <a href="">
+                                <span>＋</span>
+                            </a>
+                        </div>
+                        
+                        
+                        <!--TEAM一覧-->
+                        <div id="teams">
+                            <ul class="t_list">
+                                <li><a href="">PROJECT ABABABA</a></li>
+                                <li><a href="">GOMENNNASAI</a></li>
+                                <li><a href="">KIYOSHI KONOYORU</a></li>
+                                <li><a href="">HOTARU NO HAKA</a></li>
+                                <li><a href="">JIBURI IPPAI COLLECTION</a></li>
+                                <li><a href="">KCG PROJECT</a></li>
+                                <li><a href="">ONAKA SUITA</a></li>
+                            </ul>
+                        
+                            <!--TEAMここまで-->        
+                        </div>
+                    </div>
+                </div>
+                
+        </div>
+    </body>
+</html>
