@@ -20,14 +20,17 @@ open class BtsApplicationConfig {
     }
 
     @Bean
-    open fun userService() = UserServiceImpl()
+    open fun userService(): UserService = UserServiceImpl()
 
     @Bean
-    open fun teamService() = TeamServiceImpl()
+    open fun teamService(): TeamService = TeamServiceImpl()
 
     @Bean
-    open fun productService() = ProductServiceImpl()
+    open fun productService(): ProductService = ProductServiceImpl()
 
     @Bean
-    open fun appUserService() = AppUserServiceImpl()
+    open fun appUserService(): AppUserService = AppUserServiceImpl()
+
+    @Bean
+    open fun reportService(): ReportService = ReportServiceImpl()
 }

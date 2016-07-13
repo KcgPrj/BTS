@@ -4,8 +4,6 @@ import net.orekyuu.bts.domain.*
 import net.orekyuu.bts.message.product.ProductInfo
 import net.orekyuu.bts.message.team.TeamInfo
 import org.jetbrains.exposed.sql.StdOutSqlLogger
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -84,13 +82,5 @@ class ProductServiceImpl : ProductService {
         val product = Product.findById(productId) ?: throw ProductNotFoundException(team, productId)
         product.productToken = UUID.randomUUID()
         ofProductInfo(product)
-    }
-
-    private fun checkAuthority(team: Team, appUser: AppUser) {
-        println("---start checkAuthority---")
-        //if (!team.member.any { appUser.id == it.id })
-        if (TeamUserTable.select { TeamUserTable.team.eq(team.id).and(TeamUserTable.user.eq(appUser.id)) }.empty())
-            throw TeamAccessAuthorityNotException(appUser, team)
-        println("---end checkAuthority---")
     }
 }
