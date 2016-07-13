@@ -110,12 +110,12 @@ class TeamServiceTest {
 
     @Test(expected = NotJoinTeamMemberException::class)
     fun defectionTeamThrownNotJoinTeamMemberException() {
-        teamService.defectionTeam(teamInfo.teamId, user3)
+        teamService.defectionTeam(user1, teamInfo.teamId, user3)
     }
 
     @Test(expected = TeamNotFoundException::class)
     fun defectionTeamThrownTeamNotFoundException() {
-        teamService.defectionTeam("hogehoge", user3)
+        teamService.defectionTeam(user1, "hogehoge", user3)
     }
 
     @Test
