@@ -1,11 +1,11 @@
-select_team.html
-	ƒ`[ƒ€‘I‘ð‘O‚ÌƒTƒCƒhƒo[
+ï»¿select_team.html
+	ãƒãƒ¼ãƒ é¸æŠžå‰ã®ã‚µã‚¤ãƒ‰ãƒãƒ¼
 
 side_team.html
-	ƒ`[ƒ€‘I‘ðŒãAProductEteam‚ÌƒTƒCƒhƒo[
+	ãƒãƒ¼ãƒ é¸æŠžå¾Œã€Productãƒ»teamã®ã‚µã‚¤ãƒ‰ãƒãƒ¼
 
 main_content.html
-	ƒ`[ƒ€‘I‘ðAƒvƒƒ_ƒNƒg‘I‘ðŒã‚ÌƒƒCƒ“ƒRƒ“ƒeƒ“ƒcƒGƒŠƒA
+	ãƒãƒ¼ãƒ é¸æŠžã€ãƒ—ãƒ­ãƒ€ã‚¯ãƒˆé¸æŠžå¾Œã®ãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚¨ãƒªã‚¢
 
 wait.html
-	‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“
+	å¾…æ©Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
