@@ -141,6 +141,16 @@ body,html{
         float: right;
         margin-right: 50px;
         cursor: pointer;
+        border-left: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        padding: 0 3px;
+        margin-top: -5px;
+        @include setPrefix(border-radius,5px);
+        @include setPrefix(transition,all 0.2s);
+    }
+    
+    span:hover{
+        background: rgba(30, 39, 54, 0.85);
     }
 }
 

@@ -129,10 +129,23 @@ body, html {
     display: block;
     float: right;
     margin-right: 50px;
-    cursor: pointer; }
+    cursor: pointer;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    padding: 0 3px;
+    margin-top: -5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -webkit-transition: all 0.2s; }
+  /* line 152, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  .side_title span:hover {
+    background: rgba(30, 39, 54, 0.85); }
 
 /*サイドバー各要素のステージ*/
-/* line 153, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 163, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 #teams,
 #products,
 #members {
@@ -141,38 +154,38 @@ body, html {
   overflow-x: hidden;
   overflow-y: auto; }
 
-/* line 160, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 170, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 #products {
   height: auto; }
 
-/* line 163, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 173, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 #members {
   height: auto;
   padding-top: 15px; }
 
-/* line 168, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 178, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .product_fragment {
   margin-left: 20px; }
 
-/* line 171, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 181, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .member_fragment {
   margin-left: 50px; }
 
 /*ステージここまで*/
 /*チーム一覧*/
-/* line 178, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 188, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .team_fragment {
   margin-left: 45px; }
-  /* line 180, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 190, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .team_fragment .t_line {
     float: left; }
-    /* line 183, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 193, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .team_fragment .t_line .t_border {
       height: 30px;
       width: 2px;
       margin-left: 9px;
       background-color: #252f3b; }
-    /* line 189, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 199, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .team_fragment .t_line .t_circle {
       height: 20px;
       width: 20px;
@@ -180,7 +193,7 @@ body, html {
       -moz-border-radius: 50%;
       -webkit-border-radius: 50%;
       border: 2px solid #252f3b; }
-  /* line 196, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 206, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .team_fragment .team_name {
     margin-left: 35px;
     padding-top: 27px;
@@ -191,7 +204,7 @@ body, html {
     font-family: 'Abel', sans-serif; }
 
 /*チーム一覧ここまで*/
-/* line 213, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 223, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .m_list,
 .p_list,
 .t_list {
@@ -203,7 +216,7 @@ body, html {
   margin: 0;
   padding: 0;
   list-style: none; }
-  /* line 221, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 231, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .m_list li,
   .p_list li,
   .t_list li {
@@ -219,7 +232,7 @@ body, html {
     padding: 5px 0px 5px 50px;
     border-right: none;
     border-radius: 2px; }
-  /* line 235, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 245, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .m_list li.li-count:after,
   .p_list li.li-count:after,
   .t_list li.li-count:after {
@@ -236,13 +249,13 @@ body, html {
     text-align: center;
     font-weight: bold;
     border-radius: 2px; }
-  /* line 251, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 261, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .m_list li:hover,
   .p_list li:hover,
   .t_list li:hover {
     background: #263241; }
 
-/* line 258, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 268, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .t_list li {
   padding-left: 10px;
   border-bottom: 2px solid #333;
@@ -250,42 +263,42 @@ body, html {
   -moz-border-radius: 0 0 0 5px;
   -webkit-border-radius: 0 0 0 5px; }
 
-/* line 265, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 275, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .m_list li {
   border: none;
   background: none;
   margin-left: 0; }
-  /* line 269, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 279, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .m_list li a {
     display: block;
     width: 220px; }
 
-/* line 275, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 285, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .m_list li:hover {
   background: rgba(30, 47, 57, 0.4); }
 
-/* line 278, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 288, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 input[type="checkbox"].on-off {
   display: none; }
 
-/* line 282, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 292, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 input[type="checkbox"].on-off + ol {
   height: 0;
   overflow: hidden; }
 
-/* line 287, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 297, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 input[type="checkbox"].on-off:checked + ol {
   height: 270px;
   overflow: auto; }
 
-/* line 292, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 302, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .mem_name {
   font-size: 18px;
   color: #fff;
   margin-bottom: 5px;
   font-family: 'Abel', sans-serif; }
 
-/* line 298, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 308, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .mem_border {
   height: 4px;
   width: 220px;
@@ -294,62 +307,62 @@ input[type="checkbox"].on-off:checked + ol {
   margin-bottom: 8px; }
 
 /*チケット*/
-/* line 308, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 318, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .ticket_area {
   width: 100%;
   min-width: 1140px;
   height: auto;
   margin: 0 auto;
   padding-top: 30px; }
-  /* line 316, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 326, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .ticket_area a .ticket:hover {
     border: 1px solid #358164; }
-  /* line 319, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 329, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .ticket_area .ticket {
     background: rgba(0, 0, 0, 0.3);
     padding: 10px; }
-    /* line 324, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 334, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .ticket_area .ticket .t_title {
       font-family: 'Ubuntu Condensed', sans-serif;
       color: #fff;
       font-size: 25px; }
-    /* line 329, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 339, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .ticket_area .ticket .t_border {
       width: 100%;
       height: 2px;
       background: rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
       margin-top: 5px; }
-    /* line 336, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 346, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .ticket_area .ticket .t_data {
       width: 900px; }
-      /* line 339, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+      /* line 349, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
       .ticket_area .ticket .t_data table {
         margin-top: 10px;
         table-layout: fixed;
         width: 100%;
         color: #fff;
         font-family: 'Abel', sans-serif; }
-    /* line 349, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 359, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .ticket_area .ticket .comment img {
       height: 20px;
       width: 20px; }
-    /* line 353, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 363, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .ticket_area .ticket .comment span {
       color: #fff;
       display: inline-block;
       margin-left: 5px; }
 
-/* line 362, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 372, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .bottom_arrow img {
   height: 25px;
   width: 25px; }
 
-/* line 367, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 377, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 #search {
   width: 1140px;
   margin: 20px 0 0 10px; }
-  /* line 371, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 381, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   #search input.search_box {
     border: 0;
     padding: 10px;
@@ -366,15 +379,15 @@ input[type="checkbox"].on-off:checked + ol {
     box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
     -moz-box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
     -webkit-box-shadow: 0px 1px rgba(255, 255, 255, 0.5); }
-  /* line 384, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 394, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   #search input.search_box:focus {
     border: solid 1px #6cdb9b; }
-  /* line 388, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 398, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   #search span {
     color: #fff;
     font-size: 30px;
     font-family: 'Abel', sans-serif; }
-  /* line 393, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 403, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   #search .search_btn {
     border-bottom: 1px solid #fff;
     border-right: 1px solid #fff;
@@ -385,16 +398,16 @@ input[type="checkbox"].on-off:checked + ol {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px; }
-    /* line 402, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 412, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     #search .search_btn img {
       height: 20px;
       width: 20px;
       margin-left: 5px; }
-  /* line 409, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 419, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   #search .search_btn:hover {
     background: rgba(255, 255, 255, 0.1); }
 
-/* line 414, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 424, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .tab_input, .content {
   display: none;
   background: rgba(33, 40, 54, 0.7);
@@ -404,12 +417,12 @@ input[type="checkbox"].on-off:checked + ol {
   font: normal 1em/150% Sans-Serif;
   min-width: 200px; }
 
-/* line 424, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 434, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 #one:checked ~ .one,
 #two:checked ~ .two {
   display: block; }
 
-/* line 426, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 436, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 #tab_menu label {
   cursor: pointer;
   background: rgba(34, 54, 74, 0.5);
@@ -425,11 +438,11 @@ input[type="checkbox"].on-off:checked + ol {
   margin-right: -3px;
   transition: background 0.1s linear; }
 
-/* line 442, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 452, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 #tab_menu label:hover, #tab_menu input:checked + label {
   background: rgba(33, 40, 54, 0.7); }
 
-/* line 447, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 457, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid {
   width: 40px;
   height: 40px;
@@ -440,11 +453,11 @@ input[type="checkbox"].on-off:checked + ol {
   transform: translateY(-50%);
   margin: 0 auto; }
 
-/* line 457, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 467, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .side_inner .sk-cube-grid {
   top: 25%; }
 
-/* line 461, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 471, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube {
   width: 33%;
   height: 33%;
@@ -453,47 +466,47 @@ input[type="checkbox"].on-off:checked + ol {
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
   animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; }
 
-/* line 471, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 481, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube1 {
   -webkit-animation-delay: 0.2s;
   animation-delay: 0.2s; }
 
-/* line 474, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 484, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube2 {
   -webkit-animation-delay: 0.3s;
   animation-delay: 0.3s; }
 
-/* line 477, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 487, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube3 {
   -webkit-animation-delay: 0.4s;
   animation-delay: 0.4s; }
 
-/* line 480, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 490, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube4 {
   -webkit-animation-delay: 0.1s;
   animation-delay: 0.1s; }
 
-/* line 483, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 493, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube5 {
   -webkit-animation-delay: 0.2s;
   animation-delay: 0.2s; }
 
-/* line 486, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 496, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube6 {
   -webkit-animation-delay: 0.3s;
   animation-delay: 0.3s; }
 
-/* line 489, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 499, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube7 {
   -webkit-animation-delay: 0s;
   animation-delay: 0s; }
 
-/* line 492, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 502, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube8 {
   -webkit-animation-delay: 0.1s;
   animation-delay: 0.1s; }
 
-/* line 495, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+/* line 505, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
 .sk-cube-grid .sk-cube9 {
   -webkit-animation-delay: 0.2s;
   animation-delay: 0.2s; }
@@ -515,26 +528,26 @@ input[type="checkbox"].on-off:checked + ol {
     transform: scale3D(0, 0, 1); } }
 
 @media screen and (max-height: 800px) {
-  /* line 522, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 532, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .site_logo {
     height: 150px;
     width: 150px; }
-    /* line 526, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 536, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .site_logo img {
       height: 150px;
       width: 150px; }
-  /* line 531, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 541, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .side_title {
     font-size: 25px; }
-    /* line 534, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 544, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .side_title label img {
       height: 20px;
       width: 20px; }
-  /* line 543, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 553, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   #products input[type="checkbox"].on-off:checked + ol,
   #members input[type="checkbox"].on-off:checked + ol {
     height: 200px; }
-  /* line 551, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 561, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   #products .p_list li,
   #products .m_list li,
   #products .t_list li,
@@ -544,26 +557,26 @@ input[type="checkbox"].on-off:checked + ol {
     font-size: 16px; } }
 
 @media screen and (max-height: 670px) {
-  /* line 560, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 570, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .site_logo {
     height: 100px;
     width: 100px; }
-    /* line 564, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 574, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .site_logo img {
       height: 100px;
       width: 100px; }
-  /* line 569, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 579, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   .side_title {
     font-size: 18px; }
-    /* line 572, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+    /* line 582, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
     .side_title label img {
       height: 15px;
       width: 15px; }
-  /* line 581, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 591, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   #products input[type="checkbox"].on-off:checked + ol,
   #members input[type="checkbox"].on-off:checked + ol {
     height: 150px; }
-  /* line 589, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
+  /* line 599, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/css/style.scss */
   #products .p_list li,
   #products .m_list li,
   #products .t_list li,
