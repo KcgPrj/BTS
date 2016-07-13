@@ -67,6 +67,7 @@ body,html{
         min-height: 900px;
         border-right: 2px solid #333;
         background-color: rgba(69,76,83,0.7);
+        
         //サイドバー中身
         .side_inner{
             text-align: left;
@@ -507,4 +508,72 @@ input[type="checkbox"].on-off:checked + ol{
         -webkit-transform: scale3D(0, 0, 1);
         transform: scale3D(0, 0, 1);
     } 
+}
+
+//mediaquery
+
+@media screen and (max-height: 800px){
+    .site_logo{
+        height: 150px;
+        width: 150px;
+        
+        img{
+            height: 150px;
+            width: 150px;
+        }
+    }
+    .side_title{
+        font-size: 25px;
+    }
+    
+    #products,
+    #members{
+        
+        input[type="checkbox"].on-off:checked + ol{
+            height: 200px;
+        }
+        
+        .p_list,
+        .m_list,
+        .t_list{
+            
+            li{
+                font-size: 16px;
+            }
+
+        }
+    }
+}
+
+@media screen and (max-height: 670px){
+    .site_logo{
+        height: 100px;
+        width: 100px;
+
+        img{
+            height: 100px;
+            width: 100px;
+        }
+    }
+    .side_title{
+        font-size: 18px;
+    }
+
+    #products,
+    #members{
+
+        input[type="checkbox"].on-off:checked + ol{
+            height: 150px;
+        }
+
+        .p_list,
+        .m_list,
+        .t_list{
+
+            li{
+                font-size: 16px;
+            }
+
+        }
+    }
 }
