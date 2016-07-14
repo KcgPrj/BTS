@@ -2,9 +2,12 @@ package net.orekyuu.bts.service
 
 import net.orekyuu.bts.domain.AppUser
 import net.orekyuu.bts.domain.Team
+import net.orekyuu.bts.domain.TeamUserTable
 import net.orekyuu.bts.message.team.TeamInfo
+import net.orekyuu.bts.message.user.UserInfo
 import org.jetbrains.exposed.sql.SizedCollection
 import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 
 interface TeamService {
@@ -21,7 +24,7 @@ interface TeamService {
     /**
      * チームから脱退
      */
-    fun defectionTeam(teamId: String, defectionUser: AppUser): TeamInfo
+    fun defectionTeam(introduceUser: AppUser, teamId: String, defectionUser: AppUser): TeamInfo
 
     /**
      * チームIDからチームの情報を得る
@@ -31,7 +34,7 @@ interface TeamService {
     /**
      * チームIDからチームメンバーの一覧を得る
      */
-    fun showTeamMember(teamId: String, requestUser: AppUser): List<AppUser>
+    fun showTeamMember(teamId: String, requestUser: AppUser): List<UserInfo>
 }
 
 class TeamServiceImpl : TeamService {
@@ -53,16 +56,30 @@ class TeamServiceImpl : TeamService {
         val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         checkAuthority(team,introduceUser)
 
-        if (!team.member.any { it.id == joinUser.id }) {
-            val newMember = team.member.asSequence().plusElement(joinUser).toList()
-            team.member = SizedCollection(newMember)//memberの更新にかかる時間が重いのかと思ったが処理にかかる時間はは約1.4ms
+        //一度Listにコピー(無駄なinsertをさせないため)
+        val list = team.member.toMutableList()
+        //introduceUserはチームに含まれているか？
+        if (!list.any { it.id == introduceUser.id })
+            throw TeamAccessAuthorityNotException(introduceUser, team)
+
+        if (!list.any { it.id == joinUser.id }) {
+            TeamUserTable.insert {
+                it[TeamUserTable.team] = team.id
+                it[TeamUserTable.user] = joinUser.id
+            }
+            //新しいメンバーを追加
+            list += joinUser
         }
-        ofTeamInfo(team)
+        ofTeamInfo(team, list)
     }
 
-    override fun defectionTeam(teamId: String, defectionUser: AppUser): TeamInfo = transaction {
+    override fun defectionTeam(introduceUser: AppUser, teamId: String, defectionUser: AppUser): TeamInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
         val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
+
+        if (!team.member.any { it.id == introduceUser.id })
+            throw TeamAccessAuthorityNotException(introduceUser, team)
+
         if (!team.member.any { it.id == defectionUser.id })
             throw NotJoinTeamMemberException(defectionUser, team)
 
@@ -79,11 +96,11 @@ class TeamServiceImpl : TeamService {
         ofTeamInfo(team)
     }
 
-    override fun showTeamMember(teamId: String, requestUser: AppUser): List<AppUser> = transaction {
+    override fun showTeamMember(teamId: String, requestUser: AppUser): List<UserInfo> = transaction {
         logger.addLogger(StdOutSqlLogger())
         val team: Team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         checkAuthority(team,requestUser)
 
-        team.member.toList()
+        team.member.map { ofUserInfo(it) }.toList()
     }
 }

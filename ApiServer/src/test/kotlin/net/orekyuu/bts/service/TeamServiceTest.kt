@@ -101,7 +101,7 @@ class TeamServiceTest {
             assertThat(result.member.count()).isEqualTo(3)//0.01msとか
         }
         println("${time * 0.000001} ms ")
-        val result2 = teamService.defectionTeam(teamId, user3)
+        val result2 = teamService.defectionTeam(user1, teamId, user3)
         val time2 = measureNanoTime {
             assertThat(result2.member.count()).isEqualTo(2)//0.01msとか
         }
@@ -110,12 +110,12 @@ class TeamServiceTest {
 
     @Test(expected = NotJoinTeamMemberException::class)
     fun defectionTeamThrownNotJoinTeamMemberException() {
-        teamService.defectionTeam(teamInfo.teamId, user3)
+        teamService.defectionTeam(user1, teamInfo.teamId, user3)
     }
 
     @Test(expected = TeamNotFoundException::class)
     fun defectionTeamThrownTeamNotFoundException() {
-        teamService.defectionTeam("hogehoge", user3)
+        teamService.defectionTeam(user1, "hogehoge", user3)
     }
 
     @Test
