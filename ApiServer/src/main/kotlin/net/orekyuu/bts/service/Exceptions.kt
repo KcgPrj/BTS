@@ -27,6 +27,9 @@ class NotJoinTeamMemberException : NotFoundException {
     constructor(userId: Int, team: Team) : super("specified user[$userId] does not join team[id=${team.id},name=${team.teamName}]")
 }
 
+
+class IllegalOperationException(statusText: String) : ForbiddenException(statusText)
+
 /**
  * Teamへのアクセス権が必要なときに投げられる
  */

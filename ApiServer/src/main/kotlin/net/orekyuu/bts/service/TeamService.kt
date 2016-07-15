@@ -45,6 +45,7 @@ class TeamServiceImpl : TeamService {
 
             val team = Team.new(teamId) {
                 this.teamName = teamName
+                this.owner = user
             }
             team.member = SizedCollection(listOf(user))
             ofTeamInfo(team)
@@ -82,6 +83,11 @@ class TeamServiceImpl : TeamService {
 
         if (!team.member.any { it.id == defectionUser.id })
             throw NotJoinTeamMemberException(defectionUser, team)
+
+        //チームのオーナーは除外できない
+        val owner = team.owner
+        if (owner.id.equals(defectionUser.id))
+            throw IllegalOperationException("not possible to exclude the team owner[id=${owner.id},name=${owner.userName}] from the team[id=$$teamId,name=${team.teamName}]")
 
         val newMember = team.member.asSequence().filterNot { it.id == defectionUser.id }.toList()
         team.member = SizedCollection(newMember)

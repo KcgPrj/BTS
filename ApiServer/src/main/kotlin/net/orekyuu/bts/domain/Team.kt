@@ -7,11 +7,13 @@ import org.jetbrains.exposed.dao.IdTable
 
 object TeamTable : IdTable<String>("team") {
     override val id = varchar("team_id", 100).primaryKey().entityId()
+    val owner = reference("owner", AppUserTable)
     val teamName = varchar("teamName", 100)
 }
 
 class Team(id: EntityID<String>): Entity<String>(id) {
     companion object: EntityClass<String, Team>(TeamTable)
     var teamName by TeamTable.teamName
+    var owner by AppUser.referencedOn(TeamTable.owner)
     var member by AppUser via TeamUserTable
 }
