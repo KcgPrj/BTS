@@ -18,7 +18,8 @@ fun ofTeamInfo(team: Team, member: Iterable<AppUser> = team.member): TeamInfo {
             teamId = team.id.value,
             teamName = team.teamName,
             product = teamProduct.map { ofSimpleProductInfo(it) }.toList(),
-            member = member.map { ofUserInfo(it) }.toList()
+            member = member.map { ofUserInfo(it) }.toList(),
+            owner = ofUserInfo(team.owner)
     )
 }
 

@@ -64,6 +64,7 @@ class TeamServiceTest {
         }
         println("${time * 0.000001}ms")
         assertThat(result.product.count()).isEqualTo(0)
+        assertThat(result.owner.id).isEqualTo(user1.id.value)
     }
 
     @Test
@@ -116,6 +117,11 @@ class TeamServiceTest {
     @Test(expected = TeamNotFoundException::class)
     fun defectionTeamThrownTeamNotFoundException() {
         teamService.defectionTeam(user1, "hogehoge", user3)
+    }
+
+    @Test(expected = IllegalOperationException::class)
+    fun defectionTeamThrownIllegalOperationException() {
+        teamService.defectionTeam(user1, teamInfo.teamId, user1)
     }
 
     @Test
