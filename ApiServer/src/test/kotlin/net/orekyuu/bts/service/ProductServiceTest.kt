@@ -8,6 +8,7 @@ import net.orekyuu.bts.message.team.TeamInfo
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.After
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -113,9 +114,32 @@ class ProductServiceTest {
         assert(result2.size == 2)
     }
 
+    @Test
+    fun showProduct() {
+        val teamInfo = teamService.createTeam(user1, "showProduct", "name")
+        val name = "name"
+        val result = productService.registerToTeam(user1, teamInfo.teamId, name)
+        val result2 = productService.showProduct(user1, result.product[0].productId)
+        assertThat(result2.productId).isEqualTo(result.product[0].productId)
+    }
+
+    @Test(expected = ProductNotFoundException::class)
+    fun showProductThrownProductNotFoundException() {
+        productService.showProduct(user1, 0)
+    }
+
+    @Test(expected = TeamAccessAuthorityNotException::class)
+    fun showProductThrownTeamAccessAuthorityNotException() {
+        val teamInfo = teamService.createTeam(user1, "showProduct", "name")
+        val result = productService.registerToTeam(user1, teamInfo.teamId, "")
+        productService.showProduct(user2,result.product[0].productId)
+    }
+
     @Test(expected = TeamNotFoundException::class)
     fun showProductInfoThrownTeamNotFoundException() {
-        productService.showProductsFromTeam(user1, "hogehoge")
+        val teamInfo = teamService.createTeam(user1, "showProductInfoThrownTeamNotFoundException", "name")
+        productService.registerToTeam(user1, teamInfo.teamId, "hoge")
+        productService.showProductsFromTeam(user2, "hogehoge")
     }
 
     @Test(expected = TeamAccessAuthorityNotException::class)

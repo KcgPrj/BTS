@@ -1,14 +1,11 @@
 package net.orekyuu.bts.api.user
 
-import net.orekyuu.bts.message.product.ProductInfo
-import net.orekyuu.bts.message.product.SimpleProductInfo
-import net.orekyuu.bts.message.user.UserInfo
+import net.orekyuu.bts.message.product.*
+import net.orekyuu.bts.message.team.TeamInfo
 import net.orekyuu.bts.service.AppUserService
 import net.orekyuu.bts.service.ProductService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/{teamId}/products")
@@ -27,7 +24,33 @@ class ProductApiController {
     }
 
     @RequestMapping("/show/{id}")
-    fun showProduct(): ProductInfo {
-        //TODO
+    fun showProduct(@PathVariable("teamId") teamId: String, @PathVariable("id") id: Int): ProductInfo {
+        val user = appUserService.findAppUserFromSecurityContext()!!
+        return productService.showProduct(user, id)
     }
+
+    @RequestMapping("/create", method = arrayOf(RequestMethod.POST))
+    fun createProduct(@PathVariable("teamId") teamId: String, @RequestBody req: CreateProductRequest): TeamInfo {
+        val user = appUserService.findAppUserFromSecurityContext()!!
+        return productService.registerToTeam(user, teamId, req.productName)
+    }
+
+    @RequestMapping("/delete", method = arrayOf(RequestMethod.DELETE))
+    fun deleteProduct(@PathVariable("teamId") teamId: String, @RequestBody req: DeleteProductRequest): TeamInfo {
+        val user = appUserService.findAppUserFromSecurityContext()!!
+        return productService.deleteFromTeam(user, teamId, req.productId)
+    }
+
+    @RequestMapping("/modify", method = arrayOf(RequestMethod.POST))
+    fun modify(@PathVariable("teamId") teamId: String, @RequestBody req: ModifyProductRequest): ProductInfo {
+        val user = appUserService.findAppUserFromSecurityContext()!!
+        return productService.modifyProductName(user, teamId, req.productId, req.newName)
+    }
+
+    @RequestMapping("token/regenerate", method = arrayOf(RequestMethod.POST))
+    fun tokenRegenerate(@PathVariable("teamId") teamId: String, @RequestBody req: RegenerateTokenRequest): ProductInfo {
+        val user = appUserService.findAppUserFromSecurityContext()!!
+        return productService.regenerateProductToken(user, teamId, req.productId)
+    }
+
 }

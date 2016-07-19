@@ -26,6 +26,11 @@ interface ProductService {
     fun showProductsFromTeam(requestUser: AppUser, teamId: String): List<SimpleProductInfo>
 
     /**
+     * プロダクトを取得
+     */
+    fun showProduct(requestUser: AppUser, productId: Int): ProductInfo
+
+    /**
      *  プロダクトの名前を変更
      */
     fun modifyProductName(requestUser: AppUser, teamId: String, productId: Int, productName: String): ProductInfo
@@ -66,6 +71,14 @@ class ProductServiceImpl : ProductService {
         products.asSequence().map { ofSimpleProductInfo(it) }.toList()
     }
 
+    override fun showProduct(requestUser: AppUser, productId: Int): ProductInfo = transaction {
+        logger.addLogger(StdOutSqlLogger())
+        val product = Product.findById(productId) ?: throw ProductNotFoundException(productId)
+        val team = product.team
+        checkAuthority(team,requestUser)
+        ofProductInfo(product)
+    }
+
     override fun modifyProductName(requestUser: AppUser, teamId: String,
                                    productId: Int, productName: String): ProductInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
@@ -84,4 +97,5 @@ class ProductServiceImpl : ProductService {
         product.productToken = UUID.randomUUID()
         ofProductInfo(product)
     }
+
 }
