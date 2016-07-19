@@ -1,0 +1,3 @@
+node_modules/
+*.tern-project
+public/assets/app.js
