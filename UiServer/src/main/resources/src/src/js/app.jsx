@@ -8,8 +8,8 @@ import {createHistory} from 'history';
 
 import reducers from './reducers/reducers.js';
 
-import {Root} from './components/pages/root.jsx';
-import {SelectTeam} from './components/pages/select_team.jsx';
+import {Root} from './components/routes/root.jsx';
+import {SelectTeam} from './components/routes/select_team.jsx';
 
 const store = createStore(
     combineReducers({
