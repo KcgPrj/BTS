@@ -45,9 +45,9 @@ class ReportServiceTest {
 
     private lateinit var team: TeamInfo
 
-    private lateinit var product1: ProductInfo
-    private lateinit var product2: ProductInfo
-    private lateinit var product3: ProductInfo
+    private lateinit var product1: SimpleProductInfo
+    private lateinit var product2: SimpleProductInfo
+    private lateinit var product3: SimpleProductInfo
     private lateinit var reportModel: ReportInfo
 
     @Before
