@@ -162,7 +162,7 @@ class ProductApiControllerTest {
             "newName" : "$newName"
         }
         """
-        mock.perform(post("$productApiUrl/modify", teamInfo.teamId)
+        mock.perform(post("$productApiUrl/update", teamInfo.teamId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(modifyReq)).andExpect(status().isOk)
         val result = productService.showProduct(user1, product.productId)
@@ -172,25 +172,18 @@ class ProductApiControllerTest {
     @Test
     fun tokenRegenerate() {
         mockSecurity.enableGithubMock(user1.userName)
-        val createReq = """
-        {"productName" : "name"}
-        """
-        mock.perform(post("$productApiUrl/create", teamInfo.teamId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(createReq)).andExpect(status().isOk)
-
-        val product = teamService.showTeamInfo(teamInfo.teamId, user1).product[0]
+        val product = productService.registerToTeam(user1, teamInfo.teamId, "hoge").product[0]
 
         val regenerateReq = """
         {
             "productId" : ${product.productId}
         }
         """
+        mock.perform(post("$productApiUrl/token/regenerate", teamInfo.teamId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(regenerateReq)).andExpect(status().isOk)
 
-        mock.perform(post("$productApiUrl/token/regenerate",teamInfo.teamId)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(regenerateReq)).andExpect(status().isOk)
-        val result = productService.showProduct(user1,product.productId)
+        val result = productService.showProduct(user1, product.productId)
         assertThat(result.token).isNotEqualTo(product.token)
     }
 

@@ -41,8 +41,8 @@ class ProductApiController {
         return productService.deleteFromTeam(user, teamId, req.productId)
     }
 
-    @RequestMapping("/modify", method = arrayOf(RequestMethod.POST))
-    fun modify(@PathVariable("teamId") teamId: String, @RequestBody req: ModifyProductRequest): ProductInfo {
+    @RequestMapping("/update", method = arrayOf(RequestMethod.POST))
+    fun update(@PathVariable("teamId") teamId: String, @RequestBody req: ModifyProductRequest): ProductInfo {
         val user = appUserService.findAppUserFromSecurityContext()!!
         return productService.modifyProductName(user, teamId, req.productId, req.newName)
     }
