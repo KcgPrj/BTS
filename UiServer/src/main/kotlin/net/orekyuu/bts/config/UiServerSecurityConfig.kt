@@ -38,7 +38,7 @@ open class UiServerSecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity?) {
         http!!.authorizeRequests()
-                .antMatchers("/login**", "/ico/favicon.ico", "/webjars/**", "/error/**", "/css/**", "/img/**").permitAll()
+                .antMatchers("/login**", "/ico/favicon.ico", "/webjars/**", "/error/**", "/assets/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(LoginUrlAuthenticationEntryPoint("/"))
                 .and().logout().logoutSuccessUrl("/").permitAll()
