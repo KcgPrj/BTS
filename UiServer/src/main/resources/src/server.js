@@ -14,7 +14,11 @@ var server = new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     hot: true,
     contentBase: '../static/',
-    historyApiFallback: true
+    historyApiFallback: {
+        rewrites: [
+            {from: /react_index.html\/(.*)$/, to: "react_index.html"}
+        ]
+    }
 });
 
 server.use('/', function (request, response) {
