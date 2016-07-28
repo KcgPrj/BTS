@@ -6,40 +6,28 @@
 * {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box; }
+  -webkit-box-sizing: border-box;
+}
 
-/*縦幅100%*/
-/* line 30, login_main.scss */
-body, html {
-  height: 100%;
+/* line 27, login_main.scss */
+html,
+body {
+  padding: 0;
   margin: 0;
-  padding: 0; }
+  height: 100%;
+}
 
+/*link*/
 /* line 35, login_main.scss */
-a:link {
-  color: #fff;
-  text-decoration: none;
-  font-family: 'Oswald', sans-serif; }
-
-/* line 36, login_main.scss */
-a:visited {
-  color: #fff;
-  text-decoration: none;
-  font-family: 'Oswald', sans-serif; }
-
-/* line 37, login_main.scss */
-a:hover {
-  color: #fff;
-  text-decoration: none;
-  font-family: 'Oswald', sans-serif; }
-
-/* line 38, login_main.scss */
+a:link,
+a:visited,
+a:hover,
 a:active {
-  color: #fff;
-  text-decoration: none;
-  font-family: 'Oswald', sans-serif; }
+  font-family: 'Oswald', sans-serif;
+}
 
-/* line 40, login_main.scss */
+/*background*/
+/* line 41, login_main.scss */
 div#bg-image {
   background-image: url(../img/Polygon_bg.png);
   background-position: center center;
@@ -47,23 +35,10 @@ div#bg-image {
   background-attachment: fixed;
   background-size: cover;
   background-color: #464646;
-  /*背景ぼかし*/
-  height: 100%;
-  width: 100%; }
-
-/* line 54, login_main.scss */
-div#bg-image:before {
-  /* 透過した黒を重ねる */
-  /* どの範囲に重ねるかを指定 */
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  content: ' '; }
+}
 
 /*フォーム本体*/
-/* line 68, login_main.scss */
+/* line 54, login_main.scss */
 #login_form {
   margin: -300px 0 0 0;
   top: 50%;
@@ -72,39 +47,58 @@ div#bg-image:before {
   right: 0;
   height: 350px;
   width: 100%;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  /*サイトロゴ*/ }
-  /* line 76, login_main.scss */
-  #login_form .sitelogo {
-    height: 200px;
-    width: 200px;
-    border-radius: 100px;
-    -moz-border-radius: 100px;
-    -webkit-border-radius: 100px;
-    top: 0px;
-    left: 50%;
-    bottom: 0;
-    right: 0;
-    background-image: url(../img/site_logo.png);
-    margin-left: -100px; }
-  /* line 85, login_main.scss */
-  #login_form #login_github .git_area {
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-    margin-top: 230px;
-    height: 73px;
-    width: 100%; }
-    /* line 86, login_main.scss */
-    #login_form #login_github .git_area img {
-      display: block;
-      margin: 0 auto; }
-  /* line 97, login_main.scss */
-  #login_form #signup {
-    color: #fff;
-    margin-top: 15px;
-    padding-top: 5px;
-    width: 100%;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.6); }
+  /*サイトロゴ*/
+}
+/* line 60, login_main.scss */
+#login_form .sitelogo {
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  top: 0px;
+  left: 50%;
+  bottom: 0;
+  right: 0;
+  background-image: url(../img/site_logo.png);
+  margin-left: -100px;
+}
+/* line 68, login_main.scss */
+#login_form .git_area {
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  height: 73px;
+  width: 100%;
+}
+/* line 73, login_main.scss */
+#login_form .git_area a,
+#login_form .git_area a:before,
+#login_form .git_area img {
+  height: 53px;
+  width: 305px;
+  display: block;
+  margin: 0 auto;
+}
+/* line 81, login_main.scss */
+#login_form .git_area a:before {
+  position: absolute;
+  margin-top: 10px;
+  content: ' ';
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  transition: 0.05s;
+  -moz-transition: 0.05s;
+  -webkit-transition: 0.05s;
+}
+/* line 89, login_main.scss */
+#login_form .git_area a:hover:before {
+  background: rgba(255, 255, 255, 0.3);
+}
+/* line 94, login_main.scss */
+#login_form #signup {
+  color: #fff;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+}

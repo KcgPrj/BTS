@@ -28,10 +28,7 @@ $set-prefix: '' , -moz- , -webkit-;
 *{
     @include setPrefix(box-sizing, border-box);
 }
-a:link { color:#fff; text-decoration:none }
-a:visited { color:#fff; text-decoration:none }
-a:hover { color:#fff; text-decoration:none }
-a:active { color:#fff; text-decoration:none }
+
 
 body,html{
     @include size(100%,100%);
