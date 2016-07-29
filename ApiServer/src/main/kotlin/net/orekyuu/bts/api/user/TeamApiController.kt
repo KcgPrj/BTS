@@ -20,19 +20,19 @@ class TeamApiController {
     @Autowired
     lateinit var appUserService: AppUserService
 
-    @RequestMapping(value = "/show", method = arrayOf(RequestMethod.GET))
+    @GetMapping(value = "/show")
     fun showTeam(@RequestParam("teamId") teamId: String): TeamInfo {
         val user = appUserService.findAppUserFromSecurityContext()
         return teamService.showTeamInfo(teamId, user!!)
     }
 
-    @RequestMapping(value = "/member/show", method = arrayOf(RequestMethod.GET))
+    @GetMapping(value = "/member/show")
     fun showMember(@RequestParam("teamId") teamId: String): List<UserInfo> {
         val user = appUserService.findAppUserFromSecurityContext()
         return teamService.showTeamMember(teamId, user!!)
     }
 
-    @RequestMapping(value = "/create", method = arrayOf(RequestMethod.POST), consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE))
+    @PostMapping(value = "/create")
     fun createTeam(@RequestBody req: CreateTeamRequest): TeamInfo {
         val user = appUserService.findAppUserFromSecurityContext()
         return teamService.createTeam(
