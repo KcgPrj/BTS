@@ -17,37 +17,37 @@ class ProductApiController {
     @Autowired
     lateinit var productService: ProductService
 
-    @RequestMapping("/show")
+    @GetMapping("/show")
     fun showProducts(@PathVariable("teamId") teamId: String): List<SimpleProductInfo> {
         val user = appUserService.findAppUserFromSecurityContext()!!
         return productService.showProductsFromTeam(user, teamId)
     }
 
-    @RequestMapping("/show/{id}")
+    @GetMapping("/show/{id}")
     fun showProduct(@PathVariable("teamId") teamId: String, @PathVariable("id") id: Int): ProductInfo {
         val user = appUserService.findAppUserFromSecurityContext()!!
         return productService.showProduct(user, id)
     }
 
-    @RequestMapping("/create", method = arrayOf(RequestMethod.POST))
+    @PostMapping("/create")
     fun createProduct(@PathVariable("teamId") teamId: String, @RequestBody req: CreateProductRequest): TeamInfo {
         val user = appUserService.findAppUserFromSecurityContext()!!
         return productService.registerToTeam(user, teamId, req.productName)
     }
 
-    @RequestMapping("/delete", method = arrayOf(RequestMethod.DELETE))
+    @DeleteMapping("/delete")
     fun deleteProduct(@PathVariable("teamId") teamId: String, @RequestBody req: DeleteProductRequest): TeamInfo {
         val user = appUserService.findAppUserFromSecurityContext()!!
         return productService.deleteFromTeam(user, teamId, req.productId)
     }
 
-    @RequestMapping("/update", method = arrayOf(RequestMethod.POST))
+    @PostMapping("/update")
     fun update(@PathVariable("teamId") teamId: String, @RequestBody req: ModifyProductRequest): ProductInfo {
         val user = appUserService.findAppUserFromSecurityContext()!!
         return productService.modifyProductName(user, teamId, req.productId, req.newName)
     }
 
-    @RequestMapping("token/regenerate", method = arrayOf(RequestMethod.POST))
+    @PostMapping("token/regenerate")
     fun tokenRegenerate(@PathVariable("teamId") teamId: String, @RequestBody req: RegenerateTokenRequest): ProductInfo {
         val user = appUserService.findAppUserFromSecurityContext()!!
         return productService.regenerateProductToken(user, teamId, req.productId)

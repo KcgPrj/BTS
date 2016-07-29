@@ -73,7 +73,7 @@ open class UiServerSecurityConfig : WebSecurityConfigurerAdapter() {
     @Bean
     open fun oauth2ClientFilterRegistration(filter: OAuth2ClientContextFilter): FilterRegistrationBean {
         val registration = FilterRegistrationBean()
-        registration.setFilter(filter)
+        registration.filter = filter
         registration.order = -100
         return registration
     }

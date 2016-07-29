@@ -1,15 +1,12 @@
 package net.orekyuu.bts.service
 
-import net.orekyuu.bts.ApiServerApplication
-import net.orekyuu.bts.config.BTSResourceServerConfigurer
 import net.orekyuu.bts.config.BtsApplicationConfig
 import net.orekyuu.bts.domain.AppUser
-import net.orekyuu.bts.message.product.ProductInfo
 import net.orekyuu.bts.message.product.SimpleProductInfo
 import net.orekyuu.bts.message.report.ReportInfo
 import net.orekyuu.bts.message.team.TeamInfo
 import net.orekyuu.bts.message.user.UserInfo
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.After
@@ -17,14 +14,12 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import org.springframework.test.context.web.WebAppConfiguration
 import java.util.*
 
 @RunWith(SpringJUnit4ClassRunner::class)
-@SpringApplicationConfiguration(classes = arrayOf(ApiServerApplication::class, BtsApplicationConfig::class, BTSResourceServerConfigurer::class))
-@WebAppConfiguration
+@SpringBootTest
 class ReportServiceTest {
 
     @Autowired

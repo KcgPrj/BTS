@@ -14,7 +14,7 @@ class CreateUserController {
     @Autowired
     lateinit var userService: UserService
 
-    @RequestMapping(value = "/github", method = arrayOf(RequestMethod.POST))
+    @PostMapping(value = "/github")
     fun createGithubUser(@RequestBody message: CreateUserMessage): UserInfo {
         val user = userService.createAppUserFromGithub(message.userId)
         return UserInfo(user.id.value, user.userName, UserType.GITHUB)
