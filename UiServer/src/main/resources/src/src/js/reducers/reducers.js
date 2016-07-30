@@ -1,7 +1,7 @@
-import selectTeamPage from './select_team_page.js';
+import currentPage from './current_page.js';
 
 const reducers = {
-    selectTeamPage,
+    currentPage,
 };
 
 export default reducers;
