@@ -95,6 +95,21 @@ abstract class AbstractSuccessHandler(
             super.handle(request, response, authentication)
             return
         }
+        //ログインしたらトップページへリダイレクト
+        response.sendRedirect("/top")
+
+        //Cookieを保存する前にhandleを呼ばないと保存されない
+        super.handle(request, response, authentication)
+    }
+
+    override fun onAuthenticationSuccess(request: HttpServletRequest?, response: HttpServletResponse?, authentication: Authentication?) {
+        logger.info("onAuthenticationSuccess")
+
+        if(response == null || authentication == null) {
+            logger.warn("response or authentication is null [response=$response, authentication=$authentication]")
+            super.onAuthenticationSuccess(request, response, authentication)
+            return
+        }
 
         val userInfo: UserInfo
         try {
@@ -103,9 +118,11 @@ abstract class AbstractSuccessHandler(
         } catch(e: HttpServerErrorException) {
             //500エラーならユーザーが見つからなかったので新しく作成
             if(e.statusCode.is5xxServerError) {
+                logger.info("User not found")
                 val url = "http://localhost:18080/open/user/create/${endpointPostfix(userType)}"
                 val name = authentication.name
                 userInfo = restTemplate.postForEntity(url, CreateUserMessage(name), UserInfo::class.java).body
+                logger.info("User created")
             } else {
                 //その他のエラーは想定していないのでスタックトレースを出してスロー
                 e.printStackTrace()
@@ -119,11 +136,7 @@ abstract class AbstractSuccessHandler(
         response.addCookie(createCookie("user_id", userInfo.id.toString()))
         response.addCookie(createCookie("user_name", userInfo.name))
 
-        //ログインしたらトップページへリダイレクト
-        response.sendRedirect("/top")
-
-        //Cookieを保存する前にhandleを呼ばないと保存されない
-        super.handle(request, response, authentication)
+        super.onAuthenticationSuccess(request, response, authentication)
     }
 
     fun createCookie(name: String, value: String) = Cookie(name, value).apply { path = "/" }
