@@ -1,9 +1,6 @@
 package net.orekyuu.bts.api.user
 
-import net.orekyuu.bts.message.team.CreateTeamRequest
-import net.orekyuu.bts.message.team.DefectionMemberRequest
-import net.orekyuu.bts.message.team.JoinMemberRequest
-import net.orekyuu.bts.message.team.TeamInfo
+import net.orekyuu.bts.message.team.*
 import net.orekyuu.bts.message.user.UserInfo
 import net.orekyuu.bts.service.AppUserService
 import net.orekyuu.bts.service.TeamService
@@ -24,6 +21,12 @@ class TeamApiController {
     fun showTeam(@RequestParam("teamId") teamId: String): TeamInfo {
         val user = appUserService.findAppUserFromSecurityContext()
         return teamService.showTeamInfo(teamId, user!!)
+    }
+
+    @GetMapping(value = "/show/all")
+    fun showTeamList(): List<SimpleTeamInfo> {
+        val user = appUserService.findAppUserFromSecurityContext()
+        return teamService.showTeamListFromUser(user!!)
     }
 
     @GetMapping(value = "/member/show")

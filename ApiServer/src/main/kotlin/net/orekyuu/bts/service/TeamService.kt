@@ -1,13 +1,13 @@
 package net.orekyuu.bts.service
 
-import net.orekyuu.bts.domain.AppUser
-import net.orekyuu.bts.domain.Team
-import net.orekyuu.bts.domain.TeamUserTable
+import net.orekyuu.bts.domain.*
+import net.orekyuu.bts.message.team.SimpleTeamInfo
 import net.orekyuu.bts.message.team.TeamInfo
 import net.orekyuu.bts.message.user.UserInfo
 import org.jetbrains.exposed.sql.SizedCollection
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 interface TeamService {
@@ -35,9 +35,26 @@ interface TeamService {
      * チームIDからチームメンバーの一覧を得る
      */
     fun showTeamMember(teamId: String, requestUser: AppUser): List<UserInfo>
+
+    /**
+     * ユーザーが参加しているチームのリストを返します
+     */
+    fun showTeamListFromUser(requestUser: AppUser): List<SimpleTeamInfo>
 }
 
 class TeamServiceImpl : TeamService {
+
+    override fun showTeamListFromUser(requestUser: AppUser) = transaction {
+        logger.addLogger(StdOutSqlLogger())
+        val teamList =  TeamTable.innerJoin(TeamUserTable).select { TeamUserTable.user.eq(requestUser.id) }.map {
+            val teamId = it[TeamTable.id]
+            SimpleTeamInfo(
+                    teamId = teamId.value,
+                    teamName = it[TeamTable.teamName]
+            )
+        }
+        teamList
+    }
 
     override fun createTeam(user: AppUser, teamId: String, teamName: String): TeamInfo {
         return transaction {

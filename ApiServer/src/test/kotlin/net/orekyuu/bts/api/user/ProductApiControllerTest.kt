@@ -1,6 +1,7 @@
 package net.orekyuu.bts.api.user
 
 import net.orekyuu.bts.api.user.util.MockOAuth2Util
+import net.orekyuu.bts.api.user.util.printInfo
 import net.orekyuu.bts.config.BtsApplicationConfig
 import net.orekyuu.bts.domain.AppUser
 import net.orekyuu.bts.message.team.TeamInfo
@@ -76,10 +77,14 @@ class ProductApiControllerTest {
         """
         mock.perform(post("$productApiUrl/create", teamInfo.teamId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(createReq)).andExpect(status().isOk)
+                .content(createReq))
+                .andExpect(status().isOk)
 
-        mock.perform(get("$productApiUrl/show", teamInfo.teamId)).andExpect(status().isOk)
-        mock.perform(get("$productApiUrl/show", "hoge")).andExpect(status().isNotFound)
+        mock.perform(get("$productApiUrl/show", teamInfo.teamId))
+                .andDo(::printInfo)
+                .andExpect(status().isOk)
+        mock.perform(get("$productApiUrl/show", "hoge"))
+                .andExpect(status().isNotFound)
     }
 
     @Test
@@ -90,10 +95,13 @@ class ProductApiControllerTest {
         """
         mock.perform(post("$productApiUrl/create", teamInfo.teamId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(createReq)).andExpect(status().isOk)
+                .content(createReq))
+                .andExpect(status().isOk)
         val product = teamService.showTeamInfo(teamInfo.teamId, user1).product[0]
 
-        mock.perform(get("$productApiUrl/show/{id}", teamInfo.teamId, product.productId)).andExpect(status().isOk)
+        mock.perform(get("$productApiUrl/show/{id}", teamInfo.teamId, product.productId))
+                .andDo(::printInfo)
+                .andExpect(status().isOk)
         mock.perform(get("$productApiUrl/show/{id}", teamInfo.teamId, 1010)).andExpect(status().isNotFound)
     }
 
@@ -105,7 +113,8 @@ class ProductApiControllerTest {
         """
         mock.perform(post("$productApiUrl/create", teamInfo.teamId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(createReq)).andExpect(status().isOk)
+                .content(createReq))
+                .andExpect(status().isOk)
 
         val products = teamService.showTeamInfo(teamInfo.teamId, user1).product
 
@@ -114,7 +123,9 @@ class ProductApiControllerTest {
 
         mock.perform(post("$productApiUrl/create", "hoge")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(createReq)).andExpect(status().isNotFound)
+                .content(createReq))
+                .andDo(::printInfo)
+                .andExpect(status().isNotFound)
     }
 
     @Test
@@ -125,7 +136,8 @@ class ProductApiControllerTest {
         """
         mock.perform(post("$productApiUrl/create", teamInfo.teamId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(createReq)).andExpect(status().isOk)
+                .content(createReq))
+                .andExpect(status().isOk)
 
         val product = teamService.showTeamInfo(teamInfo.teamId, user1).product[0]
         val deleteReq = """
@@ -134,7 +146,9 @@ class ProductApiControllerTest {
 
         mock.perform(delete("$productApiUrl/delete", teamInfo.teamId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(deleteReq)).andExpect(status().isOk)
+                .content(deleteReq))
+                .andDo(::printInfo)
+                .andExpect(status().isOk)
 
         val teamProducts = teamService.showTeamInfo(teamInfo.teamId, user1).product
         assertThat(teamProducts.size).isEqualTo(0)
@@ -148,7 +162,8 @@ class ProductApiControllerTest {
         """
         mock.perform(post("$productApiUrl/create", teamInfo.teamId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(createReq)).andExpect(status().isOk)
+                .content(createReq))
+                .andExpect(status().isOk)
 
         val product = teamService.showTeamInfo(teamInfo.teamId, user1).product[0]
         val newName = "newName"
@@ -160,7 +175,9 @@ class ProductApiControllerTest {
         """
         mock.perform(post("$productApiUrl/update", teamInfo.teamId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(modifyReq)).andExpect(status().isOk)
+                .content(modifyReq))
+                .andDo(::printInfo)
+                .andExpect(status().isOk)
         val result = productService.showProduct(user1, product.productId)
         assertThat(result.productName).isEqualTo(newName)
     }
@@ -177,7 +194,9 @@ class ProductApiControllerTest {
         """
         mock.perform(post("$productApiUrl/token/regenerate", teamInfo.teamId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(regenerateReq)).andExpect(status().isOk)
+                .content(regenerateReq))
+                .andDo(::printInfo)
+                .andExpect(status().isOk)
 
         val result = productService.showProduct(user1, product.productId)
         assertThat(result.token).isNotEqualTo(product.token)
