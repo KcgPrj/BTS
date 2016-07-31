@@ -2,11 +2,14 @@ package net.orekyuu.bts.api.user
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.orekyuu.bts.api.user.util.MockOAuth2Util
+import net.orekyuu.bts.api.user.util.printInfo
 import net.orekyuu.bts.config.BtsApplicationConfig
 import net.orekyuu.bts.domain.AppUser
 import net.orekyuu.bts.service.TeamService
 import net.orekyuu.bts.service.UserService
 import org.assertj.core.api.Assertions.assertThat
+import org.hamcrest.Matcher
+import org.hamcrest.Matchers
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.After
@@ -22,6 +25,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.hamcrest.Matchers.*
 
 @RunWith(SpringJUnit4ClassRunner::class)
 @SpringBootTest
@@ -72,6 +77,7 @@ class TeamApiControllerTest {
 
         teamService.createTeam(user1, "test", "test")
         mock.perform(MockMvcRequestBuilders.get("/team/show").param("teamId", "test"))
+                .andDo(::printInfo)
                 .andExpect(status().isOk)
 
         mock.perform(MockMvcRequestBuilders.get("/team/show").param("teamId", "test2"))
@@ -85,6 +91,7 @@ class TeamApiControllerTest {
         teamService.createTeam(user1, "test", "test")
 
         mock.perform(MockMvcRequestBuilders.get("/team/member/show").param("teamId", "test"))
+                .andDo(::printInfo)
                 .andExpect(status().isOk)
     }
 
@@ -97,7 +104,9 @@ class TeamApiControllerTest {
         """
 
         mock.perform(MockMvcRequestBuilders.post("/team/create").contentType(MediaType.APPLICATION_JSON)
-                .content(req)).andExpect(status().isOk)
+                .content(req))
+                .andDo(::printInfo)
+                .andExpect(status().isOk)
 
         val team = teamService.showTeamInfo("test", user1)
         assertThat(team).isNotNull()
@@ -117,7 +126,9 @@ class TeamApiControllerTest {
         """
 
         mock.perform(MockMvcRequestBuilders.post("/team/member/join").contentType(MediaType.APPLICATION_JSON)
-                .content(req)).andExpect(status().isOk)
+                .content(req))
+                .andDo(::printInfo)
+                .andExpect(status().isOk)
 
         val member = teamService.showTeamMember("team1", user1)
         assertThat(member.size).isEqualTo(2)
@@ -134,11 +145,34 @@ class TeamApiControllerTest {
         { "teamId": "team1", "userId": "${user2.id.value}"}
         """
         mock.perform(MockMvcRequestBuilders.post("/team/member/defection").contentType(MediaType.APPLICATION_JSON)
-                .content(req)).andExpect(status().isOk)
+                .content(req))
+                .andDo(::printInfo)
+                .andExpect(status().isOk)
 
         val member = teamService.showTeamMember("team1", user1)
         assertThat(member.size).isEqualTo(1)
         assertThat(member[0].id).isEqualTo(user1.id.value)
+    }
+
+    @Test
+    fun showTeamList() {
+        //Team1はuser1とuser2が参加
+        teamService.createTeam(user1, "team1", "team1")
+        teamService.joinTeam(user1, "team1", user2)
+
+        //Team2はuser2のみ参加
+        teamService.createTeam(user2, "team2", "team2")
+
+        mockSecurity.enableGithubMock("user1")
+        mock.perform(MockMvcRequestBuilders.get("/team/show/all"))
+                .andDo(::printInfo)
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$", hasSize<Any>(1)))
+
+        mockSecurity.enableGithubMock("user2")
+        mock.perform(MockMvcRequestBuilders.get("/team/show/all"))
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$", hasSize<Any>(2)))
     }
 
 }

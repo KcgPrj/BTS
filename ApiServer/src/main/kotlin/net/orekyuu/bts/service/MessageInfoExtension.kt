@@ -23,6 +23,11 @@ fun ofTeamInfo(team: Team, member: Iterable<AppUser> = team.member): TeamInfo {
     )
 }
 
+fun ofSimpleTeamInfo(team: Team) = TeamInfo(
+        teamId = team.id.value,
+        teamName = team.teamName
+)
+
 fun ofUserInfo(user: AppUser): UserInfo {
     return UserInfo(user.id.value, user.userName)
 }

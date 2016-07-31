@@ -10,3 +10,8 @@ class TeamInfo(
         var member: List<UserInfo> = emptyList(),
         var product: List<SimpleProductInfo> = emptyList()
 )
+
+class SimpleTeamInfo(
+        var teamId: String = "",
+        var teamName: String = ""
+)
