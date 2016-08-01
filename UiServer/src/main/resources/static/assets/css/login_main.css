@@ -1,44 +1,40 @@
 @charset "UTF-8";
 /*@Mixin*/
 /*All content*/
-/* line 23, login_main.scss */
+/* line 24, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
 *::before,
 * {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
+  -webkit-box-sizing: border-box; }
 
-/* line 27, login_main.scss */
+/* line 28, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
 html,
 body {
   padding: 0;
   margin: 0;
-  height: 100%;
-}
+  height: 100%; }
 
 /*link*/
-/* line 35, login_main.scss */
+/* line 38, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
 a:link,
 a:visited,
 a:hover,
 a:active {
-  font-family: 'Oswald', sans-serif;
-}
+  font-family: 'Oswald', sans-serif; }
 
 /*background*/
-/* line 41, login_main.scss */
+/* line 41, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
 div#bg-image {
   background-image: url(../img/Polygon_bg.png);
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  background-color: #464646;
-}
+  background-color: #464646; }
 
 /*フォーム本体*/
-/* line 54, login_main.scss */
+/* line 54, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
 #login_form {
   margin: -300px 0 0 0;
   top: 50%;
@@ -47,58 +43,56 @@ div#bg-image {
   right: 0;
   height: 350px;
   width: 100%;
-  /*サイトロゴ*/
-}
-/* line 60, login_main.scss */
-#login_form .sitelogo {
-  height: 200px;
-  width: 200px;
-  border-radius: 100px;
-  -moz-border-radius: 100px;
-  -webkit-border-radius: 100px;
-  top: 0px;
-  left: 50%;
-  bottom: 0;
-  right: 0;
-  background-image: url(../img/site_logo.png);
-  margin-left: -100px;
-}
-/* line 68, login_main.scss */
-#login_form .git_area {
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.7);
-  height: 73px;
-  width: 100%;
-}
-/* line 73, login_main.scss */
-#login_form .git_area a,
-#login_form .git_area a:before,
-#login_form .git_area img {
-  height: 53px;
-  width: 305px;
-  display: block;
-  margin: 0 auto;
-}
-/* line 81, login_main.scss */
-#login_form .git_area a:before {
-  position: absolute;
-  margin-top: 10px;
-  content: ' ';
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  transition: 0.05s;
-  -moz-transition: 0.05s;
-  -webkit-transition: 0.05s;
-}
-/* line 89, login_main.scss */
-#login_form .git_area a:hover:before {
-  background: rgba(255, 255, 255, 0.3);
-}
-/* line 94, login_main.scss */
-#login_form #signup {
-  color: #fff;
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-}
+  /*サイトロゴ*/ }
+  /* line 60, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
+  #login_form .sitelogo {
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    top: 0px;
+    left: 50%;
+    bottom: 0;
+    right: 0;
+    background-image: url(../img/site_logo.png);
+    margin-left: -100px; }
+  /* line 68, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
+  #login_form .git_area {
+    padding: 10px;
+    margin-top: 230px;
+    background-color: rgba(255, 255, 255, 0.7);
+    height: 73px;
+    width: 100%; }
+    /* line 76, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
+    #login_form .git_area a,
+    #login_form .git_area a:before,
+    #login_form .git_area img {
+      height: 53px;
+      width: 305px;
+      display: block;
+      margin: 0 auto; }
+    /* line 82, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
+    #login_form .git_area a:before {
+      position: absolute;
+      margin-top: 10px;
+      content: ' ';
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      transition: 0.05s;
+      -moz-transition: 0.05s;
+      -webkit-transition: 0.05s; }
+    /* line 90, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
+    #login_form .git_area a:hover:before {
+      background: rgba(255, 255, 255, 0.3); }
+  /* line 95, C:/PROGRAMs/KcgPRJ/BTS/UiServer/src/main/resources/static/assets/css/login_main.scss */
+  #login_form #signup {
+    color: #fff;
+    margin-top: 15px;
+    padding-top: 5px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.6); }
+
+/*# sourceMappingURL=login_main.css.map */
