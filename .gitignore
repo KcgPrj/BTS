@@ -7,6 +7,7 @@
 /ApiServer/build/
 /Message/build/
 /UiServer/build/
+/Frontend/node_modules/
 /.idea/
 .DS_Store
 
