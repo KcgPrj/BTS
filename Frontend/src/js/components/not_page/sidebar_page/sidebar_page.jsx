@@ -21,7 +21,7 @@ export class SidebarPage extends React.Component {
     }
 }
 
-SidebarPage.PropTypes = {
+SidebarPage.propTypes = {
     sidebarContents: PropTypes.node.isRequired,
     mainContents: PropTypes.node.isRequired,
 };

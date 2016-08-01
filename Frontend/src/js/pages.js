@@ -1,0 +1,1 @@
+export const PAGE_SELECT_TEAM = 'PAGE_SELECT_TEAM';
