@@ -21,9 +21,9 @@ class SelectTeamComponent extends React.Component {
         // チームのリストをli要素に変換
         let teams = [];
         if (this.props.teams) {
-            teams = this.props.teams.map(teamName => {
-                // return <li key={teamName}><Link to={`team/${teamName}`}>{teamName}</Link></li>;
-                return <li key={teamName}><Link to={`sample-route`}>{teamName}</Link></li>;
+            teams = this.props.teams.map(({teamId}) => {
+                // return <li key={teamId}><Link to={`team/${teamId}`}>{teamId}</Link></li>;
+                return <li key={teamId}><Link to={`sample-route`}>{teamId}</Link></li>;
             });
         }
 
@@ -50,7 +50,8 @@ class SelectTeamComponent extends React.Component {
      */
     onClick(e) {
         e.preventDefault();
-        this.props.onClickCreateTeamButton();
+        const teamId = 'new team' + Math.random();
+        this.props.onClickCreateTeamButton(teamId);
     }
 
     /**
@@ -74,8 +75,8 @@ class SelectTeamComponent extends React.Component {
     }
 }
 SelectTeamComponent.propTypes = {
-    teams: PropTypes.array.isRequired,
-    onClickCreateTeamButton: PropTypes.func.isRequired,
+    teams: PropTypes.array,
+    onClickCreateTeamButton: PropTypes.func,
 };
 
 export const SelectTeam = connect(state => {
@@ -84,8 +85,8 @@ export const SelectTeam = connect(state => {
     };
 }, dispatch => {
     return {
-        onClickCreateTeamButton: () => {
-            dispatch(createTeam());
+        onClickCreateTeamButton: (teamId) => {
+            dispatch(createTeam(teamId));
         },
     };
 })(SelectTeamComponent);
