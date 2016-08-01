@@ -5,6 +5,9 @@ import net.orekyuu.bts.service.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 open class BtsApplicationConfig {
@@ -17,6 +20,16 @@ open class BtsApplicationConfig {
 
     companion object {
         val TABLE_LIST = arrayOf(AppUserTable, GithubUserTable, ProductTable, ReportTable, TeamTable, TeamUserTable)
+    }
+
+    @Bean
+    // http://localhost:8080からのクロスオリジンリクエストを許可する
+    open fun corsConfigurer(): WebMvcConfigurer {
+        return object : WebMvcConfigurerAdapter() {
+            override fun addCorsMappings(registry: CorsRegistry): Unit {
+                registry.addMapping("/**").allowedOrigins("http://localhost:8080").allowedHeaders("Authorization", "Content-Type")
+            }
+        }
     }
 
     @Bean
