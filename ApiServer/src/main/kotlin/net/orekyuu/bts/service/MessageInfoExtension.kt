@@ -54,7 +54,7 @@ fun ofSimpleProductInfo(product: Product): SimpleProductInfo {
 }
 
 fun ofReportInfo(report: Report): ReportInfo {
-    val isOpen = OpenedReport.select { OpenedReport.report eq report.id }.limit(1).empty()
+    val isOpen = !OpenedReport.select { OpenedReport.report eq report.id }.limit(1).empty()
     val state = if (isOpen) ReportState.OPEN else ReportState.CLOSE
     return ReportInfo(
             reportId = report.id.value,

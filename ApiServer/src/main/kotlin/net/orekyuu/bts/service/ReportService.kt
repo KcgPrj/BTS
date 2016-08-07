@@ -54,7 +54,7 @@ class ReportServiceImpl : ReportService {
         val productToken = reportInfo.product.token
         val product = Product
                 .find {
-                    ProductTable.productToken.eq(UUID.fromString(productToken))
+                    ProductTable.productToken eq UUID.fromString(productToken)
                 }
                 .limit(1)
                 .singleOrNull() ?: throw ProductNotFoundException(productToken)
@@ -115,23 +115,25 @@ class ReportServiceImpl : ReportService {
 
     override fun openReport(requestUser: AppUser, reportId: Int): SimpleReportInfo = transaction {
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
+        checkAuthority(report.product.team, requestUser)
         val isOpen = !OpenedReport
                 .select { OpenedReport.report eq report.id }
                 .limit(1)
                 .empty()
 
         if (isOpen)
-            throw OpenTriedReportBeenOpendException(reportId)
+            throw OpenTriedReportBeenOpenedException(reportId)
         ClosedReport
-                .deleteWhere { OpenedReport.report eq EntityID(reportId, ReportTable) }
+                .deleteWhere { ClosedReport.report eq EntityID(reportId, ReportTable) }
         OpenedReport.insert { it[this.report] = report.id }
         ofSimpleReportInfo(report)
     }
 
     override fun closeReport(requestUser: AppUser, reportId: Int): SimpleReportInfo = transaction {
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
+        checkAuthority(report.product.team, requestUser)
         val isClose = !ClosedReport
-                .select { OpenedReport.report eq report.id }
+                .select { ClosedReport.report eq report.id }
                 .limit(1)
                 .empty()
 

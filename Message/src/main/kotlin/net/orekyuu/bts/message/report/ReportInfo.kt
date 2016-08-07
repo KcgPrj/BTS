@@ -15,7 +15,7 @@ class ReportInfo(
         var log: String = "",
         var runtimeInfo: String = "",
         var product: SimpleProductInfo,
-        state: ReportState = ReportState.UNDEFINE
+        state: ReportState = ReportState.OPEN
 ) {
     var state = state.state
 }
@@ -29,5 +29,5 @@ class SimpleReportInfo(
 )
 
 enum class ReportState(val state: String) {
-    CLOSE("close"), OPEN("open"), UNDEFINE("undefine")
+    CLOSE("close"), OPEN("open")
 }
