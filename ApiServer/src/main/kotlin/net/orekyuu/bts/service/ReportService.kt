@@ -2,10 +2,9 @@ package net.orekyuu.bts.service
 
 import net.orekyuu.bts.domain.*
 import net.orekyuu.bts.message.report.ReportInfo
+import net.orekyuu.bts.message.report.SimpleReportInfo
 import org.jetbrains.exposed.dao.EntityID
-import org.jetbrains.exposed.sql.StdOutSqlLogger
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -15,7 +14,7 @@ interface ReportService {
     /**
      * レポートを生成
      */
-    fun createReport(reportModel: ReportInfo): ReportInfo
+    fun createReport(reportInfo: ReportInfo): ReportInfo
 
     /**
      * レポートをProductIdから検索
@@ -37,31 +36,41 @@ interface ReportService {
      */
     fun showReport(requestUser: AppUser, reportId: Int): ReportInfo
 
+    /**
+     * レポートをオープン
+     */
+    fun openReport(requestUser: AppUser, reportId: Int): SimpleReportInfo
+
+    /**
+     * レポートをクローズ
+     */
+    fun closeReport(requestUser: AppUser, reportId: Int): SimpleReportInfo
 }
 
 class ReportServiceImpl : ReportService {
 
-    override fun createReport(reportModel: ReportInfo): ReportInfo = transaction {
+    override fun createReport(reportInfo: ReportInfo): ReportInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
-        val productToken = reportModel.product.token
+        val productToken = reportInfo.product.token
         val product = Product
                 .find {
                     ProductTable.productToken.eq(UUID.fromString(productToken))
                 }
                 .limit(1)
                 .singleOrNull() ?: throw ProductNotFoundException(productToken)
-        val assignUserId = reportModel.assign.id
+        val assignUserId = reportInfo.assign.id
         val assign = getMember(assignUserId, product.team)
         val report = Report.new {
-            this.title = reportModel.title
-            this.description = reportModel.description
+            this.title = reportInfo.title
+            this.description = reportInfo.description
             this.assign = assign
-            this.version = reportModel.version
-            this.stacktrace = reportModel.stacktrace
-            this.log = reportModel.log
-            this.runtimeInfo = reportModel.runtimeInfo
+            this.version = reportInfo.version
+            this.stacktrace = reportInfo.stacktrace
+            this.log = reportInfo.log
+            this.runtimeInfo = reportInfo.runtimeInfo
             this.product = product
         }
+        OpenedReport.insert { it[this.report] = report.id }
         ofReportInfo(report)
     }
 
@@ -103,6 +112,37 @@ class ReportServiceImpl : ReportService {
         ofReportInfo(report)
     }
 
+
+    override fun openReport(requestUser: AppUser, reportId: Int): SimpleReportInfo = transaction {
+        val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
+        val isOpen = !OpenedReport
+                .select { OpenedReport.report eq report.id }
+                .limit(1)
+                .empty()
+
+        if (isOpen)
+            throw OpenTriedReportBeenOpendException(reportId)
+        ClosedReport
+                .deleteWhere { OpenedReport.report eq EntityID(reportId, ReportTable) }
+        OpenedReport.insert { it[this.report] = report.id }
+        ofSimpleReportInfo(report)
+    }
+
+    override fun closeReport(requestUser: AppUser, reportId: Int): SimpleReportInfo = transaction {
+        val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
+        val isClose = !ClosedReport
+                .select { OpenedReport.report eq report.id }
+                .limit(1)
+                .empty()
+
+        if (isClose)
+            throw CloseTriedReportBeenClosedException(reportId)
+        OpenedReport
+                .deleteWhere { OpenedReport.report eq EntityID(reportId, ReportTable) }
+        ClosedReport.insert { it[this.report] = report.id }
+        ofSimpleReportInfo(report)
+    }
+
     private fun getMember(userId: Int, team: Team): AppUser {
         val teamUser = TeamUserTable
                 .select {
@@ -115,4 +155,5 @@ class ReportServiceImpl : ReportService {
                 .singleOrNull() ?: throw NotJoinTeamMemberException(userId, team)
         return AppUser[teamUser[TeamUserTable.user]]
     }
+
 }
