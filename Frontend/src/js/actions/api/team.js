@@ -72,7 +72,7 @@ export function fetchTeams(page) {
         try {
             options = getOptions();
         } catch (e) {
-            location.href = '/';
+            redirectToLogin();
             return Promise.resolve(dispatch(fetchTeamFailure(page, new Error('no token'))));
         }
 
@@ -115,7 +115,7 @@ export function createTeam(page, teamId, teamName = '') {
         try {
             options = postOptions();
         } catch (e) {
-            location.href = '/';
+            redirectToLogin();
             return Promise.resolve(dispatch(createTeamFailure(page, new Error('no token'))));
         }
 
