@@ -19,7 +19,7 @@ open class BtsApplicationConfig {
     lateinit var driver: String
 
     companion object {
-        val TABLE_LIST = arrayOf(AppUserTable, GithubUserTable, ProductTable, ReportTable, TeamTable, TeamUserTable)
+        val TABLE_LIST = arrayOf(AppUserTable, GithubUserTable, ProductTable, ReportTable, TeamTable, TeamUserTable,OpenedReport,ClosedReport)
     }
 
     @Bean
