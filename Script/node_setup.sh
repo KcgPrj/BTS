@@ -1,2 +1,2 @@
-cd UiServer/src/main/resources/src
+cd Frontend
 npm install

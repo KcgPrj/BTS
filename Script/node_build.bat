@@ -1,8 +1,8 @@
 echo on
 
 @cd %~dp0
-@call cd ../UiServer/src/main/resources/src
-call npm build
+@call cd ../Frontend
+call npm run build
 
 cd %~dp0
 pause

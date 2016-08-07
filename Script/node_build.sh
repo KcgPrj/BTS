@@ -1,2 +1,2 @@
-cd UiServer/src/main/resources/src
-npm build
+cd Frontend
+npm run build
