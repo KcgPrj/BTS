@@ -65,5 +65,5 @@ object ClosedReport : Table("closed_table") {
 }
 
 object OpenedReport : Table("opened_table") {
-    val report = reference("report_id", ReportTable)
+    val report = reference("report_id", ReportTable).primaryKey()
 }
