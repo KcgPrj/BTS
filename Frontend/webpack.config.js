@@ -39,7 +39,7 @@ module.exports = {
   ],
 
   output: {
-    path: path.resolve(__dirname, '../static/assets'),
+    path: path.resolve(__dirname, '../UiServer/src/main/resources/static/assets'),
     filename: 'app.js',
     publicPath: '/assets/',
   },
