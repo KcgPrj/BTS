@@ -17,7 +17,6 @@ function fetchTeamsRequest(page) {
 }
 
 function fetchTeamsSuccess(page, data) {
-    console.log('fetch success');
     return {
         page: page,
         type: FETCH_TEAMS_SUCCESS,
@@ -28,13 +27,11 @@ function fetchTeamsSuccess(page, data) {
 }
 
 function fetchTeamFailure(page, data) {
-    console.log('fetch failed');
-    console.log(data);
     return {
         page: page,
         type: FETCH_TEAMS_FAILURE,
         data: data,
-    }
+    };
 }
 
 function createTeamRequest(page) {
@@ -45,7 +42,6 @@ function createTeamRequest(page) {
 }
 
 function createTeamSuccess(page, json) {
-    console.log('create team success');
     return {
         page: page,
         type: CREATE_TEAM_SUCCESS,
@@ -56,16 +52,17 @@ function createTeamSuccess(page, json) {
 }
 
 function createTeamFailure(page, json) {
-    console.log('create team failed');
     return {
         page: page,
         type: CREATE_TEAM_FAILURE,
         data: json,
-    }
+    };
 }
 
 /**
  * チームを取得する
+ * @param {string} page dispatchしたページ名
+ * @return {function(*)}
  */
 export function fetchTeams(page) {
     return async dispatch => {
@@ -104,7 +101,7 @@ export function fetchTeams(page) {
  * @param {string} page dispatchしたページ名
  * @param {string} teamId チームID
  * @param {string} teamName チーム名
- * @returns {function()}
+ * @returns {function(*)}
  */
 export function createTeam(page, teamId, teamName = '') {
     if (teamName === '') {
