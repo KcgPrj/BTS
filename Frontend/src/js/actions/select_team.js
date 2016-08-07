@@ -10,7 +10,8 @@ import {fetchTeams, createTeam as createTeamApi} from './api/team.js';
  */
 export function initSelectTeamPage() {
     return dispatch => {
-        return dispatch(fetchTeams(PAGE_SELECT_TEAM));
+        return dispatch(fetchTeams(PAGE_SELECT_TEAM))
+            .catch(error => console.log(error));
     };
 }
 
@@ -22,6 +23,7 @@ export function initSelectTeamPage() {
 export function createTeam(teamId) {
     return dispatch => {
         return dispatch(createTeamApi(PAGE_SELECT_TEAM, teamId))
-            .then(() => dispatch(fetchTeams(PAGE_SELECT_TEAM)));
+            .then(() => dispatch(fetchTeams(PAGE_SELECT_TEAM)))
+            .catch(error => console.log(error));
     };
 }
