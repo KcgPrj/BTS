@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
-import {getOptions, postOptions} from './api_utils.js';
+import 'babel-polyfill';
+import {getOptions, postOptions, checkStatus, redirectToLogin} from './api_utils.js';
 
 export const FETCH_TEAMS_REQUEST = 'FETCH_TEAMS_REQUEST';
 export const FETCH_TEAMS_SUCCESS = 'FETCH_TEAMS_SUCCESS';
@@ -67,7 +68,7 @@ function createTeamFailure(page, json) {
  * チームを取得する
  */
 export function fetchTeams(page) {
-    return dispatch => {
+    return async dispatch => {
         dispatch(fetchTeamsRequest(page));
 
         let options = {};
@@ -75,14 +76,26 @@ export function fetchTeams(page) {
             options = getOptions();
         } catch (e) {
             location.href = '/';
-            return Promise.resolve(dispatch(fetchTeamFailure(page, {})));
+            return Promise.resolve(dispatch(fetchTeamFailure(page, new Error('no token'))));
         }
-        return fetch('http://localhost:18080/team/show/all', {
-            ...options,
-        })
-            .then(response => response.json())
+
+        let response;
+        try {
+            response = await fetch('http://localhost:18080/team/show/all', {
+                ...options,
+            });
+        } catch (e) {
+            redirectToLogin();
+            return Promise.reject();
+        }
+
+        Promise.resolve(response)
+            .then(res => checkStatus(res))
             .then(json => dispatch(fetchTeamsSuccess(page, json)))
-            .catch(error => dispatch(fetchTeamFailure(page, error)));
+            .catch(error => {
+                dispatch(fetchTeamFailure(page, error));
+                return Promise.reject(error);
+            });
     };
 }
 
@@ -98,7 +111,7 @@ export function createTeam(page, teamId, teamName = '') {
         teamName = teamId;
     }
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(createTeamRequest(page));
 
         let options = {};
@@ -106,17 +119,28 @@ export function createTeam(page, teamId, teamName = '') {
             options = postOptions();
         } catch (e) {
             location.href = '/';
-            return Promise.resolve(dispatch(createTeamFailure(page, {error: 'no token in cookie'})));
+            return Promise.resolve(dispatch(createTeamFailure(page, new Error('no token'))));
         }
-        return fetch('http://localhost:18080/team/create', {
-            ...options,
-            body: JSON.stringify({
-                teamId: teamId,
-                teamName: teamName,
-            }),
-        })
-            .then(response => response.json())
+
+        let response;
+        try {
+            response = await fetch('http://localhost:18080/team/create', {
+                ...options,
+                body: JSON.stringify({
+                    teamId: teamId,
+                    teamName: teamName,
+                }),
+            });
+        } catch (error) {
+            redirectToLogin();
+            return Promise.reject(error)
+        }
+
+        Promise.resolve(response)
+            .then(response => checkStatus(response))
             .then(json => dispatch(createTeamSuccess(page, json)))
-            .catch(error => dispatch(createTeamFailure(page, error)));
+            .catch(error => {
+                return dispatch(createTeamFailure(page, error))
+            });
     };
 }
