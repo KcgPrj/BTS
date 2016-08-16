@@ -7,6 +7,11 @@
 /ApiServer/build/
 /Message/build/
 /UiServer/build/
+/UiServer/src/main/resources/static/assets/*
+!/UiServer/src/main/resources/static/assets/css/
+/UiServer/src/main/resources/static/assets/css/*
+!/UiServer/src/main/resources/static/assets/css/base.css
+!/UiServer/src/main/resources/static/assets/img/
 /Frontend/node_modules/
 /.idea/
 .DS_Store
