@@ -68,13 +68,7 @@ export function fetchTeams(page) {
     return async dispatch => {
         dispatch(fetchTeamsRequest(page));
 
-        let options = {};
-        try {
-            options = getOptions();
-        } catch (e) {
-            redirectToLogin();
-            return Promise.resolve(dispatch(fetchTeamFailure(page, new Error('no token'))));
-        }
+        const options = getOptions();
 
         let response;
         try {
@@ -111,13 +105,7 @@ export function createTeam(page, teamId, teamName = '') {
     return async dispatch => {
         dispatch(createTeamRequest(page));
 
-        let options = {};
-        try {
-            options = postOptions();
-        } catch (e) {
-            redirectToLogin();
-            return Promise.resolve(dispatch(createTeamFailure(page, new Error('no token'))));
-        }
+        const options = postOptions();
 
         let response;
         try {
