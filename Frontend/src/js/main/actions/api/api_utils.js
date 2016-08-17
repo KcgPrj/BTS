@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie';
-import 'whatwg-fetch';
 
 /**
  * API認証用のトークンを取得する

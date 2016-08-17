@@ -1,4 +1,4 @@
-import 'whatwg-fetch';
+import 'isomorphic-fetch';
 import 'babel-polyfill';
 import {getOptions, postOptions, checkStatus, redirectToLogin} from './api_utils.js';
 
