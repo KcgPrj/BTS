@@ -35,7 +35,7 @@ module.exports = {
   },
 
   entry: [
-    './src/js/app.jsx'
+    './src/js/main/app.jsx',
   ],
 
   output: {
