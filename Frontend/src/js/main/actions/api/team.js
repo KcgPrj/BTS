@@ -76,11 +76,13 @@ export function fetchTeams(page) {
                 ...options,
             });
         } catch (e) {
+            // アクセストークンが有効でなかったとき
             redirectToLogin();
-            return Promise.reject();
+            dispatch(fetchTeamFailure(page, e));
+            return Promise.reject(e);
         }
 
-        Promise.resolve(response)
+        return Promise.resolve(response)
             .then(res => checkStatus(res))
             .then(json => dispatch(fetchTeamsSuccess(page, json)))
             .catch(error => {
@@ -117,15 +119,18 @@ export function createTeam(page, teamId, teamName = '') {
                 }),
             });
         } catch (error) {
+            // アクセストークンが有効でなかったとき
             redirectToLogin();
+            dispatch(createTeamFailure(page, error));
             return Promise.reject(error)
         }
 
-        Promise.resolve(response)
+        return Promise.resolve(response)
             .then(response => checkStatus(response))
             .then(json => dispatch(createTeamSuccess(page, json)))
             .catch(error => {
-                return dispatch(createTeamFailure(page, error))
+                dispatch(createTeamFailure(page, error));
+                return Promise.reject(error);
             });
     };
 }
