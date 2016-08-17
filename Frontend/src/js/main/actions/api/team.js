@@ -16,21 +16,19 @@ function fetchTeamsRequest(page) {
     };
 }
 
-function fetchTeamsSuccess(page, data) {
+function fetchTeamsSuccess(page, json) {
     return {
         page: page,
         type: FETCH_TEAMS_SUCCESS,
-        data: {
-            teams: data,
-        },
+        data: json,
     };
 }
 
-function fetchTeamFailure(page, data) {
+function fetchTeamFailure(page, error) {
     return {
         page: page,
         type: FETCH_TEAMS_FAILURE,
-        data: data,
+        error: error,
     };
 }
 
@@ -45,17 +43,15 @@ function createTeamSuccess(page, json) {
     return {
         page: page,
         type: CREATE_TEAM_SUCCESS,
-        data: {
-            teamId: json.teamId,
-        },
+        data: json,
     };
 }
 
-function createTeamFailure(page, json) {
+function createTeamFailure(page, error) {
     return {
         page: page,
         type: CREATE_TEAM_FAILURE,
-        data: json,
+        error: error,
     };
 }
 

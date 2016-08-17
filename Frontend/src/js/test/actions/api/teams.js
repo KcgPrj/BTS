@@ -26,7 +26,7 @@ describe('async actions', () => {
             {
                 page: dummyPage,
                 type: actions.FETCH_TEAMS_SUCCESS,
-                data: {teams: [{'teamId': 'team1', 'teamName': 'team1 name'}]},
+                data: [{'teamId': 'team1', 'teamName': 'team1 name'}],
             },
         ];
         const store = mockStore({currentPage: {teams: []}});
@@ -47,7 +47,7 @@ describe('async actions', () => {
             {
                 page: dummyPage,
                 type: actions.FETCH_TEAMS_FAILURE,
-                data: new Error(401),
+                error: new Error(401),
             },
         ];
         const store = mockStore({currentPage: {teams: []}});
@@ -95,7 +95,7 @@ describe('async actions', () => {
             {
                 page: dummyPage,
                 type: actions.CREATE_TEAM_FAILURE,
-                data: new Error(401),
+                error: new Error(401),
             },
         ];
         const store = mockStore({currentPage: {teams: []}});
