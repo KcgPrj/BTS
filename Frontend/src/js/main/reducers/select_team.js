@@ -7,7 +7,7 @@ const selectTeam = (state = {teams: []}, action) => {
         {
             const newState = {
                 ...state,
-                teams: action.data.teams,
+                teams: action.data,
             };
             return newState;
         }

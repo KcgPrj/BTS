@@ -1,5 +1,3 @@
-import 'whatwg-fetch';
-
 import {PAGE_SELECT_TEAM} from '../pages.js';
 import {fetchTeams, createTeam as createTeamApi} from './api/team.js';
 

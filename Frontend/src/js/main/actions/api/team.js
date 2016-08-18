@@ -1,4 +1,4 @@
-import 'whatwg-fetch';
+import 'isomorphic-fetch';
 import 'babel-polyfill';
 import {getOptions, postOptions, checkStatus, redirectToLogin} from './api_utils.js';
 
@@ -16,21 +16,19 @@ function fetchTeamsRequest(page) {
     };
 }
 
-function fetchTeamsSuccess(page, data) {
+function fetchTeamsSuccess(page, json) {
     return {
         page: page,
         type: FETCH_TEAMS_SUCCESS,
-        data: {
-            teams: data,
-        },
+        data: json,
     };
 }
 
-function fetchTeamFailure(page, data) {
+function fetchTeamFailure(page, error) {
     return {
         page: page,
         type: FETCH_TEAMS_FAILURE,
-        data: data,
+        error: error,
     };
 }
 
@@ -45,17 +43,15 @@ function createTeamSuccess(page, json) {
     return {
         page: page,
         type: CREATE_TEAM_SUCCESS,
-        data: {
-            teamId: json.teamId,
-        },
+        data: json,
     };
 }
 
-function createTeamFailure(page, json) {
+function createTeamFailure(page, error) {
     return {
         page: page,
         type: CREATE_TEAM_FAILURE,
-        data: json,
+        error: error,
     };
 }
 
@@ -68,13 +64,7 @@ export function fetchTeams(page) {
     return async dispatch => {
         dispatch(fetchTeamsRequest(page));
 
-        let options = {};
-        try {
-            options = getOptions();
-        } catch (e) {
-            redirectToLogin();
-            return Promise.resolve(dispatch(fetchTeamFailure(page, new Error('no token'))));
-        }
+        const options = getOptions();
 
         let response;
         try {
@@ -82,11 +72,13 @@ export function fetchTeams(page) {
                 ...options,
             });
         } catch (e) {
+            // アクセストークンが有効でなかったとき
             redirectToLogin();
-            return Promise.reject();
+            dispatch(fetchTeamFailure(page, e));
+            return Promise.reject(e);
         }
 
-        Promise.resolve(response)
+        return Promise.resolve(response)
             .then(res => checkStatus(res))
             .then(json => dispatch(fetchTeamsSuccess(page, json)))
             .catch(error => {
@@ -111,13 +103,7 @@ export function createTeam(page, teamId, teamName = '') {
     return async dispatch => {
         dispatch(createTeamRequest(page));
 
-        let options = {};
-        try {
-            options = postOptions();
-        } catch (e) {
-            redirectToLogin();
-            return Promise.resolve(dispatch(createTeamFailure(page, new Error('no token'))));
-        }
+        const options = postOptions();
 
         let response;
         try {
@@ -129,15 +115,18 @@ export function createTeam(page, teamId, teamName = '') {
                 }),
             });
         } catch (error) {
+            // アクセストークンが有効でなかったとき
             redirectToLogin();
+            dispatch(createTeamFailure(page, error));
             return Promise.reject(error)
         }
 
-        Promise.resolve(response)
+        return Promise.resolve(response)
             .then(response => checkStatus(response))
             .then(json => dispatch(createTeamSuccess(page, json)))
             .catch(error => {
-                return dispatch(createTeamFailure(page, error))
+                dispatch(createTeamFailure(page, error));
+                return Promise.reject(error);
             });
     };
 }
