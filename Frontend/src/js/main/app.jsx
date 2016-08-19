@@ -12,6 +12,7 @@ import reducers from './reducers/reducers.js';
 
 import {Root} from './components/routes/root.jsx';
 import {SelectTeam} from './components/routes/select_team.jsx';
+import {TeamPage} from './components/routes/team_page.jsx';
 import {SampleRoute} from './components/routes/sample_route.jsx'
 
 const store = createStore(
@@ -33,6 +34,7 @@ ReactDOM.render(
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
                 <Route path="sample-route" component={SampleRoute}
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
+                <Route path="team" component={TeamPage}/>
             </Route>
         </Router>
     </Provider>,

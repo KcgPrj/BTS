@@ -8,6 +8,9 @@ class TeamPage extends React.Component {
 
     constructor(props) {
         super(props);
+        //ダミーデータ
+        props.products = [{"productId":1,"productName":"name","token":"17b60fff-c2cf-4d35-96b4-f81832f4e30d"}];
+        props.member = [{"id":1,"name":"user1","type":"GITHUB"}];
     }
 
     /**
