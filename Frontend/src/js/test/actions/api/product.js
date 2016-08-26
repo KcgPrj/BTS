@@ -19,7 +19,11 @@ describe('products api actions', () => {
     });
 
     it(`creates ${actions.FETCH_PRODUCTS_SUCCESS} when fetching products has been done`, () => {
-        const responseBody = [{}];
+        const responseBody = [{
+            "productId": 1,
+            "productName": "PRODUCT1",
+            "token": "2bdf0f49-55b4-4275-92d9-f4a9890ef35c",
+        }];
 
         createNock('http://localhost:18080', `/${TEAM1}/products/show`)
             .get(`/${TEAM1}/products/show`)
