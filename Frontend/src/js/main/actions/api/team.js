@@ -1,6 +1,7 @@
 import 'isomorphic-fetch';
 import 'babel-polyfill';
-import {getOptions, postOptions, checkStatus, redirectToLogin} from './api_utils.js';
+import {getRequest, postRequest} from './lib/method.js';
+import {checkStatus} from './lib/utils.js';
 
 export const FETCH_TEAMS_REQUEST = 'FETCH_TEAMS_REQUEST';
 export const FETCH_TEAMS_SUCCESS = 'FETCH_TEAMS_SUCCESS';
@@ -64,21 +65,9 @@ export function fetchTeams(page) {
     return async dispatch => {
         dispatch(fetchTeamsRequest(page));
 
-        const options = getOptions();
+        const response = getRequest('http://localhost:18080/team/show/all');
 
-        let response;
-        try {
-            response = await fetch('http://localhost:18080/team/show/all', {
-                ...options,
-            });
-        } catch (e) {
-            // アクセストークンが有効でなかったとき
-            redirectToLogin();
-            dispatch(fetchTeamFailure(page, e));
-            return Promise.reject(e);
-        }
-
-        return Promise.resolve(response)
+        return response
             .then(res => checkStatus(res))
             .then(json => dispatch(fetchTeamsSuccess(page, json)))
             .catch(error => {
@@ -103,25 +92,14 @@ export function createTeam(page, teamId, teamName = '') {
     return async dispatch => {
         dispatch(createTeamRequest(page));
 
-        const options = postOptions();
+        const body = {
+            teamId: teamId,
+            teamName: teamName,
+        };
 
-        let response;
-        try {
-            response = await fetch('http://localhost:18080/team/create', {
-                ...options,
-                body: JSON.stringify({
-                    teamId: teamId,
-                    teamName: teamName,
-                }),
-            });
-        } catch (error) {
-            // アクセストークンが有効でなかったとき
-            redirectToLogin();
-            dispatch(createTeamFailure(page, error));
-            return Promise.reject(error)
-        }
+        const response = postRequest('http://localhost:18080/team/create', body);
 
-        return Promise.resolve(response)
+        return response
             .then(response => checkStatus(response))
             .then(json => dispatch(createTeamSuccess(page, json)))
             .catch(error => {
