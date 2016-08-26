@@ -58,8 +58,8 @@ function createProductFailure(page, error) {
 
 /**
  * プロダクトを取得する
- * @param page
- * @param teamId 取得するプロダクトのチームID
+ * @param {string} page dispatchしたページ名
+ * @param {string} teamId 取得するプロダクトのチームID
  * @return {function(*)}
  */
 export function fetchProducts(page, teamId) {
@@ -78,6 +78,13 @@ export function fetchProducts(page, teamId) {
     }
 }
 
+/**
+ * プロダクトを作成する
+ * @param {string} page dispatchしたページ名
+ * @param {string} teamId プロダクトを作成するチームのチームID
+ * @param {string} productName 新しく作成するプロダクト名
+ * @return {function(*)}
+ */
 export function createProduct(page, teamId, productName) {
     return async dispatch => {
         dispatch(createProductRequest(page));
