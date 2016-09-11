@@ -6,6 +6,9 @@ export class TeamPage extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.sidebarContents = this.sidebarContents.bind(this);
+        this.mainContents = this.mainContents.bind(this);
     }
 
     /**
