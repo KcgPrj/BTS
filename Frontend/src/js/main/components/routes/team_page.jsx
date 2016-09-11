@@ -1,7 +1,5 @@
 import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
 import {Link} from 'react-router';
-import {createTeam} from '../../actions/select_team.js';
 import {SidebarPage} from '../not_page/sidebar_page/sidebar_page.jsx';
 
 export class TeamPage extends React.Component {
