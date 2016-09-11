@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import {createTeam} from '../../actions/select_team.js';
 import {SidebarPage} from '../not_page/sidebar_page/sidebar_page.jsx';
 
-class TeamPage extends React.Component {
+export class TeamPage extends React.Component {
 
     constructor(props) {
         super(props);
