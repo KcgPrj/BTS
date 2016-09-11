@@ -9,8 +9,8 @@ class TeamPage extends React.Component {
     constructor(props) {
         super(props);
         //ダミーデータ
-        props.products = [{"productId":1,"productName":"name","token":"17b60fff-c2cf-4d35-96b4-f81832f4e30d"}];
-        props.member = [{"id":1,"name":"user1","type":"GITHUB"}];
+        props.products = [{"productId": 1, "productName": "name", "token": "17b60fff-c2cf-4d35-96b4-f81832f4e30d"}];
+        props.member = [{"id": 1, "name": "user1", "type": "GITHUB"}];
     }
 
     /**
@@ -18,17 +18,19 @@ class TeamPage extends React.Component {
      * @returns {XML}
      */
     sidebarContents() {
-        let products  = [];
-        if(this.props.products) {
+        let products = [];
+        if (this.props.products) {
             products = this.props.products.map(p => {
                 //TODO: リンクを適切に書き換える
                 //idが整数値で重複する可能性があるのでprefixを付けておく
-                return <li key={'product-' + p.productId} className="li-count"><Link to={`/`}>{p.productName}</Link></li>
+                return (
+                    <li key={'product-' + p.productId} className="li-count"><Link to={`/`}>{p.productName}</Link></li>
+                );
             });
         }
 
         let member = [];
-        if(this.props.member) {
+        if (this.props.member) {
             member = this.props.member.map(m => {
                 //TODO: リンクを適切に書き換える
                 //idが整数値で重複する可能性があるのでprefixを付けておく
@@ -53,7 +55,7 @@ class TeamPage extends React.Component {
                             <span>＋</span>
                         </a>
                     </div>
-                    <input type="checkbox" id="Panel1" className="on-off" />
+                    <input type="checkbox" id="Panel1" className="on-off"/>
                     <ol className="p_list">
                         {products}
                     </ol>
@@ -67,7 +69,7 @@ class TeamPage extends React.Component {
                         </label>
                         <span>＋</span>
                     </div>
-                    <input type="checkbox" id="Panel2" className="on-off" />
+                    <input type="checkbox" id="Panel2" className="on-off"/>
                     <ol className="m_list">
                         {member}
                     </ol>
@@ -105,5 +107,5 @@ TeamPage.propTypes = {
     products: PropTypes.array,
     //たぶん/team/member/showが使われる？
     // sample: [{"id":1,"name":"user1","type":"GITHUB"}]
-    member: PropTypes.array
+    member: PropTypes.array,
 };
