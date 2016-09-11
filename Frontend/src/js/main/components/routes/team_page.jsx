@@ -6,9 +6,6 @@ export class TeamPage extends React.Component {
 
     constructor(props) {
         super(props);
-        //ダミーデータ
-        props.products = [{"productId": 1, "productName": "name", "token": "17b60fff-c2cf-4d35-96b4-f81832f4e30d"}];
-        props.member = [{"id": 1, "name": "user1", "type": "GITHUB"}];
     }
 
     /**
@@ -106,4 +103,16 @@ TeamPage.propTypes = {
     //たぶん/team/member/showが使われる？
     // sample: [{"id":1,"name":"user1","type":"GITHUB"}]
     member: PropTypes.array,
+};
+
+// ダミーデータ
+TeamPage.defaultProps = {
+    products: [
+        {"productId": 1, "productName": "name", "token": "17b60fff-c2cf-4d35-96b4-f81832f4e30d"},
+        {"productId": 2, "productName": "name2", "token": "17b60fff-c2cf-4d35-96b4-222222222222"},
+    ],
+    member: [
+        {"id": 1, "name": "user1", "type": "GITHUB"},
+        {"id": 2, "name": "user2", "type": "GITHUB"},
+    ],
 };
