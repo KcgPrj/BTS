@@ -20,9 +20,8 @@ export class TeamPage extends React.Component {
         if (this.props.products) {
             products = this.props.products.map(p => {
                 //TODO: リンクを適切に書き換える
-                //idが整数値で重複する可能性があるのでprefixを付けておく
                 return (
-                    <li key={'product-' + p.productId} className="li-count"><Link to={`/`}>{p.productName}</Link></li>
+                    <li key={p.productId} className="li-count"><Link to={`/`}>{p.productName}</Link></li>
                 );
             });
         }
@@ -31,9 +30,8 @@ export class TeamPage extends React.Component {
         if (this.props.member) {
             member = this.props.member.map(m => {
                 //TODO: リンクを適切に書き換える
-                //idが整数値で重複する可能性があるのでprefixを付けておく
                 return (
-                    <li key={'user-' + m.id}>
+                    <li key={m.id}>
                         <Link to={`/`}>{m.name}</Link>
                         <div className="mem_border"></div>
                     </li>
