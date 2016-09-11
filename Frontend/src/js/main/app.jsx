@@ -34,7 +34,8 @@ ReactDOM.render(
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
                 <Route path="sample-route" component={SampleRoute}
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
-                <Route path="team" component={TeamPage}/>
+                <Route path="team" component={TeamPage}
+                       onLeave={() => store.dispatch(clearCurrentPageState())}/>
             </Route>
         </Router>
     </Provider>,
