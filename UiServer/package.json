@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node server.js",
-    "build": "gulp",
+    "build": "gulp build",
     "watch": "webpack -w",
     "debug": "webpack",
     "lint": "eslint src/**",

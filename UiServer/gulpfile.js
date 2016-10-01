@@ -8,13 +8,13 @@ gulp.task('default', ['sass', 'webpack']);
 
 // SASSのコンパイル
 gulp.task('sass', () => {
-    return gulp.src('./src/sass/**/*.scss')
+    return gulp.src('./src/main/front/sass/**/*.scss') // src/main/front/sass内の.sassをターゲットにコンパイル
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('../UiServer/src/main/resources/static/assets/css'));
+        .pipe(gulp.dest('./build/resources/main/static/assets/css')); //コンパイル結果を成果物内に突っ込む
 });
 
 // JSファイルのトランスパイル
-gulp.task('webpack', () => {
+gulp.task('build', () => {
     process.argv.push('--release');
     webpack(require('./webpack.config.js')).run(callback => {
         return (err, stats) => {

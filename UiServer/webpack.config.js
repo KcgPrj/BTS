@@ -35,11 +35,11 @@ module.exports = {
   },
 
   entry: [
-    './src/js/main/app.jsx',
+    './src/main/front/js/app.jsx',
   ],
 
   output: {
-    path: path.resolve(__dirname, '../UiServer/src/main/resources/static/assets'),
+    path: path.resolve(__dirname, './build/resources/static/assets'),//ビルド結果の出力先
     filename: 'app.js',
     publicPath: '/assets/',
   },
@@ -53,7 +53,7 @@ module.exports = {
   module: {
     loaders: [{
         test: /\.jsx?$/,
-        include: [path.resolve(__dirname, 'src/js')],
+        include: [path.resolve(__dirname, 'src/main/front/js')],
         loaders: ['react-hot', 'babel'] }
     ]
   }
