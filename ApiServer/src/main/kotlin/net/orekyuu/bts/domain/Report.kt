@@ -4,6 +4,7 @@ import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.IntIdTable
+import org.jetbrains.exposed.sql.Table
 import org.joda.time.DateTime
 
 object ReportTable : IntIdTable() {
@@ -45,8 +46,9 @@ object ReportTable : IntIdTable() {
     val product = reference("product", ProductTable)
 }
 
-class Report(id: EntityID<Int>): Entity<Int>(id) {
-    companion object: EntityClass<Int, Report>(ReportTable)
+class Report(id: EntityID<Int>) : Entity<Int>(id) {
+    companion object : EntityClass<Int, Report>(ReportTable)
+
     var title by ReportTable.title
     var description by ReportTable.description
     var createdAt by ReportTable.createdAt
@@ -56,4 +58,12 @@ class Report(id: EntityID<Int>): Entity<Int>(id) {
     var log by ReportTable.log
     var runtimeInfo by ReportTable.runtimeInfo
     var product by Product.referencedOn(ReportTable.product)
+}
+
+object ClosedReport : Table("closed_table") {
+    val report = reference("report_id", ReportTable).primaryKey()
+}
+
+object OpenedReport : Table("opened_table") {
+    val report = reference("report_id", ReportTable).primaryKey()
 }

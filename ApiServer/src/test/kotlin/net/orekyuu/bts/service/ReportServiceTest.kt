@@ -92,7 +92,7 @@ class ReportServiceTest {
         assertThat(reportInfo.description).isEqualTo(reportModel.description)
         assertThat(reportInfo.log).isEqualTo(reportModel.log)
         assertThat(reportInfo.product.productId).isEqualTo(reportModel.product.productId)
-
+        assertThat(reportInfo.state).isEqualTo("open")
     }
 
     @Test(expected = ProductNotFoundException::class)
@@ -269,4 +269,51 @@ class ReportServiceTest {
         val reportId = reportService.createReport(reportModel).reportId
         reportService.showReport(user3, reportId)
     }
+
+    @Test
+    fun openAndCloseTest() {
+        val reportInfo = reportService.createReport(reportModel)
+        reportService.closeReport(user1, reportInfo.reportId)
+        val stateClose = reportService.showReport(user1, reportInfo.reportId).state
+        assertThat(stateClose).isEqualTo("close")
+        reportService.openReport(user1, reportInfo.reportId)
+        val openState = reportService.showReport(user1, reportInfo.reportId).state
+        assertThat(openState).isEqualTo("open")
+    }
+
+    @Test(expected = ReportNotFoundException::class)
+    fun openReportThrownReportNotFoundException() {
+        reportService.openReport(user1, 0)
+    }
+
+    @Test(expected = TeamAccessAuthorityNotException::class)
+    fun openReportThrownTeamAccessAuthorityNotException() {
+        val info = reportService.createReport(reportModel)
+        reportService.openReport(user3, info.reportId)
+    }
+
+    @Test(expected = OpenTriedReportBeenOpenedException::class)
+    fun openReportThrownOpenTriedReportBeenOpenedException() {
+        val info = reportService.createReport(reportModel)
+        reportService.openReport(user1, info.reportId)
+    }
+
+    @Test(expected = ReportNotFoundException::class)
+    fun closeReportThrownReportNotFoundException() {
+        reportService.closeReport(user1, 0)
+    }
+
+    @Test(expected = TeamAccessAuthorityNotException::class)
+    fun closeReportThrownTeamAccessAuthorityNotException() {
+        val info = reportService.createReport(reportModel)
+        reportService.closeReport(user3, info.reportId)
+    }
+
+    @Test(expected = CloseTriedReportBeenClosedException::class)
+    fun closeReportThrownOpenTriedReportBeenOpenedException() {
+        val info = reportService.createReport(reportModel)
+        reportService.closeReport(user1, info.reportId)
+        reportService.closeReport(user1, info.reportId)
+    }
+
 }
