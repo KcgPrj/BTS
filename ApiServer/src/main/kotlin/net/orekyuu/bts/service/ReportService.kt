@@ -69,8 +69,8 @@ class ReportServiceImpl : ReportService {
             this.log = reportInfo.log
             this.runtimeInfo = reportInfo.runtimeInfo
             this.product = product
+            this.state = ReportState.OPENED
         }
-        OpenedReport.insert { it[this.report] = report.id }
         ofReportInfo(report)
     }
 
@@ -116,32 +116,22 @@ class ReportServiceImpl : ReportService {
     override fun openReport(requestUser: AppUser, reportId: Int): SimpleReportInfo = transaction {
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
         checkAuthority(report.product.team, requestUser)
-        val isOpen = !OpenedReport
-                .select { OpenedReport.report eq report.id }
-                .limit(1)
-                .empty()
+        val isOpen = report.state.equals(ReportState.OPENED)
 
         if (isOpen)
             throw OpenTriedReportBeenOpenedException(reportId)
-        ClosedReport
-                .deleteWhere { ClosedReport.report eq EntityID(reportId, ReportTable) }
-        OpenedReport.insert { it[this.report] = report.id }
+        report.state = ReportState.OPENED
         ofSimpleReportInfo(report)
     }
 
     override fun closeReport(requestUser: AppUser, reportId: Int): SimpleReportInfo = transaction {
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
         checkAuthority(report.product.team, requestUser)
-        val isClose = !ClosedReport
-                .select { ClosedReport.report eq report.id }
-                .limit(1)
-                .empty()
+        val isClose = report.state.equals(ReportState.CLOSED)
 
         if (isClose)
             throw CloseTriedReportBeenClosedException(reportId)
-        OpenedReport
-                .deleteWhere { OpenedReport.report eq EntityID(reportId, ReportTable) }
-        ClosedReport.insert { it[this.report] = report.id }
+        report.state = ReportState.CLOSED
         ofSimpleReportInfo(report)
     }
 

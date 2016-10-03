@@ -4,7 +4,6 @@ import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.IntIdTable
-import org.jetbrains.exposed.sql.Table
 import org.joda.time.DateTime
 
 object ReportTable : IntIdTable() {
@@ -44,6 +43,11 @@ object ReportTable : IntIdTable() {
      * プロダクト
      */
     val product = reference("product", ProductTable)
+
+    /**
+     * レポートの状態
+     */
+    val state = enumeration("state", ReportState::class.java)
 }
 
 class Report(id: EntityID<Int>) : Entity<Int>(id) {
@@ -58,12 +62,9 @@ class Report(id: EntityID<Int>) : Entity<Int>(id) {
     var log by ReportTable.log
     var runtimeInfo by ReportTable.runtimeInfo
     var product by Product.referencedOn(ReportTable.product)
+    var state by ReportTable.state
 }
 
-object ClosedReport : Table("closed_table") {
-    val report = reference("report_id", ReportTable).primaryKey()
-}
-
-object OpenedReport : Table("opened_table") {
-    val report = reference("report_id", ReportTable).primaryKey()
+enum class ReportState(val status: String) {
+    OPENED("opened"), CLOSED("closed")
 }

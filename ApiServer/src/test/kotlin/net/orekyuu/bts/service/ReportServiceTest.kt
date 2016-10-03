@@ -2,6 +2,7 @@ package net.orekyuu.bts.service
 
 import net.orekyuu.bts.config.BtsApplicationConfig
 import net.orekyuu.bts.domain.AppUser
+import net.orekyuu.bts.domain.ReportState
 import net.orekyuu.bts.message.product.SimpleProductInfo
 import net.orekyuu.bts.message.report.ReportInfo
 import net.orekyuu.bts.message.team.TeamInfo
@@ -92,7 +93,7 @@ class ReportServiceTest {
         assertThat(reportInfo.description).isEqualTo(reportModel.description)
         assertThat(reportInfo.log).isEqualTo(reportModel.log)
         assertThat(reportInfo.product.productId).isEqualTo(reportModel.product.productId)
-        assertThat(reportInfo.state).isEqualTo("open")
+        assertThat(reportInfo.state).isEqualTo(ReportState.OPENED.status)
     }
 
     @Test(expected = ProductNotFoundException::class)
@@ -275,10 +276,10 @@ class ReportServiceTest {
         val reportInfo = reportService.createReport(reportModel)
         reportService.closeReport(user1, reportInfo.reportId)
         val stateClose = reportService.showReport(user1, reportInfo.reportId).state
-        assertThat(stateClose).isEqualTo("close")
+        assertThat(stateClose).isEqualTo(ReportState.CLOSED.status)
         reportService.openReport(user1, reportInfo.reportId)
         val openState = reportService.showReport(user1, reportInfo.reportId).state
-        assertThat(openState).isEqualTo("open")
+        assertThat(openState).isEqualTo(ReportState.OPENED.status)
     }
 
     @Test(expected = ReportNotFoundException::class)

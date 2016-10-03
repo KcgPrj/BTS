@@ -7,11 +7,9 @@ import net.orekyuu.bts.domain.*
 import net.orekyuu.bts.message.product.ProductInfo
 import net.orekyuu.bts.message.product.SimpleProductInfo
 import net.orekyuu.bts.message.report.ReportInfo
-import net.orekyuu.bts.message.report.ReportState
 import net.orekyuu.bts.message.report.SimpleReportInfo
 import net.orekyuu.bts.message.team.TeamInfo
 import net.orekyuu.bts.message.user.UserInfo
-import org.jetbrains.exposed.sql.select
 
 fun ofTeamInfo(team: Team, member: Iterable<AppUser> = team.member): TeamInfo {
     val teamProduct = Product.find { ProductTable.team.eq(team.id) }
@@ -54,8 +52,6 @@ fun ofSimpleProductInfo(product: Product): SimpleProductInfo {
 }
 
 fun ofReportInfo(report: Report): ReportInfo {
-    val isOpen = !OpenedReport.select { OpenedReport.report eq report.id }.limit(1).empty()
-    val state = if (isOpen) ReportState.OPEN else ReportState.CLOSE
     return ReportInfo(
             reportId = report.id.value,
             title = report.title,
@@ -67,7 +63,7 @@ fun ofReportInfo(report: Report): ReportInfo {
             log = report.log,
             runtimeInfo = report.runtimeInfo,
             product = ofSimpleProductInfo(report.product),
-            state = state
+            state = report.state.status
     )
 }
 
