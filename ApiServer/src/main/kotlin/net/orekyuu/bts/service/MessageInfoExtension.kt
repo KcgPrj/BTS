@@ -73,6 +73,7 @@ fun ofSimpleReportInfo(report: Report): SimpleReportInfo {
             title = report.title,
             createdAt = report.createdAt.toString(),
             assign = ofUserInfo(report.assign),
-            version = report.version
+            version = report.version,
+            state = report.state.status
     )
 }
