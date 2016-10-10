@@ -4,7 +4,7 @@ const sass = require('gulp-sass');
 
 const webpack = require('webpack');
 
-gulp.task('default', ['sass', 'webpack']);
+gulp.task('build', ['sass', 'webpack']);
 
 // SASSのコンパイル
 gulp.task('sass', () => {
@@ -14,7 +14,7 @@ gulp.task('sass', () => {
 });
 
 // JSファイルのトランスパイル
-gulp.task('build', () => {
+gulp.task('webpack', () => {
     process.argv.push('--release');
     webpack(require('./webpack.config.js')).run(callback => {
         return (err, stats) => {
