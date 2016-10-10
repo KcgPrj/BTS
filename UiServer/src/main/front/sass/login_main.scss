@@ -24,19 +24,20 @@ $set-prefix: '' , -moz- , -webkit-;
 *{
     @include setPrefix(box-sizing, border-box);
 }
-
-/*縦幅100%*/
-
-body,html{
-    height: 100%;
-    margin: 0;
+html,
+body{
     padding: 0;
+    margin: 0;
+    height: 100%;
 }
-a:link { color:#fff; text-decoration:none; font-family: 'Oswald', sans-serif;}
-a:visited { color:#fff; text-decoration:none; font-family: 'Oswald', sans-serif;}
-a:hover { color:#fff; text-decoration:none; font-family: 'Oswald', sans-serif;}
-a:active { color:#fff; text-decoration:none;font-family: 'Oswald', sans-serif; }
 
+/*link*/
+a:link,
+a:visited,
+a:hover,
+a:active {font-family: 'Oswald', sans-serif;}
+
+/*background*/
 div#bg-image{
     background:{
         image: url(../img/Polygon_bg.png);
@@ -46,31 +47,14 @@ div#bg-image{
         size: cover;
         color: #464646;
     }
-    /*背景ぼかし*/
-    //@include setPrefix(filter,blur(100px));
-    @include size(100%,100%);
 }
 
-div#bg-image:before{
-    /* 透過した黒を重ねる */
-    //background-color: rgba(0,0,0,0.5);
-    
-    /* どの範囲に重ねるかを指定 */
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    content: ' ';
-}
 
 /*フォーム本体*/
 #login_form{
     margin: -300px 0 0 0;
-    //background-color: rgba(255,255,255,0.60);
     @include position(50%,0,0,0);
     @include size(350px,100%);
-    @include setPrefix(border-radius, 5px);
     
     /*サイトロゴ*/
     .sitelogo{
@@ -81,25 +65,37 @@ div#bg-image:before{
         margin-left: -100px;
     }
     
-    #login_github{
-        .git_area{
-            img{
-                display: block;
-                margin: 0 auto;
-            }
-            padding: 10px;
-            background-color: rgba(255,255,255,0.7);
-            margin-top: 230px;
-            @include size(73px,100%);
+    .git_area{
+        padding: 10px;
+        margin-top: 230px;
+        background-color: rgba(255,255,255,0.7);
+        @include size(73px,100%);
+        
+        a,
+        a:before,
+        img{
+            @include size(53px,305px);
+            display: block;
+            margin: 0 auto;
+        }
+
+        a:before{
+            position: absolute;
+            margin-top: 10px;
+            content: ' ';
+            @include position(0,0,0,0);
+            @include setPrefix(transition,0.05s);
+        }
+        
+        a:hover:before{
+            background: rgba(255,255,255,0.3);
         }
     }
     
     #signup{
-        color: #fff;
         margin-top: 15px;
         padding-top: 5px;
-        
-        width: 100%;
+        color: #fff;
         text-align: center;
         border-top: 1px solid rgba(255,255,255,0.6);
     }
