@@ -39,7 +39,7 @@ module.exports = {
   ],
 
   output: {
-    path: path.resolve(__dirname, './build/resources/static/assets'),//ビルド結果の出力先
+    path: path.resolve(__dirname, './build/resources/main/static/assets'),//ビルド結果の出力先
     filename: 'app.js',
     publicPath: '/assets/',
   },

@@ -2,7 +2,6 @@
 
 `gradlew build`
 
-SASSファイルとJSファイルをコンパイルする。
 SASSとJSのみコンパイルする場合は以下を実行する。
 
 `gradlew gulp_build`
