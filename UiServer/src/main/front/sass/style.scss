@@ -105,13 +105,13 @@ body,html{
 .side_title{
     color: #fff;
     font-family: 'Fjalla One', sans-serif;
-    font-size: 30px;
+    font-size: 25px;
     
     label{
         cursor: pointer;
         
         img{
-            @include size(25px,25px);
+            @include size(35px,35px);
             transition: all 0.3s;
         }
     }
@@ -119,12 +119,16 @@ body,html{
     span{
         display: block;
         float: right;
-        margin-right: 50px;
+        margin-right: 25px;
+        text-align: center;
         cursor: pointer;
+        background: rgba(0,0,0,.1);
+        /*
         border-left: 1px solid #fff;
         border-bottom: 1px solid #fff;
-        padding: 0 3px;
-        margin-top: -5px;
+        */
+        padding: 7px 0;
+        @include size(45px,45px);
         @include setPrefix(border-radius,5px);
         @include setPrefix(transition,all 0.2s);
     }
@@ -170,7 +174,6 @@ body,html{
     counter-reset:li;
     color: #fff;
     @include setPrefix(transition,all 0.5s);
-    margin: 0;
     padding: 0;
     list-style: none;
     
@@ -337,9 +340,8 @@ input[type="checkbox"].on-off:checked + ol{
         font-family: 'Abel', sans-serif;
     }
     .search_btn {
-        border-bottom: 1px solid #fff;
-        border-right: 1px solid #fff;
         @include size(32px,32px);
+        background: rgba(0,0,0,.2);
         line-height: 32px;
         @include setPrefix(border-radius,5px);
         
@@ -458,7 +460,7 @@ input[type="checkbox"].on-off:checked + ol{
 
 //mediaquery
 
-@media screen and (max-height: 800px){
+@media screen and (max-height: 885px){
     .site_logo{
         @include size(150px,150px);
         
@@ -470,7 +472,7 @@ input[type="checkbox"].on-off:checked + ol{
         font-size: 25px;
         
         label img{
-            @include size(20px,20px);
+            @include size(30px,30px);
         }
     }
     
@@ -493,7 +495,10 @@ input[type="checkbox"].on-off:checked + ol{
     }
 }
 
-@media screen and (max-height: 670px){
+@media screen and (max-height: 725px){
+    .side_title span{
+        padding: 10px 0;
+    }
     .site_logo{
         @include size(100px,100px);
 
@@ -505,7 +510,7 @@ input[type="checkbox"].on-off:checked + ol{
         font-size: 18px;
         
         label img{
-            @include size(15px,15px);
+            @include size(25px,25px);
         }
     }
 
