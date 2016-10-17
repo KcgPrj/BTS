@@ -9,7 +9,7 @@ import {Sidebar} from './sidebar.jsx';
 export class SidebarPage extends React.Component {
     render() {
         return (
-            <div id="wrapper" className="pst-a">
+            <div id="wrapper" className="pst-a h100p w100p">
                 <Sidebar>
                     {this.props.sidebarContents}
                 </Sidebar>
