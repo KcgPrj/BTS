@@ -2,6 +2,7 @@ package net.orekyuu.bts.service
 
 import net.orekyuu.bts.config.BtsApplicationConfig
 import net.orekyuu.bts.domain.AppUser
+import net.orekyuu.bts.domain.ReportState
 import net.orekyuu.bts.message.product.SimpleProductInfo
 import net.orekyuu.bts.message.report.ReportInfo
 import net.orekyuu.bts.message.team.TeamInfo
@@ -92,7 +93,7 @@ class ReportServiceTest {
         assertThat(reportInfo.description).isEqualTo(reportModel.description)
         assertThat(reportInfo.log).isEqualTo(reportModel.log)
         assertThat(reportInfo.product.productId).isEqualTo(reportModel.product.productId)
-
+        assertThat(reportInfo.state).isEqualTo(ReportState.OPENED.status)
     }
 
     @Test(expected = ProductNotFoundException::class)
@@ -269,4 +270,51 @@ class ReportServiceTest {
         val reportId = reportService.createReport(reportModel).reportId
         reportService.showReport(user3, reportId)
     }
+
+    @Test
+    fun openAndCloseTest() {
+        val reportInfo = reportService.createReport(reportModel)
+        reportService.closeReport(user1, reportInfo.reportId)
+        val stateClose = reportService.showReport(user1, reportInfo.reportId).state
+        assertThat(stateClose).isEqualTo(ReportState.CLOSED.status)
+        reportService.openReport(user1, reportInfo.reportId)
+        val openState = reportService.showReport(user1, reportInfo.reportId).state
+        assertThat(openState).isEqualTo(ReportState.OPENED.status)
+    }
+
+    @Test(expected = ReportNotFoundException::class)
+    fun openReportThrownReportNotFoundException() {
+        reportService.openReport(user1, 0)
+    }
+
+    @Test(expected = TeamAccessAuthorityNotException::class)
+    fun openReportThrownTeamAccessAuthorityNotException() {
+        val info = reportService.createReport(reportModel)
+        reportService.openReport(user3, info.reportId)
+    }
+
+    @Test(expected = OpenTriedReportBeenOpenedException::class)
+    fun openReportThrownOpenTriedReportBeenOpenedException() {
+        val info = reportService.createReport(reportModel)
+        reportService.openReport(user1, info.reportId)
+    }
+
+    @Test(expected = ReportNotFoundException::class)
+    fun closeReportThrownReportNotFoundException() {
+        reportService.closeReport(user1, 0)
+    }
+
+    @Test(expected = TeamAccessAuthorityNotException::class)
+    fun closeReportThrownTeamAccessAuthorityNotException() {
+        val info = reportService.createReport(reportModel)
+        reportService.closeReport(user3, info.reportId)
+    }
+
+    @Test(expected = CloseTriedReportBeenClosedException::class)
+    fun closeReportThrownOpenTriedReportBeenOpenedException() {
+        val info = reportService.createReport(reportModel)
+        reportService.closeReport(user1, info.reportId)
+        reportService.closeReport(user1, info.reportId)
+    }
+
 }

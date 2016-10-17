@@ -13,6 +13,11 @@ abstract class NotFoundException(statusText: String) : HttpStatusCodeException(H
 @ResponseStatus(HttpStatus.FORBIDDEN)
 abstract class ForbiddenException(statusText: String) : HttpStatusCodeException(HttpStatus.FORBIDDEN, statusText)
 
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+abstract class BadRequestException(statusText: String) : HttpStatusCodeException(HttpStatus.BAD_REQUEST, statusText)
+
+class BadRequestBodyException(statusText: String) : BadRequestException(statusText)
+
 //Team関係
 /**
  * Teamが見つからない時に投げられる
@@ -48,3 +53,7 @@ class ProductNotFoundException : NotFoundException {
 
 //Report関係
 class ReportNotFoundException(reportId: Int) : NotFoundException("specified report[id=$reportId] does not exist")
+
+class OpenTriedReportBeenOpenedException(reportId: Int) : BadRequestException("tried to open a report[id = $reportId] that has been opened")
+
+class CloseTriedReportBeenClosedException(reportId: Int) : BadRequestException("tried to close a report[id = $reportId] that has been closed")

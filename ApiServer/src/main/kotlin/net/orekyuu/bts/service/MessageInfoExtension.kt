@@ -12,7 +12,7 @@ import net.orekyuu.bts.message.team.TeamInfo
 import net.orekyuu.bts.message.user.UserInfo
 
 fun ofTeamInfo(team: Team, member: Iterable<AppUser> = team.member): TeamInfo {
-    val teamProduct = Product.find{ ProductTable.team.eq(team.id) }
+    val teamProduct = Product.find { ProductTable.team.eq(team.id) }
 
     return TeamInfo(
             teamId = team.id.value,
@@ -62,7 +62,8 @@ fun ofReportInfo(report: Report): ReportInfo {
             stacktrace = report.stacktrace,
             log = report.log,
             runtimeInfo = report.runtimeInfo,
-            product = ofSimpleProductInfo(report.product)
+            product = ofSimpleProductInfo(report.product),
+            state = report.state.status
     )
 }
 
@@ -72,6 +73,7 @@ fun ofSimpleReportInfo(report: Report): SimpleReportInfo {
             title = report.title,
             createdAt = report.createdAt.toString(),
             assign = ofUserInfo(report.assign),
-            version = report.version
+            version = report.version,
+            state = report.state.status
     )
 }

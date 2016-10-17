@@ -43,10 +43,16 @@ object ReportTable : IntIdTable() {
      * プロダクト
      */
     val product = reference("product", ProductTable)
+
+    /**
+     * レポートの状態
+     */
+    val state = enumeration("state", ReportState::class.java)
 }
 
-class Report(id: EntityID<Int>): Entity<Int>(id) {
-    companion object: EntityClass<Int, Report>(ReportTable)
+class Report(id: EntityID<Int>) : Entity<Int>(id) {
+    companion object : EntityClass<Int, Report>(ReportTable)
+
     var title by ReportTable.title
     var description by ReportTable.description
     var createdAt by ReportTable.createdAt
@@ -56,4 +62,9 @@ class Report(id: EntityID<Int>): Entity<Int>(id) {
     var log by ReportTable.log
     var runtimeInfo by ReportTable.runtimeInfo
     var product by Product.referencedOn(ReportTable.product)
+    var state by ReportTable.state
+}
+
+enum class ReportState(val status: String) {
+    OPENED("opened"), CLOSED("closed")
 }
