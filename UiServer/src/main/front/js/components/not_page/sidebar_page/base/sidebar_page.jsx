@@ -14,7 +14,7 @@ export class SidebarPage extends React.Component {
                     {this.props.sidebarContents}
                 </Sidebar>
                 <Contents>
-                    {this.props.mainContents}
+                    {this.props.children}
                 </Contents>
             </div>
         );
@@ -23,5 +23,5 @@ export class SidebarPage extends React.Component {
 
 SidebarPage.propTypes = {
     sidebarContents: PropTypes.node.isRequired,
-    mainContents: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired,
 };
