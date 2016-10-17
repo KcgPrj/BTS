@@ -20,3 +20,6 @@
 hs_err_pid*
 
 database.db*
+UiServer/node_modules/
+UiServer/.gradle/
+classes/
