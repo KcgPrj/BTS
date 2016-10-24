@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import nock from 'nock';
 import expect from 'expect';
 
-import * as actions from '../../../main/actions/api/team.js';
+import * as actions from '../../../../../../main/front/js/actions/api/team.js';
 import {createNock} from '../nock_utils.js';
 
 const middlewares = [thunk];
