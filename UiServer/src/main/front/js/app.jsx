@@ -15,6 +15,7 @@ import {Root} from './components/routes/root.jsx';
 import {SelectTeam} from './components/routes/select_team.jsx';
 import {TeamPage} from './components/routes/team_page.jsx';
 import {SampleRoute} from './components/routes/sample_route.jsx'
+import {MainPage} from './components/routes/main_page.jsx';
 
 const store = createStore(
     combineReducers({
@@ -42,6 +43,8 @@ ReactDOM.render(
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
                 <Route path=":teamId" component={TeamPage}
                        onEnter={(nextState) => store.dispatch(initTeamIndexPage(nextState.params.teamId))}
+                       onLeave={() => store.dispatch(clearCurrentPageState())}/>
+                <Route path="main" component={MainPage}
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
             </Route>
         </Router>
