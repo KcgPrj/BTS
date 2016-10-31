@@ -31,8 +31,7 @@ export class TeamSidebar extends React.Component {
         let teams = [];
         if (this.props.teams) {
             teams = this.props.teams.map(({teamId}) => {
-                // return <li key={teamId}><Link to={`team/${teamId}`}>{teamId}</Link></li>;
-                return <li key={teamId}><Link to={`sample-route`}>{teamId}</Link></li>;
+                return <li key={teamId}><Link to={encodeURI(`${teamId}`)}>{teamId}</Link></li>;
             });
         }
 
