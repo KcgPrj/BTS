@@ -7,7 +7,7 @@
     "watch": "webpack -w",
     "debug": "webpack",
     "lint": "eslint src/**",
-    "test": "mocha --compilers js:babel-register --recursive src/js/test",
+    "test": "mocha --compilers js:babel-register --recursive src/test/front/js/test",
     "test:watch": "npm test -- --watch"
   },
   "author": "",
