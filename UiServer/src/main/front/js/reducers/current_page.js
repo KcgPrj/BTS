@@ -1,6 +1,7 @@
 import {CLEAR_CURRENT_PAGE_STATE} from '../actions/route_action.js';
-import {PAGE_SELECT_TEAM} from '../pages.js';
+import {PAGE_SELECT_TEAM, PAGE_TEAM_INDEX} from '../pages.js';
 import selectTeam from './select_team.js';
+import teamPage from './team_page.js';
 
 /**
  * 現在いるページの状態を保持するstate
@@ -15,8 +16,12 @@ const currentPage = (state = {}, action) => {
 
     // それぞれのページに合わせたstateの処理をする
     switch (action.page) {
-        case PAGE_SELECT_TEAM:
+        case PAGE_SELECT_TEAM: {
             return selectTeam(state, action);
+        }
+        case PAGE_TEAM_INDEX: {
+            return teamPage(state, action);
+        }
         default:
             return state;
     }

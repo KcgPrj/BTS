@@ -5,6 +5,17 @@ import {SidebarPage} from './base/sidebar_page.jsx';
 
 // サイドバーにProductとMemberを表示するページ
 export class ProductAndMemberSidebar extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleClickNewProduct = this.handleClickNewProduct.bind(this);
+    }
+
+    handleClickNewProduct() {
+        const newProductName = 'new_product' + Math.floor(Math.random() * 10000);
+        this.props.onClickCreateProductButton(this.props.teamId, newProductName);
+    }
+
     /**
      * サイドバーに表示されるHTML
      * @returns {XML}
@@ -15,7 +26,9 @@ export class ProductAndMemberSidebar extends React.Component {
             products = this.props.products.map(p => {
                 //TODO: リンクを適切に書き換える
                 return (
-                    <li key={p.productId} className="li-count"><Link to={`/`}>{p.productName}</Link></li>
+                    <li key={p.productId} className="li-count">
+                        <Link to={`${this.props.teamId}/${p.productName}`}>{p.productName}</Link>
+                    </li>
                 );
             });
         }
@@ -41,7 +54,7 @@ export class ProductAndMemberSidebar extends React.Component {
                             PRODUCT
                             <img src="assets/img/arrow.png" alt="展開"/>
                         </label>
-                        <a href="">
+                        <a onClick={this.handleClickNewProduct}>
                             <span>＋</span>
                         </a>
                     </div>
@@ -80,7 +93,10 @@ export class ProductAndMemberSidebar extends React.Component {
 }
 
 ProductAndMemberSidebar.propTypes = {
-    products: React.PropTypes.array.isRequired,
-    member: React.PropTypes.array.isRequired,
+    // チームID
+    teamId: React.PropTypes.string.isRequired,
+    products: React.PropTypes.array,
+    member: React.PropTypes.array,
+    onClickCreateProductButton: React.PropTypes.func.isRequired,
     children: React.PropTypes.node.isRequired,
 };
