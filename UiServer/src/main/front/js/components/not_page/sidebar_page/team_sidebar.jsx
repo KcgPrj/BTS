@@ -63,7 +63,7 @@ export class TeamSidebar extends React.Component {
 }
 
 TeamSidebar.propTypes = {
-    teams: React.PropTypes.array.isRequired,
+    teams: React.PropTypes.array,
     children: React.PropTypes.node.isRequired,
     onClickCreateTeamButton: React.PropTypes.func.isRequired,
 };
