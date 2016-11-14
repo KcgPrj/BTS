@@ -9,6 +9,7 @@ import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 import {clearCurrentPageState} from './actions/route_action.js';
 import {initSelectTeamPage} from './actions/select_team.js';
 import {initTeamIndexPage} from './actions/team_page.js';
+import {initMainPage} from './actions/main_page.js';
 import reducers from './reducers/reducers.js';
 
 import {Root} from './components/routes/root.jsx';
@@ -44,7 +45,8 @@ ReactDOM.render(
                 <Route path=":teamId" component={TeamPage}
                        onEnter={(nextState) => store.dispatch(initTeamIndexPage(nextState.params.teamId))}
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
-                <Route path="main" component={MainPage}
+                <Route path=":teamId/:productId" component={MainPage}
+                       onEnter={(nextState) => store.dispatch(initMainPage(nextState.params.teamId))}
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
             </Route>
         </Router>
