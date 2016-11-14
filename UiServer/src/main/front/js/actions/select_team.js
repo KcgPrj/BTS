@@ -25,3 +25,5 @@ export function createTeam(teamId) {
             .catch(error => console.log(error));
     };
 }
+
+export {FETCH_TEAMS_REQUEST, FETCH_TEAMS_SUCCESS, FETCH_TEAMS_FAILURE} from './api/team.js';
