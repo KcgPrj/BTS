@@ -46,7 +46,7 @@ module.exports = {
 
   target: 'web',
 
-  devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
+  devtool: DEBUG ? 'eval-source-map' : false,
 
   plugins: plugins,
 
