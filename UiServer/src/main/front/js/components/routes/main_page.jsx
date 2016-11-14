@@ -1,26 +1,23 @@
 import React, {PropTypes} from 'react';
-import {ProductAndMemberSidebar} from '../not_page/sidebar_page/product_and_member_sidebar.jsx';
+import {connect} from 'react-redux';
 
-export class MainPage extends React.Component {
-  render() {
-    return (
-      <div>
-        <ProductAndMemberSidebar products={this.props.products} member={this.props.member}>
-          {/*<!--main content-->*/}
-                <div id="main" className="fr h100p w100p">
-                    <div className="main_inner tal h100p">
-                        {/*<!--<div className="plz_select">Please select Product.</div>-->*/}
-                        
-                        
-                        
-                        
-                        {/*<!--チケット一覧、プロダクトトークン(タブメニュー)要素ここから-->*/}
-                        
-                        
-                        
-                        
-                        {/*<!-- TAB CONTROLLERS -->*/}
-                        <div id="tab_menu">
+import {ProductAndMemberSidebar} from '../not_page/sidebar_page/product_and_member_sidebar.jsx';
+import {createProduct} from '../../actions/main_page.js';
+
+export class MainPageComponent extends React.Component {
+    render() {
+        return (
+            <div>
+                <ProductAndMemberSidebar
+                    teamId={this.props.params.teamId}
+                    products={this.props.products}
+                    member={this.props.member}
+                    onClickCreateProductButton={this.props.createProduct}
+                >
+                    {/*<!--main content-->*/}
+
+                    {/*<!-- TAB CONTROLLERS -->*/}
+                    <div id="tab_menu">
                         <input type="radio" name="nav" id="one" className="tab_input"/>
                         <label htmlFor="one">PRODUCT TOKEN</label>
 
@@ -31,28 +28,27 @@ export class MainPage extends React.Component {
                             <h1>Token</h1>
                         </article>
                         <article className="content two">
-                            
 
                             <div id="search">
                                 <table>
-                                  <tbody>
+                                    <tbody>
                                     <tr>
                                         <th>
                                             <span>Search </span>
                                         </th>
                                         <th>
-                                            <input type="search" className="search_box" />
+                                            <input type="search" className="search_box"/>
                                         </th>
                                         <th>
                                             <a href="">
                                                <span className="search_btn dib">
-                                                   <img src="assets/img/search.png" alt="検索" />
+                                                   <img src="assets/img/search.png" alt="検索"/>
                                                </span>
-                                            </a> 
+                                            </a>
                                         </th>
                                     </tr>
-                                  </tbody>
-                                </table>  
+                                    </tbody>
+                                </table>
                             </div>
 
                             <div className="ticket_area m0a">
@@ -63,7 +59,7 @@ export class MainPage extends React.Component {
                                         <div className="t_title">Hogehogehoge</div>
                                         <div className="t_data">
                                             <table>
-                                              <tbody>
+                                                <tbody>
                                                 <tr>
                                                     <th>yuusendo</th>
                                                     <th>tantou</th>
@@ -72,56 +68,45 @@ export class MainPage extends React.Component {
                                                     <th>version</th>
                                                     <th>
                                                         <div className="comment">
-                                                            <img className="fl" src="assets/img/comment2.png" alt="コメント数"  />
+                                                            <img className="fl" src="assets/img/comment2.png"
+                                                                 alt="コメント数"/>
                                                             <span>6</span>
                                                         </div>
                                                     </th>
                                                 </tr>
-                                              </tbody>  
+                                                </tbody>
                                             </table>
                                         </div>
                                         <div className="t_border"></div>
-                                        </div>
+                                    </div>
                                 </a>
                                 {/*<!--ここまで-->*/}
-                                
-                                
+
                             </div>
                         </article>
-                        </div>
-                        
-                        
-                        
-                        
-                        
-                        {/*<!--チケット一覧、プロダクトトークン(タブメニュー)-->*/}
-                        
-                        
-                        
-                        
-                        
-                        
                     </div>
-                </div>
-        </ProductAndMemberSidebar>
-      </div>
-    );
-  }
+                    {/*<!--チケット一覧、プロダクトトークン(タブメニュー)-->*/}
+                </ProductAndMemberSidebar>
+            </div>
+        );
+    }
 }
 
-MainPage.propTypes = {
-  products: PropTypes.array,
-  member: PropTypes.array,
+MainPageComponent.propTypes = {
+    products: PropTypes.array,
+    member: PropTypes.array,
+    createProduct: PropTypes.func.isRequired,
 };
 
-// ダミーデータ
-MainPage.defaultProps = {
-  products: [
-    {"productId": 1, "productName": "name", "token": "17b60fff-c2cf-4d35-96b4-f81832f4e30d"},
-    {"productId": 2, "productName": "name2", "token": "17b60fff-c2cf-4d35-96b4-222222222222"},
-  ],
-  member: [
-    {"id": 1, "name": "user1", "type": "GITHUB"},
-    {"id": 2, "name": "user2", "type": "GITHUB"},
-  ],
-};
+export const MainPage = connect(state => {
+    return {
+        products: state.currentPage.products,
+        member: state.currentPage.member,
+    };
+}, dispatch => {
+    return {
+        createProduct: (teamId, productName) => {
+            dispatch(createProduct(teamId, productName));
+        },
+    };
+})(MainPageComponent);
