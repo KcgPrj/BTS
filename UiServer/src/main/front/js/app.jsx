@@ -26,6 +26,10 @@ const store = createStore(
 
 const history = syncHistoryWithStore(hashHistory, store);
 
+store.subscribe(() => {
+    console.log(store.getState());
+});
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
