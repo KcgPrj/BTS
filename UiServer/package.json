@@ -8,7 +8,8 @@
     "debug": "webpack",
     "lint": "eslint src/**",
     "test": "mocha --compilers js:babel-register --recursive src/test/front/js/test",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "server": "webpack-dev-server --inline --colors --progress --display-error-details --display-cached  --content-base src/main/front"
   },
   "author": "",
   "repository": {
