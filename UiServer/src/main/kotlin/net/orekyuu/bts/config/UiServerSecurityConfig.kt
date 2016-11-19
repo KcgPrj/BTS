@@ -111,18 +111,19 @@ abstract class AbstractSuccessHandler(
             return
         }
 
-        val userInfo: UserInfo
-        try {
+        val userInfo: UserInfo = try {
             val userInfoEndpoint = "http://localhost:18080/user/"
-            userInfo = restTemplate.getForEntity(userInfoEndpoint, UserInfo::class.java).body
+            restTemplate.getForEntity(userInfoEndpoint, UserInfo::class.java).body
         } catch(e: HttpServerErrorException) {
             //500エラーならユーザーが見つからなかったので新しく作成
             if(e.statusCode.is5xxServerError) {
                 logger.info("User not found")
                 val url = "http://localhost:18080/open/user/create/${endpointPostfix(userType)}"
                 val name = authentication.name
-                userInfo = restTemplate.postForEntity(url, CreateUserMessage(name), UserInfo::class.java).body
-                logger.info("User created")
+                restTemplate.postForEntity(url, CreateUserMessage(name), UserInfo::class.java).body.let {
+                    logger.info("User created")
+                    it
+                }
             } else {
                 //その他のエラーは想定していないのでスタックトレースを出してスロー
                 e.printStackTrace()
