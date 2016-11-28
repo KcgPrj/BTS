@@ -60,6 +60,8 @@ body,html{
     //メインコンテンツ全体
     #main{
         margin-left: -300px;
+		height: 100%;
+		width: 100%;
         //メインコンテンツ中身
         .main_inner{
             margin-left: 300px;
@@ -391,10 +393,9 @@ input[type="checkbox"].on-off:checked + ol{
 .sk-cube-grid {
     @include size(40px,40px);
     position: relative;
-    top: 50%;
     -webkit-transform: translateY(-50%); /* Safari用 */
     transform: translateY(-50%);
-    margin: 0 auto;
+    margin: 100px auto 0;
 }
 
 .side_inner .sk-cube-grid{
