@@ -48,7 +48,7 @@ body,html{
 #wrapper{
     top: 0;
     left: 0;
-    
+
     //サイドバー全体
     #side{
         width: 300px;
@@ -56,7 +56,7 @@ body,html{
         border-right: 2px solid #333;
         background-color: rgba(69,76,83,0.7);
     }
-    
+
     //メインコンテンツ全体
     #main{
         margin-left: -300px;
@@ -106,16 +106,16 @@ body,html{
     color: #fff;
     font-family: 'Fjalla One', sans-serif;
     font-size: 25px;
-    
+
     label{
         cursor: pointer;
-        
+
         img{
             @include size(35px,35px);
             transition: all 0.3s;
         }
     }
-    
+
     span{
         display: block;
         float: right;
@@ -132,7 +132,7 @@ body,html{
         @include setPrefix(border-radius,5px);
         @include setPrefix(transition,all 0.2s);
     }
-    
+
     span:hover{
         background: rgba(30, 39, 54, 0.85);
     }
@@ -148,7 +148,7 @@ body,html{
     @include size(500px,auto);
     overflow-x: hidden;
     overflow-y: auto;
-    
+
 }
 #products{
     height: auto;
@@ -176,7 +176,7 @@ body,html{
     @include setPrefix(transition,all 0.5s);
     padding: 0;
     list-style: none;
-    
+
     li{
         word-wrap: break-word;
         font-size: 20px;
@@ -187,14 +187,14 @@ body,html{
         position:relative;
         display: block;
         background: #323e4a;
-        padding:5px 0px 5px 50px; 
+        padding:5px 0px 5px 50px;
         border-right: none;
         border-radius: 2px;
     }
     li.li-count:after{
         counter-increment: li;
         content: counter(li);
-        position: absolute;	
+        position: absolute;
         left: 0px;
         top: 0px;
         background: #252f3b;
@@ -205,16 +205,16 @@ body,html{
         font-weight: bold;
         border-radius: 2px;
     }
-    
+
     li:hover{
         background:#263241;
     }
-    
+
 }
 
 .t_list{
     li{
-        padding-left:10px; 
+        padding-left:10px;
         border-bottom: 2px solid #333;
         @include setPrefix(border-radius,0 0 0 5px);
     }
@@ -266,14 +266,14 @@ input[type="checkbox"].on-off:checked + ol{
     @include size(auto,100%);
     min-width: 1140px;
     padding-top: 30px;
-    
+
     a .ticket:hover{
         border: 1px solid #358164;
     }
     .ticket{
         background: rgba(0,0,0,0.3);
         padding: 10px;
-        
+
         .t_title{
             font-family: 'Ubuntu Condensed', sans-serif;
             color: #fff;
@@ -287,14 +287,14 @@ input[type="checkbox"].on-off:checked + ol{
         }
         .t_data{
             width: 900px;
-            
+
             table{
                 margin-top: 10px;
                 table-layout: fixed;
                 width: 100%;
                 color: #fff;
                 font-family: 'Abel', sans-serif;
-                
+
             }
         }
         .comment{
@@ -317,11 +317,11 @@ input[type="checkbox"].on-off:checked + ol{
 #search{
     width: 1140px;
     margin: 20px 0 0 10px;
-    
+
     input.search_box{
         border:0;
         padding:10px;
-        margin-left: 10px; 
+        margin-left: 10px;
         font-size:1.3em;
         font-family:Arial, sans-serif;
         color:#aaa;
@@ -329,11 +329,11 @@ input[type="checkbox"].on-off:checked + ol{
         @include size(30px,800px);
         @include setPrefix(border-radius,3px);
         @include setPrefix(box-shadow,0px 1px rgba(255, 255, 255, 0.5));
-    }    
+    }
     input.search_box:focus {
         border:solid 1px #6cdb9b;
     }
-        
+
     span{
         color: #fff;
         font-size: 30px;
@@ -344,20 +344,19 @@ input[type="checkbox"].on-off:checked + ol{
         background: rgba(0,0,0,.2);
         line-height: 32px;
         @include setPrefix(border-radius,5px);
-        
+
         img{
             @include size(20px,20px);
             margin-left: 5px;
             }
         }
-    
+
     .search_btn:hover{
         background: rgba(255, 255, 255, 0.1);
     }
     }
 
-.tab_input, .content {
-    display: none;
+.content {
     background: rgba(33, 40, 54, 0.7);
     line-height: 25px;
     padding: 5px 25px;
@@ -365,8 +364,6 @@ input[type="checkbox"].on-off:checked + ol{
     font: normal 1em/150% Sans-Serif;
     min-width: 200px;
 }
-#one:checked ~ .one,
-#two:checked ~ .two,{display: block;}
 
 #tab_menu label {
     cursor: pointer;
@@ -380,10 +377,10 @@ input[type="checkbox"].on-off:checked + ol{
     font-family: 'Ubuntu Condensed', sans-serif;
     font-size: 20px;
     margin-right: -3px;
-    transition: background .10s linear;  
+    transition: background .10s linear;
 }
 
-#tab_menu label:hover, #tab_menu input:checked + label {background: rgba(33, 40, 54, 0.7);;}
+#tab_menu label:hover, #tab_menu .active-tab {background: rgba(33, 40, 54, 0.7);;}
 
 
 //WAIT ANIM COPY
@@ -406,7 +403,7 @@ input[type="checkbox"].on-off:checked + ol{
     background-color: #59d09d;
     float: left;
     -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-    animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+    animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
 }
 
 
@@ -444,7 +441,7 @@ input[type="checkbox"].on-off:checked + ol{
         transform: scale3D(1, 1, 1);
     } 35% {
         -webkit-transform: scale3D(0, 0, 1);
-        transform: scale3D(0, 0, 1); 
+        transform: scale3D(0, 0, 1);
     }
 }
 
@@ -455,7 +452,7 @@ input[type="checkbox"].on-off:checked + ol{
     } 35% {
         -webkit-transform: scale3D(0, 0, 1);
         transform: scale3D(0, 0, 1);
-    } 
+    }
 }
 
 //mediaquery
@@ -463,30 +460,30 @@ input[type="checkbox"].on-off:checked + ol{
 @media screen and (max-height: 885px){
     .site_logo{
         @include size(150px,150px);
-        
+
         img{
             @include size(150px,150px);
         }
     }
     .side_title{
         font-size: 25px;
-        
+
         label img{
             @include size(30px,30px);
         }
     }
-    
+
     #products,
     #members{
-        
+
         input[type="checkbox"].on-off:checked + ol{
             height: 200px;
         }
-        
+
         .p_list,
         .m_list,
         .t_list{
-            
+
             li{
                 font-size: 16px;
             }
@@ -508,7 +505,7 @@ input[type="checkbox"].on-off:checked + ol{
     }
     .side_title{
         font-size: 18px;
-        
+
         label img{
             @include size(25px,25px);
         }

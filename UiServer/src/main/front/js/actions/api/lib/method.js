@@ -7,12 +7,14 @@ import Cookies from 'js-cookie';
  * @param {string} url APIのエンドポイント
  * @return {Promise.<*>}
  */
-export async function getRequest(url) {
+// TODO GETリクエストにbodyがあるのは不自然なので削除する
+export async function getRequest(url, body) {
     const options = getOptions();
 
     let response;
     try {
         response = await fetch(url, {
+            body: JSON.stringify(body),
             ...options,
         });
     } catch (err) {

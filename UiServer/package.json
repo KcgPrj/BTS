@@ -18,6 +18,7 @@
   "license": "",
   "dependencies": {
     "babel-polyfill": "^6.9.0",
+    "classnames": "^2.2.5",
     "gulp-sass": "^2.3.2",
     "history": "^2.1.2",
     "isomorphic-fetch": "^2.2.1",
