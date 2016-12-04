@@ -16,6 +16,8 @@
               th:href="@{'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300'}" rel='stylesheet' type='text/css' />
         <link href='https://fonts.googleapis.com/css?family=Ubuntu+Condensed'
               th:href="@{'https://fonts.googleapis.com/css?family=Ubuntu+Condensed'}" rel='stylesheet' type='text/css' />
+        <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One" 
+        	  th:href="@{'https://fonts.googleapis.com/css?family=Pathway+Gothic+One'}" rel="stylesheet" type='text/css' />
     </head>
     <body>
         <div class="full_bg pst-f">
@@ -33,11 +35,48 @@
                         <!--モーダルウィンドウここから-->
                         <section class="modal-window" id="modal-p01">
 							<div class="modal-inner">
-								<p>
-									コンテンツ<br>
-									コンテンツ<br>
-									コンテンツ
-								</p>
+								<form action="" method="">
+									<table>
+										<tr>
+											<th>
+												<label for="name">Product name : </label>
+											</th>
+											<th>
+												<input class="modal-input" type="text" id="Pname" />
+											</th>
+										</tr>
+										<tr>
+											<th></th>
+											<th>
+												<button type="submit">create</button>
+											</th>
+										</tr>
+									</table>
+								</form>
+							</div>
+							<a href="#!" class="modal-close">&times;</a>
+						</section>
+                       
+                       <section class="modal-window" id="modal-p02">
+							<div class="modal-inner">
+								<form action="" method="">
+									<table>
+										<tr>
+											<th>
+												<label for="name">Member name : </label>
+											</th>
+											<th>
+												<input class="modal-input" type="text" id="Mname" />
+											</th>
+										</tr>
+										<tr>
+											<th></th>
+											<th>
+												<button type="submit">add to</button>
+											</th>
+										</tr>
+									</table>
+								</form>
 							</div>
 							<a href="#!" class="modal-close">&times;</a>
 						</section>
@@ -181,7 +220,7 @@
                                     MEMBER
                                     <img src="assets/img/arrow.png" alt="展開">
                                 </label>
-                                <a href=""><span>＋</span></a>
+                                <a href="#modal-p02"><span>＋</span></a>
                             </div>
                             <input type="checkbox" id="Panel2" class="on-off" />
                             <ol class="m_list">
