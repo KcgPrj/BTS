@@ -63,16 +63,68 @@ export class MainPageComponent extends React.Component {
                                 {/*<!--チケットここから-->*/}
                                 <a href="">
                                     <div className="ticket">
+                                        <div className="t_title">登録できない</div>
+                                        <div className="t_data">
+                                            <table>
+                                                <tbody>
+                                                <tr>
+                                                    <th>Blocker</th>
+                                                    <th>山田 太郎</th>
+                                                    <th>2016/07/12</th>
+                                                    <th>Open</th>
+                                                    <th>0.1.0</th>
+                                                    <th>
+                                                        <div className="comment">
+                                                            <img className="fl" src="assets/img/comment2.png"
+                                                                 alt="コメント数"/>
+                                                            <span>6</span>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div className="t_border"></div>
+                                    </div>
+                                </a>
+                                <a href="">
+                                    <div className="ticket">
+                                        <div className="t_title">チケット追加に失敗する</div>
+                                        <div className="t_data">
+                                            <table>
+                                                <tbody>
+                                                <tr>
+                                                    <th>Major</th>
+                                                    <th>佐藤 二郎</th>
+                                                    <th>2016/11/13</th>
+                                                    <th>Closed</th>
+                                                    <th>1.2.1</th>
+                                                    <th>
+                                                        <div className="comment">
+                                                            <img className="fl" src="assets/img/comment2.png"
+                                                                 alt="コメント数"/>
+                                                            <span>6</span>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div className="t_border"></div>
+                                    </div>
+                                </a>
+                                <a href="">
+                                    <div className="ticket">
                                         <div className="t_title">Hogehogehoge</div>
                                         <div className="t_data">
                                             <table>
                                                 <tbody>
                                                 <tr>
-                                                    <th>yuusendo</th>
-                                                    <th>tantou</th>
+                                                    <th>Blocker</th>
+                                                    <th>山田 太郎</th>
                                                     <th>2016/07/12</th>
-                                                    <th>joutai</th>
-                                                    <th>version</th>
+                                                    <th>Open</th>
+                                                    <th>0.1.0</th>
                                                     <th>
                                                         <div className="comment">
                                                             <img className="fl" src="assets/img/comment2.png"
