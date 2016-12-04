@@ -5,6 +5,7 @@
         <title>TOP</title>
         <link rel="stylesheet" href="assets/css/base.css" th:href="@{'/css/base.css'}">
         <link rel="stylesheet" href="assets/css/style.css" th:href="@{'/css/style.css'}">
+        <link rel="stylesheet" href="assets/css/modal.css" th:href="@{'/css/modal.css'}">
         
         <!--import font-->
         <link href='https://fonts.googleapis.com/css?family=Fjalla+One'
@@ -43,6 +44,57 @@
                        プロダクト選択中のメインコンテンツ部分ここまで
                         
                        -->
+                       
+                       <!--モーダルウィンドウここから-->
+                        <section class="modal-window" id="modal-p01">
+							<div class="modal-inner">
+								<form action="" method="">
+									<table>
+										<tr>
+											<th>
+												<label class="fr" for="Proname">Product name : </label>
+											</th>
+											<th>
+												<input class="modal-input" type="text" id="Pname" />
+											</th>
+										</tr>
+										<tr>
+											<th></th>
+											<th>
+												<button type="submit">create</button>
+											</th>
+										</tr>
+									</table>
+								</form>
+							</div>
+							<a href="#!" class="modal-close">&times;</a>
+						</section>
+                       
+                       <section class="modal-window" id="modal-p02">
+							<div class="modal-inner">
+								<form action="" method="">
+									<table>
+										<tr>
+											<th>
+												<label class="fr" for="Memname">Member name : </label>
+											</th>
+											<th>
+												<input class="modal-input" type="text" id="Mname" />
+											</th>
+										</tr>
+										<tr>
+											<th></th>
+											<th>
+												<button type="submit">add to</button>
+											</th>
+										</tr>
+									</table>
+								</form>
+							</div>
+							<a href="#!" class="modal-close">&times;</a>
+						</section>
+                        
+                        <!--ここまで-->
                     </div>
                 </div>
                 <div id="side" class="pst-f h100p fl">
@@ -62,7 +114,7 @@
                                     PRODUCT
                                     <img src="assets/img/arrow.png" alt="展開">
                                 </label>
-                                <a href="">
+                                <a href="#modal-p01">
                                     <span>＋</span>
                                 </a>
                             </div>
@@ -85,7 +137,7 @@
                                     MEMBER
                                     <img src="assets/img/arrow.png" alt="展開">
                                 </label>
-                                <span>＋</span>
+                                <a href="#modal-p02"><span>＋</span></a>
                             </div>
                             <input type="checkbox" id="Panel2" class="on-off" />
                             <ol class="m_list">
