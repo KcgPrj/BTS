@@ -1,6 +1,11 @@
 import {PAGE_MAIN_PAGE} from '../pages.js';
 import {fetchProducts, createProduct as createProductApi} from './api/product.js';
 import {fetchMember} from './api/member.js';
+import {fetchReports} from './api/report.js';
+
+export const INIT_STATE = 'INIT_STATE';
+export const SHOW_PRODUCT_TOKEN_TAB = 'SHOW_PRODUCT_TOKEN_TAB';
+export const SHOW_REPORT_TAB = 'SHOW_REPORT_TAB';
 
 /**
  * ページを初期化する。
@@ -8,8 +13,15 @@ import {fetchMember} from './api/member.js';
  * @returns {function()}
  */
 export function initMainPage(teamId) {
-    return dispatch => {
-        Promise.all([dispatch(fetchProducts(PAGE_MAIN_PAGE, teamId)), dispatch(fetchMember(PAGE_MAIN_PAGE, teamId))])
+    return (dispatch, getState) => {
+        dispatch(initState());
+        Promise.all([
+            dispatch(fetchProducts(PAGE_MAIN_PAGE, teamId)),
+            dispatch(fetchMember(PAGE_MAIN_PAGE, teamId)),
+        ])
+            .then(() => {
+                const {productId, productToken} = getState();
+            })
             .catch(error => console.log(error));
     };
 }
@@ -27,6 +39,27 @@ export function createProduct(teamId, productName) {
                 return dispatch(fetchProducts(PAGE_MAIN_PAGE, teamId));
             })
             .catch(error => console.log(error));
+    };
+}
+
+export function initState() {
+    return {
+        type: INIT_STATE,
+        page: PAGE_MAIN_PAGE,
+    };
+}
+
+export function showProductTokenTab() {
+    return {
+        type: SHOW_PRODUCT_TOKEN_TAB,
+        page: PAGE_MAIN_PAGE,
+    };
+}
+
+export function showReportTab() {
+    return {
+        type: SHOW_REPORT_TAB,
+        page: PAGE_MAIN_PAGE,
     };
 }
 

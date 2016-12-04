@@ -2,10 +2,15 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 
 import {ProductAndMemberSidebar} from '../not_page/sidebar_page/product_and_member_sidebar.jsx';
-import {createProduct} from '../../actions/main_page.js';
+import * as Actions from '../../actions/main_page.js';
 
 export class MainPageComponent extends React.Component {
     render() {
+        const currentTab = this.props.currentTab;
+        const thisProduct = this.props.products.find(i => {
+            return i.productName === this.props.params.productId;
+        });
+
         return (
             <div>
                 <ProductAndMemberSidebar
@@ -18,16 +23,18 @@ export class MainPageComponent extends React.Component {
 
                     {/*<!-- TAB CONTROLLERS -->*/}
                     <div id="tab_menu">
-                        <input type="radio" name="nav" id="one" className="tab_input"/>
-                        <label htmlFor="one">PRODUCT TOKEN</label>
+                        <label onClick={this.props.showProductTokenTab}
+                               className={currentTab === 'productToken' && 'active-tab'}>PRODUCT TOKEN</label>
+                        <label onClick={this.props.showReportTab}
+                               className={currentTab === 'report' && 'active-tab'}>REPORT</label>
 
-                        <input type="radio" name="nav" id="two" className="tab_input"/>
-                        <label htmlFor="two">REPORT</label>
-
-                        <article className="content one">
-                            <h1>Token</h1>
+                        {currentTab === 'productToken' &&
+                        <article className="content">
+                            <h1>{thisProduct ? thisProduct.token : ''}</h1>
                         </article>
-                        <article className="content two">
+                        }
+                        {currentTab === 'report' &&
+                        <article className="content">
 
                             <div id="search">
                                 <table>
@@ -84,6 +91,7 @@ export class MainPageComponent extends React.Component {
 
                             </div>
                         </article>
+                        }
                     </div>
                     {/*<!--チケット一覧、プロダクトトークン(タブメニュー)-->*/}
                 </ProductAndMemberSidebar>
@@ -95,18 +103,28 @@ export class MainPageComponent extends React.Component {
 MainPageComponent.propTypes = {
     products: PropTypes.array,
     member: PropTypes.array,
+    currentTab: PropTypes.string.isRequired,
     createProduct: PropTypes.func.isRequired,
+    showProductTokenTab: PropTypes.func.isRequired,
+    showReportTab: PropTypes.func.isRequired,
 };
 
 export const MainPage = connect(state => {
     return {
         products: state.currentPage.products,
         member: state.currentPage.member,
+        currentTab: state.currentPage.currentTab,
     };
 }, dispatch => {
     return {
+        showProductTokenTab: () => {
+            dispatch(Actions.showProductTokenTab());
+        },
+        showReportTab: () => {
+            dispatch(Actions.showReportTab());
+        },
         createProduct: (teamId, productName) => {
-            dispatch(createProduct(teamId, productName));
+            dispatch(Actions.createProduct(teamId, productName));
         },
     };
 })(MainPageComponent);
