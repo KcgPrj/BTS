@@ -1,15 +1,25 @@
 import {PAGE_MAIN_PAGE} from '../pages.js';
 import {fetchProducts, createProduct as createProductApi} from './api/product.js';
 import {fetchMember} from './api/member.js';
+import {fetchReports} from './api/report.js';
+
+export const INIT_STATE = 'INIT_STATE';
+export const SHOW_PRODUCT_TOKEN_TAB = 'SHOW_PRODUCT_TOKEN_TAB';
+export const SHOW_REPORT_TAB = 'SHOW_REPORT_TAB';
 
 /**
  * ページを初期化する。
  * チームを取得する。
  * @returns {function()}
  */
-export function initMainPage(teamId) {
+export function initMainPage(teamId, productId) {
     return dispatch => {
-        Promise.all([dispatch(fetchProducts(PAGE_MAIN_PAGE, teamId)), dispatch(fetchMember(PAGE_MAIN_PAGE, teamId))])
+        dispatch(initState());
+        Promise.all([
+            dispatch(fetchProducts(PAGE_MAIN_PAGE, teamId)),
+            dispatch(fetchMember(PAGE_MAIN_PAGE, teamId)),
+            dispatch(fetchReports(PAGE_MAIN_PAGE, productId)),
+        ])
             .catch(error => console.log(error));
     };
 }
@@ -30,6 +40,27 @@ export function createProduct(teamId, productName) {
     };
 }
 
+export function initState() {
+    return {
+        type: INIT_STATE,
+        page: PAGE_MAIN_PAGE,
+    };
+}
+
+export function showProductTokenTab() {
+    return {
+        type: SHOW_PRODUCT_TOKEN_TAB,
+        page: PAGE_MAIN_PAGE,
+    };
+}
+
+export function showReportTab() {
+    return {
+        type: SHOW_REPORT_TAB,
+        page: PAGE_MAIN_PAGE,
+    };
+}
+
 export {
     FETCH_PRODUCTS_REQUEST,
     FETCH_PRODUCTS_SUCCESS,
@@ -39,4 +70,14 @@ export {
     CREATE_PRODUCT_FAILURE,
 } from './api/product.js';
 
-export {FETCH_MEMBER_REQUEST, FETCH_MEMBER_SUCCESS, FETCH_MEMBER_FAILURE} from './api/member.js';
+export {
+    FETCH_MEMBER_REQUEST,
+    FETCH_MEMBER_SUCCESS,
+    FETCH_MEMBER_FAILURE,
+} from './api/member.js';
+
+export {
+    FETCH_REPORTS_REQUEST,
+    FETCH_REPORTS_SUCCESS,
+    FETCH_REPORTS_FAILURE,
+} from './api/report.js';

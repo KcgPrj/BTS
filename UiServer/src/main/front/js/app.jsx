@@ -46,7 +46,7 @@ ReactDOM.render(
                        onEnter={(nextState) => store.dispatch(initTeamIndexPage(nextState.params.teamId))}
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
                 <Route path=":teamId/:productId" component={MainPage}
-                       onEnter={(nextState) => store.dispatch(initMainPage(nextState.params.teamId))}
+                       onEnter={(nextState) => store.dispatch(initMainPage(nextState.params.teamId, nextState.params.productId))}
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
             </Route>
         </Router>

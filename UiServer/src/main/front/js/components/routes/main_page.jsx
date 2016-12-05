@@ -1,11 +1,58 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
+import moment from 'moment';
 
 import {ProductAndMemberSidebar} from '../not_page/sidebar_page/product_and_member_sidebar.jsx';
-import {createProduct} from '../../actions/main_page.js';
+import * as Actions from '../../actions/main_page.js';
 
 export class MainPageComponent extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.genReportTickets = this.genReportTickets.bind(this);
+    }
+
+    genReportTickets() {
+        if (!this.props.reports) {
+            return false;
+        }
+        return this.props.reports.map(i => {
+            return (
+                <a href="" key={i.reportId}>
+                    <div className="ticket">
+                        <div className="t_title">{i.title}</div>
+                        <div className="t_data">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th>{i.assign.name}</th>
+                                    <th>{moment(i.createdAt).format('YYYY-MM-DD HH:mm:ss')}</th>
+                                    <th>{i.state}</th>
+                                    <th>{i.version}</th>
+                                    <th>
+                                        <div className="comment">
+                                            <img className="fl" src="assets/img/comment2.png"
+                                                 alt="コメント数"/>
+                                            <span>6</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="t_border"></div>
+                    </div>
+                </a>
+            );
+        });
+    }
+
     render() {
+        const currentTab = this.props.currentTab;
+        const thisProduct = this.props.products.find(i => {
+            return i.productId === parseInt(this.props.params.productId);
+        });
+
         return (
             <div>
                 <ProductAndMemberSidebar
@@ -18,16 +65,18 @@ export class MainPageComponent extends React.Component {
 
                     {/*<!-- TAB CONTROLLERS -->*/}
                     <div id="tab_menu">
-                        <input type="radio" name="nav" id="one" className="tab_input"/>
-                        <label htmlFor="one">PRODUCT TOKEN</label>
+                        <label onClick={this.props.showProductTokenTab}
+                               className={currentTab === 'productToken' && 'active-tab'}>PRODUCT TOKEN</label>
+                        <label onClick={this.props.showReportTab}
+                               className={currentTab === 'report' && 'active-tab'}>REPORT</label>
 
-                        <input type="radio" name="nav" id="two" className="tab_input"/>
-                        <label htmlFor="two">REPORT</label>
-
-                        <article className="content one">
-                            <h1>Token</h1>
+                        {currentTab === 'productToken' &&
+                        <article className="content">
+                            <h1>{thisProduct ? thisProduct.token : ''}</h1>
                         </article>
-                        <article className="content two">
+                        }
+                        {currentTab === 'report' &&
+                        <article className="content">
 
                             <div id="search">
                                 <table>
@@ -53,37 +102,11 @@ export class MainPageComponent extends React.Component {
 
                             <div className="ticket_area m0a">
 
-                                {/*<!--チケットここから-->*/}
-                                <a href="">
-                                    <div className="ticket">
-                                        <div className="t_title">Hogehogehoge</div>
-                                        <div className="t_data">
-                                            <table>
-                                                <tbody>
-                                                <tr>
-                                                    <th>yuusendo</th>
-                                                    <th>tantou</th>
-                                                    <th>2016/07/12</th>
-                                                    <th>joutai</th>
-                                                    <th>version</th>
-                                                    <th>
-                                                        <div className="comment">
-                                                            <img className="fl" src="assets/img/comment2.png"
-                                                                 alt="コメント数"/>
-                                                            <span>6</span>
-                                                        </div>
-                                                    </th>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div className="t_border"></div>
-                                    </div>
-                                </a>
-                                {/*<!--ここまで-->*/}
+                                {this.genReportTickets()}
 
                             </div>
                         </article>
+                        }
                     </div>
                     {/*<!--チケット一覧、プロダクトトークン(タブメニュー)-->*/}
                 </ProductAndMemberSidebar>
@@ -95,18 +118,30 @@ export class MainPageComponent extends React.Component {
 MainPageComponent.propTypes = {
     products: PropTypes.array,
     member: PropTypes.array,
+    reports: PropTypes.array,
+    currentTab: PropTypes.string.isRequired,
     createProduct: PropTypes.func.isRequired,
+    showProductTokenTab: PropTypes.func.isRequired,
+    showReportTab: PropTypes.func.isRequired,
 };
 
 export const MainPage = connect(state => {
     return {
         products: state.currentPage.products,
         member: state.currentPage.member,
+        reports: state.currentPage.reports,
+        currentTab: state.currentPage.currentTab,
     };
 }, dispatch => {
     return {
+        showProductTokenTab: () => {
+            dispatch(Actions.showProductTokenTab());
+        },
+        showReportTab: () => {
+            dispatch(Actions.showReportTab());
+        },
         createProduct: (teamId, productName) => {
-            dispatch(createProduct(teamId, productName));
+            dispatch(Actions.createProduct(teamId, productName));
         },
     };
 })(MainPageComponent);
