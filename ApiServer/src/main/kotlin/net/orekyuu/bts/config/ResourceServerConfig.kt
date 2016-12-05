@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 open class BTSResourceServerConfigurer : ResourceServerConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.authorizeRequests()
-                .antMatchers("/open/**").permitAll()
+                .antMatchers("/open/**", "/report/create").permitAll()
                 // CORSのpreflight requestを許可する
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
