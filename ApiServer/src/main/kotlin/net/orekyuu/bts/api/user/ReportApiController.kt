@@ -34,12 +34,12 @@ class ReportApiController {
     }
 
     @GetMapping(value = "/list")
-    fun list(@RequestBody req: ReportListRequest): List<ReportInfo> {
+    fun list(@RequestParam("productId", required = false) productId: Int?, @RequestParam("productToken", required = false) productToken: String?): List<ReportInfo> {
         val user = appUserService.findAppUserFromSecurityContext()!!
-        req.productId?.let {
+        productId?.let {
             return reportService.findFromProductId(user, it)
         }
-        req.productToken?.let {
+        productToken?.let {
             return reportService.findFromProductToken(user, it)
         }
         throw BadRequestBodyException("productId and productToken is null")
