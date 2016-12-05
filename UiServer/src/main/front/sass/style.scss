@@ -60,6 +60,8 @@ body,html{
     //メインコンテンツ全体
     #main{
         margin-left: -300px;
+		height: 100%;
+		width: 100%;
         //メインコンテンツ中身
         .main_inner{
             margin-left: 300px;
@@ -264,7 +266,7 @@ input[type="checkbox"].on-off:checked + ol{
 /*チケット*/
 .ticket_area{
     @include size(auto,100%);
-    min-width: 1140px;
+    min-width: 900px;
     padding-top: 30px;
     
     a .ticket:hover{
@@ -315,7 +317,7 @@ input[type="checkbox"].on-off:checked + ol{
 }
 
 #search{
-    width: 1140px;
+    min-width: 900px;
     margin: 20px 0 0 10px;
     
     input.search_box{
@@ -326,7 +328,7 @@ input[type="checkbox"].on-off:checked + ol{
         font-family:Arial, sans-serif;
         color:#aaa;
         border:solid 1px #ccc;
-        @include size(30px,800px);
+        @include size(30px,750px);
         @include setPrefix(border-radius,3px);
         @include setPrefix(box-shadow,0px 1px rgba(255, 255, 255, 0.5));
     }    
@@ -391,10 +393,9 @@ input[type="checkbox"].on-off:checked + ol{
 .sk-cube-grid {
     @include size(40px,40px);
     position: relative;
-    top: 50%;
     -webkit-transform: translateY(-50%); /* Safari用 */
     transform: translateY(-50%);
-    margin: 0 auto;
+    margin: 100px auto 0;
 }
 
 .side_inner .sk-cube-grid{
