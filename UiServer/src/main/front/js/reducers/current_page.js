@@ -3,6 +3,7 @@ import * as PAGE from '../pages.js';
 import selectTeam from './select_team.js';
 import teamPage from './team_page.js';
 import mainPage from './main_page.js';
+import productDescription from './product_description.js';
 
 /**
  * 現在いるページの状態を保持するstate
@@ -25,6 +26,9 @@ const currentPage = (state = {}, action) => {
         }
         case PAGE.PAGE_MAIN_PAGE: {
             return mainPage(state, action);
+        }
+        case PAGE.PAGE_PRODUCT_DESCRIPTION_PAGE: {
+            return productDescription(state, action);
         }
         default:
             return state;

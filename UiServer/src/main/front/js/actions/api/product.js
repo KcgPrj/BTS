@@ -3,12 +3,38 @@ import 'babel-polyfill';
 import {getRequest, postRequest} from './lib/method.js';
 import {checkStatus} from './lib/utils.js';
 
+export const FETCH_ONE_PRODUCT_REQUEST = 'FETCH_ONE_PRODUCT_REQUEST';
+export const FETCH_ONE_PRODUCT_SUCCESS = 'FETCH_ONE_PRODUCT_SUCCESS';
+export const FETCH_ONE_PRODUCT_FAILURE = 'FETCH_ONE_PRODUCT_FAILURE';
 export const FETCH_PRODUCTS_REQUEST = 'FETCH_PRODUCTS_REQUEST';
 export const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
 export const FETCH_PRODUCTS_FAILURE = 'FETCH_PRODUCTS_FAILURE';
 export const CREATE_PRODUCT_REQUEST = 'CREATE_PRODUCT_REQUEST';
 export const CREATE_PRODUCT_SUCCESS = 'CREATE_PRODUCT_SUCCESS';
 export const CREATE_PRODUCT_FAILURE = 'CREATE_PRODUCT_FAILURE';
+
+function fetchOneProductRequest(page) {
+    return {
+        page: page,
+        type: FETCH_ONE_PRODUCT_REQUEST,
+    };
+}
+
+function fetchOneProductSuccess(page, json) {
+    return {
+        page: page,
+        type: FETCH_ONE_PRODUCT_SUCCESS,
+        data: json,
+    };
+}
+
+function fetchOneProductFailure(page, error) {
+    return {
+        page: page,
+        type: FETCH_ONE_PRODUCT_FAILURE,
+        error: error,
+    };
+}
 
 function fetchProductsRequest(page) {
     return {
@@ -55,6 +81,30 @@ function createProductFailure(page, error) {
         error: error,
     }
 }
+
+/**
+ * プロダクトを一つ取得する
+ * @param page
+ * @param teamId
+ * @param productId
+ * @returns {function(*)}
+ */
+export function fetchOneProduct(page, teamId, productId) {
+    return async dispatch => {
+        dispatch(fetchOneProductRequest(page));
+
+        const response = getRequest(`http://localhost:18080/${teamId}/products/show/${productId}`);
+
+        return response
+            .then(res => checkStatus(res))
+            .then(json => dispatch(fetchOneProductSuccess(page, json)))
+            .catch(error => {
+                dispatch(fetchOneProductFailure(page, error));
+                return Promise.reject(error)
+            });
+    }
+}
+
 
 /**
  * プロダクトを取得する

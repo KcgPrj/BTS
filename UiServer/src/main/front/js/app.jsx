@@ -10,6 +10,7 @@ import {clearCurrentPageState} from './actions/route_action.js';
 import {initSelectTeamPage} from './actions/select_team.js';
 import {initTeamIndexPage} from './actions/team_page.js';
 import {initMainPage} from './actions/main_page.js';
+import {initProductDescriptionPage} from './actions/product_description.js';
 import reducers from './reducers/reducers.js';
 
 import {Root} from './components/routes/root.jsx';
@@ -17,6 +18,7 @@ import {SelectTeam} from './components/routes/select_team.jsx';
 import {TeamPage} from './components/routes/team_page.jsx';
 import {SampleRoute} from './components/routes/sample_route.jsx'
 import {MainPage} from './components/routes/main_page.jsx';
+import {ProductDescription} from './components/routes/report_description.jsx';
 
 const store = createStore(
     combineReducers({
@@ -47,6 +49,9 @@ ReactDOM.render(
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
                 <Route path=":teamId/:productId" component={MainPage}
                        onEnter={(nextState) => store.dispatch(initMainPage(nextState.params.teamId, nextState.params.productId))}
+                       onLeave={() => store.dispatch(clearCurrentPageState())}/>
+                <Route path=":teamId/:productId/product" component={ProductDescription}
+                       onEnter={(nextState) => store.dispatch(initProductDescriptionPage(nextState.params.teamId, nextState.params.productId))}
                        onLeave={() => store.dispatch(clearCurrentPageState())}/>
             </Route>
         </Router>

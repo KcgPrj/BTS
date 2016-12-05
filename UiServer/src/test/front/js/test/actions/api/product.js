@@ -12,10 +12,57 @@ const mockStore = configureMockStore(middlewares);
 const DUMMY_PAGE = 'DUMMY_PAGE';
 const TEAM1 = 'TEAM1';
 const PRODUCT1 = 'PRODUCT1';
+const PRODUCT1ID = 1;
 
 describe('products api actions', () => {
     afterEach(() => {
         nock.cleanAll();
+    });
+
+    it(`creates ${actions.FETCH_ONE_PRODUCT_SUCCESS} when fetching product has been done`, () => {
+        const responseBody = [{
+            // TODO
+        }];
+
+        createNock('http://localhost:18080', `/${TEAM1}/products/show/${PRODUCT1ID}`)
+            .get(`/${TEAM1}/products/show/${PRODUCT1ID}`)
+            .reply(200, responseBody);
+
+        const expectedActions = [
+            {page: DUMMY_PAGE, type: actions.FETCH_ONE_PRODUCT_REQUEST},
+            {
+                page: DUMMY_PAGE,
+                type: actions.FETCH_ONE_PRODUCT_SUCCESS,
+                data: responseBody,
+            },
+        ];
+        const store = mockStore({currentPage: {}});
+
+        return store.dispatch(actions.fetchOneProduct(DUMMY_PAGE, TEAM1, PRODUCT1ID))
+            .then(() => {
+                expect(store.getActions()).toEqual(expectedActions);
+            });
+    });
+
+    it(`creates ${actions.FETCH_ONE_PRODUCT_FAILURE} when fetching product has been failed`, () => {
+        createNock('http://localhost:18080', `/${TEAM1}/products/show/${PRODUCT1ID}`)
+            .get(`/${TEAM1}/products/show/${PRODUCT1ID}`)
+            .reply(401);
+
+        const expectedActions = [
+            {page: DUMMY_PAGE, type: actions.FETCH_ONE_PRODUCT_REQUEST},
+            {
+                page: DUMMY_PAGE,
+                type: actions.FETCH_ONE_PRODUCT_FAILURE,
+                error: new Error(401),
+            },
+        ];
+        const store = mockStore({currentPage: {}});
+
+        return store.dispatch(actions.fetchOneProduct(DUMMY_PAGE, TEAM1, PRODUCT1ID))
+            .catch(() => {
+                expect(store.getActions()).toEqual(expectedActions);
+            });
     });
 
     it(`creates ${actions.FETCH_PRODUCTS_SUCCESS} when fetching products has been done`, () => {
