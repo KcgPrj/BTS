@@ -23,11 +23,11 @@ open class BtsApplicationConfig {
     }
 
     @Bean
-    // http://localhost:8080からのクロスオリジンリクエストを許可する
+    // クロスオリジンリクエストを許可する
     open fun corsConfigurer(): WebMvcConfigurer {
         return object : WebMvcConfigurerAdapter() {
             override fun addCorsMappings(registry: CorsRegistry): Unit {
-                registry.addMapping("/**").allowedOrigins("http://localhost:8080").allowedHeaders("Authorization", "Content-Type")
+                registry.addMapping("/**").allowedOrigins("*").allowedHeaders("Authorization", "Content-Type")
             }
         }
     }

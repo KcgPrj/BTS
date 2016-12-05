@@ -103,27 +103,20 @@ class ReportApiControllerTest {
     fun list() {
         mockSecurity.enableGithubMock(user1.userName)
         val product = productService.registerToTeam(user1, team.teamId, "").product[0]
-        val listReq = """{"productId" : ${product.productId} , "productToken" : ""}"""
         mock.perform(
                 get("/report/list")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(listReq))
+                        .param("productId", product.productId.toString()))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
 
-        val listReq2 = """{"productId" : null , "productToken" : "${product.token}"}"""
         mock.perform(
                 get("/report/list")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(listReq2))
+                        .param("productToken", product.token))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
 
-        val listReq3 = """{"productId" : null , "productToken" : null}"""
         mock.perform(
-                get("/report/list")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(listReq3))
+                get("/report/list"))
                 .andDo(::printInfo)
                 .andExpect(status().isBadRequest)
     }

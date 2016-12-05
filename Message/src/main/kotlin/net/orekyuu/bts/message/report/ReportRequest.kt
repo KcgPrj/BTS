@@ -21,11 +21,6 @@ class CreateReportRequest(
         val runTimeInfo: String = ""
 )
 
-class ReportListRequest(
-        val productId: Int? = null,
-        val productToken: String? = null
-)
-
 class ReportUpdateRequest(
         val reportId: Int = 0,
         val newDescription: String = "",

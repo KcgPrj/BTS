@@ -358,8 +358,7 @@ input[type="checkbox"].on-off:checked + ol{
     }
     }
 
-.tab_input, .content {
-    display: none;
+.content {
     background: rgba(33, 40, 54, 0.7);
     line-height: 25px;
     padding: 5px 25px;
@@ -367,8 +366,6 @@ input[type="checkbox"].on-off:checked + ol{
     font: normal 1em/150% Sans-Serif;
     min-width: 200px;
 }
-#one:checked ~ .one,
-#two:checked ~ .two,{display: block;}
 
 #tab_menu label {
     cursor: pointer;
@@ -385,7 +382,7 @@ input[type="checkbox"].on-off:checked + ol{
     transition: background .10s linear;  
 }
 
-#tab_menu label:hover, #tab_menu input:checked + label {background: rgba(33, 40, 54, 0.7);;}
+#tab_menu label:hover, #tab_menu .active-tab {background: rgba(33, 40, 54, 0.7);;}
 
 
 //WAIT ANIM COPY

@@ -24,10 +24,9 @@ export class ProductAndMemberSidebar extends React.Component {
         let products = [];
         if (this.props.products) {
             products = this.props.products.map(p => {
-                //TODO: リンクを適切に書き換える
                 return (
                     <li key={p.productId} className="li-count">
-                        <Link to={`${this.props.teamId}/${p.productName}`}>{p.productName}</Link>
+                        <Link to={`${this.props.teamId}/${p.productId}`}>{p.productName}</Link>
                     </li>
                 );
             });
