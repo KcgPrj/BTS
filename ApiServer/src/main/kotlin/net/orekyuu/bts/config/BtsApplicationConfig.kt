@@ -28,7 +28,7 @@ open class BtsApplicationConfig {
         return object : WebMvcConfigurerAdapter() {
             override fun addCorsMappings(registry: CorsRegistry): Unit {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8080").allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("*")
                         .allowedHeaders("Authorization", "Content-Type")
             }
         }
