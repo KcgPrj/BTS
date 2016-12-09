@@ -56,5 +56,19 @@ module.exports = {
         include: [path.resolve(__dirname, 'src/main/front/js')],
         loaders: ['react-hot', 'babel'] }
     ]
-  }
+  },
+  
+  devServer: {
+    historyApiFallback: true,
+    watchOptions: { aggregateTimeout: 300, poll: 1000 },
+    port: 3000,
+    host: '0.0.0.0',
+    proxy: {
+    '/': 'http://localhost:8080',
+    '/assets/**': 'http://localhost:8080',
+    '/login/**': 'http://localhost:8080',
+    '/*.html': 'http://localhost:8080',
+    '**': 'http://localhost:18080'
+    }
+  },
 };
