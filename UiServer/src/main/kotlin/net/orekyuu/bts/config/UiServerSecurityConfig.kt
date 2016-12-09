@@ -96,7 +96,7 @@ abstract class AbstractSuccessHandler(
             return
         }
         //ログインしたらトップページへリダイレクト
-        response.sendRedirect("/top")
+        response.sendRedirect("/app")
 
         //Cookieを保存する前にhandleを呼ばないと保存されない
         super.handle(request, response, authentication)

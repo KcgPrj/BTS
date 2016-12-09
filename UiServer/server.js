@@ -13,16 +13,19 @@ config.plugins.push(new webpack.HotModuleReplacementPlugin());
 var server = new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     hot: true,
-    contentBase: '../static/',
+    contentBase: './src/main/resources/static',
     historyApiFallback: {
         rewrites: [
-            {from: /react_index.html\/(.*)$/, to: "react_index.html"}
+            {from: /app\/index.html\/(.*)$/, to: "index.html"}
         ]
+    },
+    proxy: {
+        "/login/*": "http://localhost:8080"
     }
 });
 
 server.use('/', function (request, response) {
-    response.sendFile(path.resolve(__dirname, '../', 'static', 'react_index.html'));
+    response.sendFile(path.resolve(__dirname, 'app', 'index.html'));
 });
 
 server.listen(3000, 'localhost', function (err, result) {
