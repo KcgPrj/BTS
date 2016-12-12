@@ -76,11 +76,11 @@ class TeamApiControllerTest {
         mockSecurity.enableGithubMock("user1")
 
         teamService.createTeam(user1, "test", "test")
-        mock.perform(MockMvcRequestBuilders.get("/team/show").param("teamId", "test"))
+        mock.perform(MockMvcRequestBuilders.get("/api/team/show").param("teamId", "test"))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
 
-        mock.perform(MockMvcRequestBuilders.get("/team/show").param("teamId", "test2"))
+        mock.perform(MockMvcRequestBuilders.get("/api/team/show").param("teamId", "test2"))
                 .andExpect(status().isNotFound)
     }
 
@@ -90,7 +90,7 @@ class TeamApiControllerTest {
 
         teamService.createTeam(user1, "test", "test")
 
-        mock.perform(MockMvcRequestBuilders.get("/team/member/show").param("teamId", "test"))
+        mock.perform(MockMvcRequestBuilders.get("/api/team/member/show").param("teamId", "test"))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
     }
@@ -103,7 +103,7 @@ class TeamApiControllerTest {
         { "teamId": "test", "teamName": "hoge"}
         """
 
-        mock.perform(MockMvcRequestBuilders.post("/team/create").contentType(MediaType.APPLICATION_JSON)
+        mock.perform(MockMvcRequestBuilders.post("/api/team/create").contentType(MediaType.APPLICATION_JSON)
                 .content(req))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
@@ -125,7 +125,7 @@ class TeamApiControllerTest {
         { "teamId": "team1", "userId": "${user2.id.value}"}
         """
 
-        mock.perform(MockMvcRequestBuilders.post("/team/member/join").contentType(MediaType.APPLICATION_JSON)
+        mock.perform(MockMvcRequestBuilders.post("/api/team/member/join").contentType(MediaType.APPLICATION_JSON)
                 .content(req))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
@@ -144,7 +144,7 @@ class TeamApiControllerTest {
         val req = """
         { "teamId": "team1", "userId": "${user2.id.value}"}
         """
-        mock.perform(MockMvcRequestBuilders.post("/team/member/defection").contentType(MediaType.APPLICATION_JSON)
+        mock.perform(MockMvcRequestBuilders.post("/api/team/member/defection").contentType(MediaType.APPLICATION_JSON)
                 .content(req))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
@@ -164,13 +164,13 @@ class TeamApiControllerTest {
         teamService.createTeam(user2, "team2", "team2")
 
         mockSecurity.enableGithubMock("user1")
-        mock.perform(MockMvcRequestBuilders.get("/team/show/all"))
+        mock.perform(MockMvcRequestBuilders.get("/api/team/show/all"))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$", hasSize<Any>(1)))
 
         mockSecurity.enableGithubMock("user2")
-        mock.perform(MockMvcRequestBuilders.get("/team/show/all"))
+        mock.perform(MockMvcRequestBuilders.get("/api/team/show/all"))
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$", hasSize<Any>(2)))
     }

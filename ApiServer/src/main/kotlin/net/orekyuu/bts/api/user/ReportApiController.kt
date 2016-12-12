@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/api/report")
 class ReportApiController {
 
     @Autowired

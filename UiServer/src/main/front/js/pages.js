@@ -1,3 +1,0 @@
-export const PAGE_SELECT_TEAM = 'PAGE_SELECT_TEAM';
-export const PAGE_TEAM_INDEX = 'PAGE_TEAM_INDEX';
-export const PAGE_MAIN_PAGE = 'PAGE_MAIN_PAGE';

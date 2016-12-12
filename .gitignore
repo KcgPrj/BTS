@@ -23,3 +23,5 @@ database.db*
 UiServer/node_modules/
 UiServer/.gradle/
 classes/
+
+UiServer/front/node_modules/*
