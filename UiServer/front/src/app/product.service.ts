@@ -26,8 +26,8 @@ export class ProductService {
     return this.http.post('/api/' + teamId + '/products/create', req).map(res => res.json() as Team)
   }
 
-  deleteProduct(teamId: string, req: DeleteProductReq): Observable<Team> {
-    return this.http.post('/api/' + teamId + '/products/delete', req).map(res => res.json() as Team)
+  deleteProduct(teamId: string, productId: number): Observable<Team> {
+    return this.http.delete('/api/' + teamId + '/products/delete?productId=' + productId).map(res => res.json() as Team)
   }
 
   update(teamId: string, req: UpdateProductReq): Observable<Product> {

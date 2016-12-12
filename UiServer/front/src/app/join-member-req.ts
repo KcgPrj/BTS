@@ -1,4 +1,4 @@
 export class JoinMemberReq {
-  constructor(public teamId: string, public userId: string) {
+  constructor(public teamId: string, public userId: number) {
   }
 }

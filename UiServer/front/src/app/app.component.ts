@@ -3,7 +3,6 @@ import {TeamService} from "./team.service";
 import {Response} from "@angular/http";
 import {ReportService} from "./report.service";
 import {ProductService} from "./product.service";
-import {CreateTeamReq} from "./create-team-req";
 
 @Component({
   selector: 'app-root',
@@ -15,11 +14,7 @@ export class AppComponent {
 
 
   constructor(teamService: TeamService, reportService: ReportService, productService: ProductService) {
-  //  teamService.fetchTeams().subscribe(res => this.hoge(res), e => this.title = e);
-    teamService.createTeam(new CreateTeamReq("team","team"));
-    //teamService.showTeamList().subscribe(res => this.title = "success", e => this.title = "hoge")
-
-
+    teamService.fetchTeams().subscribe(res => this.hoge(res), e => this.title = e);
   }
 
   hoge(res: Response) {
