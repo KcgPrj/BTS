@@ -4,10 +4,6 @@ class CreateProductRequest(
         val productName: String = ""
 )
 
-class DeleteProductRequest(
-        val productId: Int = 0
-)
-
 class ModifyProductRequest(
         val productId: Int = 0,
         val newName: String = ""
