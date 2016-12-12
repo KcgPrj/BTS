@@ -17,12 +17,12 @@ export class ReportService {
     return this.http.post('/api/report/create', createReportReq).map(res => res.json() as Report)
   }
 
-  list(productId: number = null, productToken: string = null): Observable<Report> {
+  list(productId: number = null, productToken: string = null): Observable<Report[]> {
     if (productId != null)
-      return this.http.get('/api/report/list?productId=' + productId).map(res => res.json() as Report);
+      return this.http.get('/api/report/list?productId=' + productId).map(res => res.json() as Report[]);
 
     if (productToken != null)
-      return this.http.get('/api/report/list?productToken=' + productToken).map(res => res.json() as Report);
+      return this.http.get('/api/report/list?productToken=' + productToken).map(res => res.json() as Report[]);
 
     throw new Error("productIdとproductToken両方にnullが")
   }
