@@ -4,9 +4,10 @@ import {Observable} from "rxjs";
 import {HttpWrapperService} from "./http-wrapper.service";
 import {Team} from "./team";
 import {User} from "./user";
-import {TeamCreateReq} from "./team-create-req";
+import {CreateTeamReq} from "./create-team-req";
 import {JoinMemberReq} from "./join-member-req";
 import {DefectionMemberReq} from "./defection-member-req";
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class TeamService {
@@ -30,15 +31,15 @@ export class TeamService {
     return this.http.get('/api/team/member/show?teamId=' + teamId).map(res => res.json() as User[])
   }
 
-  createTeam(teamCreateReq: TeamCreateReq): Observable<Team> {
+  createTeam(teamCreateReq: CreateTeamReq): Observable<Team> {
     return this.http.post('/api/team/create', teamCreateReq).map(res => res.json() as Team)
   }
 
   join(joinMemberReq: JoinMemberReq): Observable<Team> {
-    return this.http.post("api/team/member/join", joinMemberReq).map(res => res.json() as Team)
+    return this.http.post("/api/team/member/join", joinMemberReq).map(res => res.json() as Team)
   }
 
   defection(defectionMemberReq: DefectionMemberReq): Observable<Team> {
-    return this.http.post("api/team/member/defection", defectionMemberReq).map(res => res.json() as Team)
+    return this.http.post("/api/team/member/defection", defectionMemberReq).map(res => res.json() as Team)
   }
 }

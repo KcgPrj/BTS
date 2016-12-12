@@ -19,7 +19,7 @@ export class ProductService {
   }
 
   showProduct(teamId: string, id: number): Observable<Product> {
-    return this.http.get('/api/' + teamId + '/products/show/' + id).map(res => res.json() as Product[])
+    return this.http.get('/api/' + teamId + '/products/show/' + id).map(res => res.json() as Product)
   }
 
   createProduct(teamId: string, req: CreateProductReq): Observable<Team> {

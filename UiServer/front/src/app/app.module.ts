@@ -1,11 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {TeamService} from "./team.service";
 import {HttpWrapperService} from "./http-wrapper.service";
+import {ProductService} from "./product.service";
+import {ReportService} from "./report.service";
 
 @NgModule({
   declarations: [
@@ -18,8 +20,11 @@ import {HttpWrapperService} from "./http-wrapper.service";
   ],
   providers: [
     TeamService,
+    ProductService,
+    ReportService,
     HttpWrapperService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
