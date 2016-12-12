@@ -84,7 +84,7 @@ class ReportApiControllerTest {
         val token = productService.registerToTeam(user1, team.teamId, "").product[0].token
         val createReq = """{"productToken":"$token","assignUserId":${user1.id},"title":"","description":"","version":"","stacktrace":"","log":"","runTimeInfo":""}"""
         mock.perform(
-                post("/report/create")
+                post("/api/report/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createReq))
                 .andDo(::printInfo)
@@ -92,7 +92,7 @@ class ReportApiControllerTest {
 
         val createReq2 = """{"productToken":"${UUID.randomUUID().toString()}","assignUserId":${user1.id},"title":"","description":"","version":"","stacktrace":"","log":"","runTimeInfo":""}"""
         mock.perform(
-                post("/report/create")
+                post("/api/report/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createReq2))
                 .andDo(::printInfo)
@@ -104,19 +104,19 @@ class ReportApiControllerTest {
         mockSecurity.enableGithubMock(user1.userName)
         val product = productService.registerToTeam(user1, team.teamId, "").product[0]
         mock.perform(
-                get("/report/list")
+                get("/api/report/list")
                         .param("productId", product.productId.toString()))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
 
         mock.perform(
-                get("/report/list")
+                get("/api/report/list")
                         .param("productToken", product.token))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
 
         mock.perform(
-                get("/report/list"))
+                get("/api/report/list"))
                 .andDo(::printInfo)
                 .andExpect(status().isBadRequest)
     }
@@ -140,7 +140,7 @@ class ReportApiControllerTest {
         val report = reportService.findFromProductToken(user1, product.token)
         val updateReq = """{"reportId":${report[0].reportId},"newDescription":"","newAssignUserId":${user1.id}}"""
         mock.perform(
-                post("/report/update")
+                post("/api/report/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateReq))
                 .andDo(::printInfo)
@@ -148,7 +148,7 @@ class ReportApiControllerTest {
 
         val updateReq2 = """{"reportId":100,"newDescription":"","newAssignUserId":${user1.id}}"""
         mock.perform(
-                post("/report/update")
+                post("/api/report/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateReq2))
                 .andDo(::printInfo)
@@ -173,13 +173,13 @@ class ReportApiControllerTest {
         reportService.createReport(info)
         val report = reportService.findFromProductToken(user1, product.token)
         val openRequest = """{"reportId" : ${report[0].reportId}}"""
-        mock.perform(post("/report/open")
+        mock.perform(post("/api/report/open")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(openRequest))
                 .andDo(::printInfo)
                 .andExpect(status().isBadRequest)
         reportService.closeReport(user1, report[0].reportId)
-        mock.perform(post("/report/open")
+        mock.perform(post("/api/report/open")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(openRequest))
                 .andDo(::printInfo)
@@ -204,12 +204,12 @@ class ReportApiControllerTest {
         reportService.createReport(info)
         val report = reportService.findFromProductToken(user1, product.token)
         val closeRequest = """{"reportId" : ${report[0].reportId}}"""
-        mock.perform(post("/report/close")
+        mock.perform(post("/api/report/close")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(closeRequest))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
-        mock.perform(post("/report/close")
+        mock.perform(post("/api/report/close")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(closeRequest))
                 .andDo(::printInfo)

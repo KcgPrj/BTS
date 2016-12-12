@@ -56,7 +56,7 @@ class ProductApiControllerTest {
         user1 = userService.createAppUserFromGithub("user1")
         user2 = userService.createAppUserFromGithub("user2")
         teamInfo = teamService.createTeam(user1, "teamId", "teamName")
-        productApiUrl = "/{teamId}/products/"
+        productApiUrl = "/api/{teamId}/products/"
         mock = MockMvcBuilders
                 .webAppContextSetup(context)
                 .build()

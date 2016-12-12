@@ -21,5 +21,7 @@
     ```
 1. webpack-dev-serverを起動
     ```
-    ./gradlew UiServer:npm_run_server
+    cd UiServer/front
+    npm start
     ```
+1. http://localhost:3001/login/githubにアクセスして認証を通す
