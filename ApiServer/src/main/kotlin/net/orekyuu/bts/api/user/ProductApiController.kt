@@ -36,9 +36,9 @@ class ProductApiController {
     }
 
     @DeleteMapping("/delete")
-    fun deleteProduct(@PathVariable("teamId") teamId: String, @RequestBody req: DeleteProductRequest): TeamInfo {
+    fun deleteProduct(@PathVariable("teamId") teamId: String, @RequestParam productId: Int): TeamInfo {
         val user = appUserService.findAppUserFromSecurityContext()!!
-        return productService.deleteFromTeam(user, teamId, req.productId)
+        return productService.deleteFromTeam(user, teamId, productId)
     }
 
     @PostMapping("/update")

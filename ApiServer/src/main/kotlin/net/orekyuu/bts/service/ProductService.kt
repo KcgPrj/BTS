@@ -50,6 +50,7 @@ class ProductServiceImpl : ProductService {
         val product = Product.new {
             this.productName = productName
             this.team = team
+            this.productToken = UUID.randomUUID()
         }
         ofTeamInfo(product.team)
     }
@@ -68,7 +69,7 @@ class ProductServiceImpl : ProductService {
         val team = Team.findById(teamId) ?: throw TeamNotFoundException(teamId)
         checkAuthority(team, requestUser)
         val products = Product.find { ProductTable.team.eq(team.id) }
-        products.asSequence().map { ofSimpleProductInfo(it) }.toList()
+        products.asSequence().map(::ofSimpleProductInfo).toList()
     }
 
     override fun showProduct(requestUser: AppUser, productId: Int): ProductInfo = transaction {
