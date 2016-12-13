@@ -6,6 +6,7 @@ import net.orekyuu.bts.message.report.SimpleReportInfo
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -64,6 +65,7 @@ class ReportServiceImpl : ReportService {
             this.title = reportInfo.title
             this.description = reportInfo.description
             this.assign = assign
+            this.createdAt = DateTime.now()
             this.version = reportInfo.version
             this.stacktrace = reportInfo.stacktrace
             this.log = reportInfo.log
@@ -78,7 +80,7 @@ class ReportServiceImpl : ReportService {
         logger.addLogger(StdOutSqlLogger())
         val product = Product.findById(productId) ?: throw ProductNotFoundException(productId)
         checkAuthority(product.team, requestUser)
-        Report.find { ReportTable.product eq product.id }.map { ofReportInfo(it) }
+        Report.find { ReportTable.product eq product.id }.map(::ofReportInfo)
     }
 
     override fun findFromProductToken(requestUser: AppUser, productToken: String): List<ReportInfo> = transaction {
@@ -91,7 +93,7 @@ class ReportServiceImpl : ReportService {
                 .singleOrNull() ?: throw ProductNotFoundException(productToken)
 
         checkAuthority(product.team, requestUser)
-        Report.find { ReportTable.product eq product.id }.map { ofReportInfo(it) }
+        Report.find { ReportTable.product eq product.id }.map(::ofReportInfo)
     }
 
     override fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newAssignUserId: Int): ReportInfo = transaction {
@@ -116,7 +118,7 @@ class ReportServiceImpl : ReportService {
     override fun openReport(requestUser: AppUser, reportId: Int): SimpleReportInfo = transaction {
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
         checkAuthority(report.product.team, requestUser)
-        val isOpen = report.state.equals(ReportState.OPENED)
+        val isOpen = report.state == ReportState.OPENED
 
         if (isOpen)
             throw OpenTriedReportBeenOpenedException(reportId)
@@ -127,7 +129,7 @@ class ReportServiceImpl : ReportService {
     override fun closeReport(requestUser: AppUser, reportId: Int): SimpleReportInfo = transaction {
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
         checkAuthority(report.product.team, requestUser)
-        val isClose = report.state.equals(ReportState.CLOSED)
+        val isClose = report.state == ReportState.CLOSED
 
         if (isClose)
             throw CloseTriedReportBeenClosedException(reportId)
