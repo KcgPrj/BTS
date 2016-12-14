@@ -6,17 +6,28 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import {TeamService} from "./team.service";
 import {HttpWrapperService} from "./http-wrapper.service";
+import {routes} from "./app.routes";
+import {HashLocationStrategy, LocationStrategy, CommonModule} from "@angular/common";
+import { SelectTeamPageComponent } from './components/select-team-page/select-team-page.component';
+import { SelectProductPageComponent } from './components/select-product-page/select-product-page.component';
+import { ReportListComponent } from './components/report-list/report-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SelectTeamPageComponent,
+    SelectProductPageComponent,
+    ReportListComponent
   ],
   imports: [
+    routes,
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    CommonModule
   ],
   providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     TeamService,
     HttpWrapperService
   ],
