@@ -8,7 +8,7 @@ import java.util.*
 
 object ProductTable : IntIdTable("product") {
     val productName = varchar("product_name", 100)
-    val productToken = uuid("product_token").clientDefault { UUID.randomUUID() }.index()
+    val productToken = uuid("product_token").index()
     val team = reference("team", TeamTable)
 }
 

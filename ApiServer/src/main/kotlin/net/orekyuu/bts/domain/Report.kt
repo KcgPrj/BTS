@@ -4,7 +4,6 @@ import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.IntIdTable
-import org.joda.time.DateTime
 
 object ReportTable : IntIdTable() {
     /**
@@ -18,7 +17,7 @@ object ReportTable : IntIdTable() {
     /**
      * 作成された日時
      */
-    val createdAt = datetime("createdAt").clientDefault { DateTime.now() }
+    val createdAt = datetime("createdAt")
     /**
      * 担当者
      */

@@ -140,13 +140,9 @@ class ProductApiControllerTest {
                 .andExpect(status().isOk)
 
         val product = teamService.showTeamInfo(teamInfo.teamId, user1).product[0]
-        val deleteReq = """
-        {"productId" : ${product.productId}}
-        """
 
         mock.perform(delete("$productApiUrl/delete", teamInfo.teamId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(deleteReq))
+                .param("productId", "${product.productId}"))
                 .andDo(::printInfo)
                 .andExpect(status().isOk)
 

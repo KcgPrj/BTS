@@ -57,13 +57,16 @@ class ProductServiceTest {
         val productName = "registerToTeam"
         val result = productService.registerToTeam(user1, teamInfo.teamId, productName)
         assert(result.product.size == 1)
-        assert(result.product[0].productName.equals(productName))
+        val productInfo = result.product[0]
+        assert(productInfo.productName == productName)
+        assertThat(productInfo.token).isEqualTo(productService.showProduct(user1, productInfo.productId).token)
 
         val productName2 = "registerToTeam2"
         val result2 = productService.registerToTeam(user1, teamInfo.teamId, productName2)
         assert(result2.product.size == 2)
-        assert(result2.product[1].productName.equals(productName2))
-
+        val productInfo1 = result2.product[1]
+        assert(productInfo1.productName == productName2)
+        assertThat(productInfo1.token).isEqualTo(productService.showProduct(user1, productInfo1.productId).token)
     }
 
     @Test(expected = TeamNotFoundException::class)
@@ -128,7 +131,7 @@ class ProductServiceTest {
     fun showProductThrownTeamAccessAuthorityNotException() {
         val teamInfo = teamService.createTeam(user1, "showProduct", "name")
         val result = productService.registerToTeam(user1, teamInfo.teamId, "")
-        productService.showProduct(user2,result.product[0].productId)
+        productService.showProduct(user2, result.product[0].productId)
     }
 
     @Test(expected = TeamNotFoundException::class)
