@@ -10,9 +10,11 @@
             <div class="site_logo"><img src="/assets/img/site_logo.png" alt="Site_logo"></div>
             <div class="border"></div>
             <div>
-              <div class="side_title ml50 mt30"><label for="">TEAM</label><a href=""><span>+</span></a></div>
+              <div class="side_title ml50 mt30"><label for="">TEAM</label><a (click)="createProduct()"><span>+</span></a></div>
               <div id="teams">
-                <ul class="t_list"></ul>
+                <ul class="t_list">
+                  <li *ngFor="let item of teamProducts">{{item.productName}}</li>
+                </ul>
               </div>
             </div>
           </div>

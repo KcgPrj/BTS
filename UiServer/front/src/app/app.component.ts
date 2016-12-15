@@ -10,16 +10,6 @@ import {ProductService} from "./domain/product/product.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
-
-
-  constructor(teamService: TeamService, reportService: ReportService, productService: ProductService) {
-    teamService.fetchTeams().subscribe(res => this.hoge(res), e => this.title = e);
-  }
-
-  hoge(res: Response) {
-    this.title = res.toString();
-
-    console.log(res);
+  constructor() {
   }
 }
