@@ -4,10 +4,10 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
-import {TeamService} from "./team.service";
+import {TeamService} from "./domain/team/team.service";
 import {HttpWrapperService} from "./http-wrapper.service";
-import {ProductService} from "./product.service";
-import {ReportService} from "./report.service";
+import {ProductService} from "./domain/product/product.service";
+import {ReportService} from "./domain/report/report.service";
 
 @NgModule({
   declarations: [

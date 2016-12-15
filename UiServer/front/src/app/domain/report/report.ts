@@ -1,5 +1,5 @@
-import {User} from "./user";
-import {Product} from "./product";
+import {User} from "../user/user";
+import {Product} from "../product/product";
 export class Report {
   constructor(public reportId: number = 0,
               public title: string,
