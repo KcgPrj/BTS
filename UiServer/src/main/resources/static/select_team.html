@@ -5,6 +5,7 @@
     <title>TOP</title>
     <link rel="stylesheet" href="assets/css/base.css" th:href="@{'/css/base.css'}">
     <link rel="stylesheet" href="assets/css/style.css" th:href="@{'/css/style.css'}">
+    <link rel="stylesheet" href="assets/css/modal.css" th:href="@{'/css/modal.css'}">
 
     <!--import font-->
     <link href='https://fonts.googleapis.com/css?family=Fjalla+One'
@@ -16,6 +17,8 @@
           type='text/css'/>
     <link href='https://fonts.googleapis.com/css?family=Ubuntu+Condensed'
           th:href="@{'https://fonts.googleapis.com/css?family=Ubuntu+Condensed'}" rel='stylesheet' type='text/css'/>
+    <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One" 
+        	  th:href="@{'https://fonts.googleapis.com/css?family=Pathway+Gothic+One'}" rel="stylesheet" type='text/css' />
 </head>
 <body>
 <div class="full_bg pst-f">
@@ -42,6 +45,38 @@
             チーム選択中のメインコンテンツ部分ここまで
 
             -->
+            
+            <section class="modal-window" id="modal-p01">
+							<div class="modal-inner">
+								<form action="" method="">
+									<table>
+										<tr>
+											<th>
+												<label class="fr" for="teamid">Team ID : </label>
+											</th>
+											<th>
+												<input class="modal-input" type="text" id="Teamid" />
+											</th>
+										</tr>
+										<tr>
+											<th>
+												<label class="fr" for="tname">Team name : </label>
+											</th>
+											<th>
+												<input class="modal-input" type="text" id="Tid" />
+											</th>
+										</tr>
+										<tr>
+											<th></th>
+											<th class="fl">
+												<button type="submit">create</button>
+											</th>
+										</tr>
+									</table>
+								</form>
+							</div>
+							<a href="#!" class="modal-close">&times;</a>
+						</section>
         </div>
     </div>
     <div id="side" class="pst-f h100p fl">
@@ -61,7 +96,7 @@
 
             <div class="side_title ml50 mt30">
                 <label for="">TEAM</label>
-                <a href="">
+                <a href="#modal-p01">
                     <span>＋</span>
                 </a>
             </div>
