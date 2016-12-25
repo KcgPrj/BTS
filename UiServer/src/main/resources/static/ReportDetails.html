@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>TOP</title>
+        <link rel="stylesheet" href="assets/css/base.css" th:href="@{'/css/base.css'}">
+        <link rel="stylesheet" href="assets/css/style.css" th:href="@{'/css/style.css'}">
+        <link rel="stylesheet" href="assets/css/modal.css" th:href="@{'/css/modal.css'}">
+        <link rel="stylesheet" href="assets/css/report.css" th:href="@{'/css/report.css'}">
+        
+        <!--import font-->
+        <link href='https://fonts.googleapis.com/css?family=Fjalla+One'
+              th:href="@{'https://fonts.googleapis.com/css?family=Fjalla+One'}" rel='stylesheet' type='text/css' />
+        <link href='https://fonts.googleapis.com/css?family=Abel'
+              th:href="@{'https://fonts.googleapis.com/css?family=Abel'}" rel='stylesheet' type='text/css' />
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300'
+              th:href="@{'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300'}" rel='stylesheet' type='text/css' />
+        <link href='https://fonts.googleapis.com/css?family=Ubuntu+Condensed'
+              th:href="@{'https://fonts.googleapis.com/css?family=Ubuntu+Condensed'}" rel='stylesheet' type='text/css' />
+        <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One" 
+        	  th:href="@{'https://fonts.googleapis.com/css?family=Pathway+Gothic+One'}" rel="stylesheet" type='text/css' />
+    </head>
+    <body>
+        <div class="full_bg pst-f">
+           <div class="polygon_img">
+               <img src="assets/img/Polygon_bg.png" th:href="@{'img/Polygon_bg.png'}" alt="polygon_bg" />
+           </div>
+        </div>
+            <div id="wrapper" class="pst-a h100p w100p">
+               
+               <!--main content-->
+                <div id="main" class="fr h100p w100p">
+                    <div class="main_inner tal h100p">
+                        <!--<div class="plz_select">Please select Product.</div>-->
+                        
+                        <!--モーダルウィンドウここから-->
+                        <section class="modal-window" id="modal-p01">
+							<div class="modal-inner">
+								<form action="" method="">
+									<table>
+										<tr>
+											<th>
+												<label class="fr" for="Proname">Product name : </label>
+											</th>
+											<th>
+												<input class="modal-input" type="text" id="Pname" />
+											</th>
+										</tr>
+										<tr>
+											<th></th>
+											<th>
+												<button type="submit">create</button>
+											</th>
+										</tr>
+									</table>
+								</form>
+							</div>
+							<a href="#!" class="modal-close">&times;</a>
+						</section>
+                       
+                       <section class="modal-window" id="modal-p02">
+							<div class="modal-inner">
+								<form action="" method="">
+									<table>
+										<tr>
+											<th>
+												<label class="fr" for="Memname">Member name : </label>
+											</th>
+											<th>
+												<input class="modal-input" type="text" id="Mname" />
+											</th>
+										</tr>
+										<tr>
+											<th></th>
+											<th>
+												<button type="submit">add to</button>
+											</th>
+										</tr>
+									</table>
+								</form>
+							</div>
+							<a href="#!" class="modal-close">&times;</a>
+						</section>
+                        
+                        <!--ここまで-->
+                        
+                        
+                        <!--
+                        
+                        Report詳細ここから。
+                        
+                        -->
+                        
+                        <!--戻るボタン-->
+                        <div id="rebtn-con">
+                           <a href=""><!--プロダクト一覧ページへ-->
+                            <div class="rebtn-inner">
+                                <img src="assets/img/arrow2.png" th:href="@{'img/arrow2.png'}" alt="return" 
+                                />
+                            </div>
+                            </a>
+                        </div>
+                        
+                        <!--レポート詳細ここから。-->
+                        
+                        <div id="redeta-con">
+                            <div class="redeta-inner">
+                              
+                              <!--タイトル-->
+                               <div id="repotitle">
+                                    <div class="rtitle fl">Title</div>
+                                    
+                                    <!--トグル-->
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton" class="toggle-button"><label for="toggleButton"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="title-v vs">
+                                        TitleTitleTitleTitleTitleTitleTitleTitle
+                                    </div>
+                                </div>
+                                
+                                <!--説明文-->
+                                <div id="repodesc" class="mt15">
+                                    <div class="rtitle fl">Description</div>
+                                    
+                                    <!--トグル-->
+                                    
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton1" class="toggle-button"><label for="toggleButton1"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <!--編集ボタン-->
+                                           <div class="edit-con">
+                                                <div class="editbtn">
+                                                    edit
+                                                </div>
+                                            </div>
+                                        <!--ここまで-->
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="description-v vs">
+                                       
+                                       
+                                        descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription
+                                    </div>
+                                </div>
+                                
+                                <!--作成された日時-->
+                                <div id="repocreated" class="mt15">
+                                    <div class="rtitle fl">CreatedAt</div>
+                                    
+                                    <!--トグル-->
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton2" class="toggle-button"><label for="toggleButton2"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="created-v vs">
+                                        CreatedAtCreatedAtCreatedAtCreatedAtCreatedAtCreatedAtCreatedAtCreatedAtCreatedAtCreatedAtCreatedAt
+                                    </div>
+                                </div>
+                                
+                                <!--担当者-->
+                                <div id="repocreated" class="mt15">
+                                    <div class="rtitle fl">Assign</div>
+                                    
+                                    <!--トグル-->
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton3" class="toggle-button"><label for="toggleButton3"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <!--編集ボタン-->
+                                           <div class="edit-con">
+                                                <div class="editbtn">
+                                                    edit
+                                                </div>
+                                            </div>
+                                        <!--ここまで-->
+                                    
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="Assign-v vs">
+                                        AssignAssignAssignAssignAssignAssignAssignAssignAssign
+                                    </div>
+                                </div>
+                                
+                                <!--アプリのバージョン-->
+                                <div id="repoversion" class="mt15">
+                                    <div class="rtitle fl">Version</div>
+                                    
+                                    <!--トグル-->
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton4" class="toggle-button"><label for="toggleButton4"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="version-v vs dn">
+                                        VersionVersionVersionVersionVersionVersionVersionVersionVersionVersionVersionVersionVersionVersion
+                                    </div>
+                                </div>
+                                
+                                <!--スタックトレース-->
+                                <div id="repostacktrace" class="mt15">
+                                    <div class="rtitle fl">Stacktrace</div>
+                                    
+                                    <!--トグル-->
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton5" class="toggle-button"><label for="toggleButton5"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="stacktrace-v vs">
+                                        stacktracestacktracestacktracestacktracestacktracestacktracestacktracestacktracestacktracestacktrace
+                                    </div>
+                                </div>
+                                
+                                <!--ログ-->
+                                <div id="repolog" class="mt15">
+                                    <div class="rtitle fl">log</div>
+                                    
+                                    <!--トグル-->
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton6" class="toggle-button"><label for="toggleButton6"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="log-v vs dn">
+                                        loglogloglogloglogloglogloglogloglogloglogloglogloglogloglogloglogloglogloglogloglogloglogloglog
+                                    </div>
+                                </div>
+                                
+                                <!--ランタイムの情報-->
+                                <div id="reporuntimeinfo" class="mt15">
+                                    <div class="rtitle fl">RuntimeInfo</div>
+                                    
+                                    <!--トグル-->
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton7" class="toggle-button"><label for="toggleButton7"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="runtimeinfo-v vs dn">
+                                        RuntimeInfoRuntimeInfoRuntimeInfoRuntimeInfoRuntimeInfoRuntimeInfoRuntimeInfoRuntimeInfoRuntimeInfoRuntimeInfo
+                                    </div>
+                                </div>
+                                
+                                <!--プロダクト-->
+                                <div id="repoproduct" class="mt15">
+                                    <div class="rtitle fl">Product</div>
+                                    
+                                    <!--トグル-->
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton8" class="toggle-button"><label for="toggleButton8"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="product-v vs dn">
+                                        productproductproductproductproductproductproductproductproductproductproductproductproductproduct
+                                    </div>
+                                </div>
+                                
+                                <!--レポートの状態-->
+                                <div id="repostate" class="mt15">
+                                    <div class="rtitle fl">State</div>
+                                    
+                                    <!--トグル-->
+                                    <div class="toggle">
+                                        <input type="checkbox" id="toggleButton9" class="toggle-button"><label for="toggleButton9"></label>
+                                    </div>
+                                    <!--ここまで-->
+                                    
+                                    <div class="tagsolid"></div>
+                                    
+                                    <div class="state-v vs dn">
+                                        statestatestatestatestatestatestatestatestatestatestatestatestatestatestatestatestatestatestatestate
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </div>
+                
+                
+                
+                
+                
+                <div id="side" class="pst-f h100p fl">
+                    <div class="side_inner tal h100p">
+                        <div class="site_logo"><!--サイドバー中身-->
+                            <img src="assets/img/site_logo.png" th:href="@{'img/site_logo.png'}" alt="Site_logo" />
+                        </div>
+                        <!--ロゴ下ボーダー-->
+                        <div class="border"></div>
+                        
+                        <!--サイドメニュー-->
+                        
+                        <!--プロダクト一覧-->
+                        <div id="products">
+                            <div class="side_title ml50 mt30">
+                                <label for="Panel1">
+                                    PRODUCT
+                                    <img src="assets/img/arrow.png" alt="展開">
+                                </label>
+                                <a href="#modal-p01"><span>＋</span></a>
+                            </div>
+                            <input type="checkbox" id="Panel1" class="on-off" />
+                            
+                            <ol class="p_list">
+                                <a href=""><li class="li-count">Workbench</li></a>
+                                <a href=""><li class="li-count">dotCampus</li></a>
+                                <a href=""><li class="li-count">Resident Evil</li></a>
+                                <a href=""><li class="li-count">FINAL FANTASY XVI</li></a>
+                                <a href=""><li class="li-count">FINAL FANTASY VII ADVENT CHILDREN</li></a>
+                                <a href=""><li class="li-count">TOKYO TOKKYO KYOKAKYOKU KYOKUCHO</li></a>
+                                <a href=""><li class="li-count">AMENBO AKAINA AIUEO</li></a>
+                            </ol>
+                        </div>
+                        
+                        <!--メンバー一覧-->
+                        <div id="members">
+                            <div class="side_title ml50 mt30">
+                                <label for="Panel2" class="member_label">
+                                    MEMBER
+                                    <img src="assets/img/arrow.png" alt="展開">
+                                </label>
+                                <a href="#modal-p02"><span>＋</span></a>
+                            </div>
+                            <input type="checkbox" id="Panel2" class="on-off" />
+                            <ol class="m_list">
+                                <li>
+                                    <a href="">TAKESHI KOKESHI</a>
+                                    <div class="mem_border"></div>
+                                </li>
+                                <li>
+                                    <a href="">AJAJAJA</a>
+                                    <div class="mem_border"></div>
+                                </li>
+                                <li>
+                                    <a href="">Nemumi</a>
+                                    <div class="mem_border"></div>
+                                </li>
+                                <li>
+                                    <a href="">ASA DUMI ORANGE</a>
+                                    <div class="mem_border"></div>
+                                </li>
+                                <li>
+                                    <a href="">JACK</a>
+                                    <div class="mem_border"></div>
+                                </li>
+                                <li>
+                                    <a href="">JACK</a>
+                                    <div class="mem_border"></div>
+                                </li>
+                                <li>
+                                    <a href="">JACK</a>
+                                    <div class="mem_border"></div>
+                                </li>
+                            </ol>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+    </body>
+</html>
