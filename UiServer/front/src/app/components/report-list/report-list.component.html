@@ -1,6 +1,61 @@
-<ul>
-  <li>aaaa</li>
-  <li>aaaa</li>
-  <li>aaaa</li>
-  <li>aaaa</li>
-</ul>
+<div id="tab_menu">
+  <label (click)="focusTokenTab()"
+         [class.active-tab]="activeTab === 'token'">PRODUCT TOKEN</label>
+  <label (click)="focusReportTab()"
+         [class.active-tab]="activeTab === 'report'">REPORT</label>
+
+  <article *ngIf="activeTab === 'token'" class="content">
+    <h1>{{product?.token}}</h1>
+  </article>
+  <article *ngIf="activeTab === 'report'" class="content">
+
+    <div id="search">
+      <table>
+        <tbody>
+        <tr>
+          <th>
+            <span>Search </span>
+          </th>
+          <th>
+            <input type="search" class="search_box"/>
+          </th>
+          <th>
+            <a href="">
+              <span class="search_btn dib">
+                <img src="/assets/img/search.png" alt="検索"/>
+              </span>
+            </a>
+          </th>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ticket_area m0a">
+
+      <!--レポート-->
+      <div *ngFor="let report of this.reports" class="ticket">
+        <div class="t_title">{{report.title}}</div>
+        <div class="t_data">
+          <table>
+            <tr>
+              <th>{{report.state}}</th>
+              <th>{{report.assign.name}}</th>
+              <th>{{report.createdAt}}</th>
+              <th>{{report.reportId}}</th>
+              <th>{{report.version}}</th>
+              <th>
+                <div class="comment">
+                  <img class="fl" src="assets/img/comment2.png" alt="コメント数"/>
+                  <span>6</span>
+                </div>
+              </th>
+            </tr>
+          </table>
+        </div>
+        <div class="t_border"></div>
+      </div>
+
+    </div>
+  </article>
+</div>

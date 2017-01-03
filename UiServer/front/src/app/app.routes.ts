@@ -1,4 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {SelectTeamPageComponent} from "./components/select-team-page/select-team-page.component";
 import {SelectProductPageComponent} from "./components/select-product-page/select-product-page.component";
 import {ModuleWithProviders} from "@angular/core";
@@ -8,12 +8,16 @@ const routerConfig: Routes = [
   { path: '', redirectTo: 'top', pathMatch: 'full'},
   { path: 'top', component: SelectTeamPageComponent},
   {
-    path: 'product/:teamId',
-    component: SelectProductPageComponent,
+    path: 'team',
     children: [
-      { path: '', redirectTo: 'report', pathMatch: 'full' },
-      { path: 'report', component: ReportListComponent},
-    ]
+      {
+        path: ':teamId',
+        component: SelectProductPageComponent,
+        children: [
+          {path: ':productId', component: ReportListComponent},
+        ],
+      },
+    ],
   },
 ];
 
