@@ -17,7 +17,8 @@ export class SelectTeamPageComponent implements OnInit {
   }
 
   createTeam() {
-    this.teamService.createTeam('test', 'test').subscribe(it => this.teams.push(it));
+    const teamId = 'team' + Math.floor(Math.random() * 10000);
+    this.teamService.createTeam(teamId, teamId).subscribe(it => this.teams.push(it));
   }
 
 }

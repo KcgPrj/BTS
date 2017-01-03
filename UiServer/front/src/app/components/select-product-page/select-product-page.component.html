@@ -1,30 +1,50 @@
-<div class="root">
-  <div class="full_bg pst-f">
-    <div class="polygon_img"><img src="/assets/img/Polygon_bg.png" alt="polygon_bg"></div>
-  </div>
-  <div>
-    <div id="wrapper" class="pst-a h100p w100p">
-      <div>
-        <div id="side" class="pst-f h100p fl">
-          <div class="side_inner tal h100p">
-            <div class="site_logo"><img src="/assets/img/site_logo.png" alt="Site_logo"></div>
-            <div class="border"></div>
-            <div>
-              <div class="side_title ml50 mt30"><label for="">TEAM</label><a (click)="createProduct()"><span>+</span></a></div>
-              <div id="teams">
-                <ul class="t_list">
-                  <li *ngFor="let item of teamProducts">{{item.productName}}</li>
-                </ul>
-              </div>
-            </div>
+<div>
+  <div id="wrapper" class="pst-a h100p w100p">
+
+    <div id="side" class="pst-f h100p fl">
+      <div class="side_inner tal h100p">
+        <div class="site_logo"><img src="/assets/img/site_logo.png" alt="Site_logo"></div>
+        <div class="border"></div>
+        <div id="products">
+          <div class="side_title ml50 mt30">
+            <label for="Panel1">
+              PRODUCT
+              <img src="/assets/img/arrow.png" alt="展開"/>
+            </label>
+            <a (click)="createProduct()">
+              <span>＋</span>
+            </a>
           </div>
+          <input type="checkbox" id="Panel1" class="on-off"/>
+          <ol class="p_list">
+            <li *ngFor="let product of teamProducts" class="li-count">
+              <a [routerLink]="['/team', teamId, product.productId]">{{product.productName}}</a>
+            </li>
+          </ol>
+        </div>
+
+        <div id="members">
+          <div class="side_title ml50 mt30">
+            <label for="Panel2" class="member_label">
+              MEMBER
+              <img src="/assets/img/arrow.png" alt="展開"/>
+            </label>
+            <span>＋</span>
+          </div>
+          <input type="checkbox" id="Panel2" class="on-off"/>
+          <ol class="m_list">
+            <li *ngFor="let user of teamMembers">
+              <a [routerLink]="">{{user.name}}</a>
+              <div className="mem_border"></div>
+            </li>
+          </ol>
         </div>
       </div>
-      <div id="main" class="fr h100p w100p">
-        <div class="main_inner tal h100p">
-          <!--こっちはコンテンツ-->
-          <router-outlet></router-outlet>
-        </div>
+    </div>
+    <div id="main" class="fr h100p w100p">
+      <div class="main_inner tal h100p">
+        <!--こっちはコンテンツ-->
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>
