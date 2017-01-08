@@ -94,7 +94,7 @@ $set-prefix: '' , -moz- , -webkit-;
     border: 0px solid rgba(0,0,0,0.0);
     border-radius: 50px;
     background-color: #ddd;
-    transition: background-color .4s ease;
+    transition: background-color .2s ease;
     cursor:pointer;
 }
 
@@ -111,7 +111,7 @@ $set-prefix: '' , -moz- , -webkit-;
     border-radius: 50%;
     background-color: #eee;
     box-shadow: 0 0 4px rgba(0,0,0,0.4);
-    transition: left .4s ease, background-color .4s ease;
+    transition: left .4s ease, background-color .2s ease;
     cursor:pointer;
 }
 /*ON*/
@@ -133,3 +133,45 @@ $set-prefix: '' , -moz- , -webkit-;
 
 /*ここまで*/
 
+
+/*トグル切り替え用*/
+
+.title-v{
+    display: none;
+}
+
+.description-v{
+    display: none;
+}
+
+.created-v{
+    display: none;
+}
+
+.assign-v{
+    display: none;
+}
+
+.version-v{
+    display: none;
+}
+
+.stacktrace-v{
+    display: none;
+}
+
+.log-v{
+    display: none;
+}
+
+.runtimeinfo-v{
+    display: none;
+}
+
+.product-v{
+    display: none;
+}
+
+.state-v{
+    display: none;
+}
