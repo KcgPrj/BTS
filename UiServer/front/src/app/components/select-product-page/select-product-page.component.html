@@ -18,7 +18,7 @@
           <input type="checkbox" id="Panel1" class="on-off"/>
           <ol class="p_list">
             <li *ngFor="let product of teamProducts" class="li-count">
-              <a [routerLink]="['/team', teamId, product.productId]">{{product.productName}}</a>
+              <a [routerLink]="product.productId">{{product.productName}}</a>
             </li>
           </ol>
         </div>

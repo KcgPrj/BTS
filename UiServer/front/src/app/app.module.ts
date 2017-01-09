@@ -13,13 +13,17 @@ import {HashLocationStrategy, LocationStrategy, CommonModule} from "@angular/com
 import { SelectTeamPageComponent } from './components/select-team-page/select-team-page.component';
 import { SelectProductPageComponent } from './components/select-product-page/select-product-page.component';
 import { ReportListComponent } from './components/report-list/report-list.component';
+import { ProductTopPageComponent } from './components/product-top-page/product-top-page.component';
+import { ReportDetailsComponent } from './components/report-details-page/report-details-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SelectTeamPageComponent,
     SelectProductPageComponent,
-    ReportListComponent
+    ReportListComponent,
+    ProductTopPageComponent,
+    ReportDetailsComponent
   ],
   imports: [
     routes,
