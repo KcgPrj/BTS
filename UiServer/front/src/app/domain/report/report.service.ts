@@ -13,7 +13,7 @@ export class ReportService {
   }
 
   createReport(productToken: ProductToken, report: Report): Observable<Report> {
-    var body = {
+    const body = {
       assignUserId: report.assign == null ? null : report.assign.id,
       productToken: productToken,
       title: report.title,
@@ -23,7 +23,6 @@ export class ReportService {
       log: report.log,
       runTimeInfo: report.runtimeInfo
     };
-    console.log(body);
     return this.http.post('/api/report/create', body).map(res => res.json() as Report)
   }
 
