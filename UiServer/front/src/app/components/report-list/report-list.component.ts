@@ -31,10 +31,8 @@ export class ReportListComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.forEach(params => {
-      this.productId = params['productId'];
-    });
-    this.route.parent.params.forEach(params => {
       this.teamId = params['teamId'];
+      this.productId = params['productId'];
     });
 
     this.reportService.list(this.productId)

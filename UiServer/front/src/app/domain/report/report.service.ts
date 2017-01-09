@@ -4,6 +4,7 @@ import {HttpWrapperService} from "../../http-wrapper.service";
 import {Report} from "./report";
 import {Product} from "../product/product";
 import {ProductToken} from "../product/product-token";
+import {assign} from "rxjs/util/assign";
 
 @Injectable()
 export class ReportService {
@@ -12,16 +13,17 @@ export class ReportService {
   }
 
   createReport(productToken: ProductToken, report: Report): Observable<Report> {
-    return this.http.post('/api/report/create', {
-      productToken: productToken.token,
-      assignUserId: report.assign.id,
+    const body = {
+      assignUserId: report.assign == null ? null : report.assign.id,
+      productToken: productToken,
       title: report.title,
       description: report.description,
       version: report.version,
       stacktrace: report.stacktrace,
       log: report.log,
       runTimeInfo: report.runtimeInfo
-    }).map(res => res.json() as Report)
+    };
+    return this.http.post('/api/report/create', body).map(res => res.json() as Report)
   }
 
   list(productId: number): Observable<Report[]> {

@@ -1,0 +1,9 @@
+<p>
+  プロダクトのトップページ
+</p>
+<div *ngIf="product">
+  {{product.productName}}の詳細とか <br>
+  Token: {{product.token}} <br>
+</div>
+<button (click)="createTestReport()">テスト用レポート作成</button>
+<button routerLink="report">レポート一覧</button>

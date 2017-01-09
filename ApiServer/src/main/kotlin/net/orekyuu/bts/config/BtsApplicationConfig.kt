@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 open class BtsApplicationConfig {
 
-    @Value("\${spring.datasource.jdbc-url}")
+    @Value("\${spring.datasource.url}")
     lateinit var jdbcUrl: String
 
     @Value("\${spring.datasource.driverClassName}")
