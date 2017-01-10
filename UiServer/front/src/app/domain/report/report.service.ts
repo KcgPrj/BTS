@@ -30,6 +30,10 @@ export class ReportService {
     return this.http.get(`/api/report/list?productId=${productId}`).map(res => res.json() as Report[]);
   }
 
+  find(reportId: number): Observable<Report> {
+    return this.http.get(`/api/report/show?reportId=${reportId}`).map(res => res.json() as Report);
+  }
+
   update(report: Report): Observable<Report> {
     return this.http.post('/api/report/update', {
       reportId: report.reportId,

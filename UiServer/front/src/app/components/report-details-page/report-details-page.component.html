@@ -1,3 +1,208 @@
-<p>
-  report-details-page works!
-</p>
+<!--戻るボタン-->
+<div id="rebtn-con">
+  <a (click)="back()"><!--プロダクト一覧ページへ-->
+    <div class="rebtn-inner">
+      <img src="/assets/img/arrow2.png" alt="return"/>
+    </div>
+  </a>
+</div>
+
+<!--レポート詳細ここから。-->
+
+<div id="redeta-con" *ngIf="report">
+  <div class="redeta-inner">
+
+    <!--タイトル-->
+    <div id="repotitle">
+      <div class="rtitle fl">Title</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton" class="toggle-button" #titleToggleObj (change)="titleToggle = titleToggleObj.checked"><label for="toggleButton"></label>
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="titleToggle">
+        {{report.title}}
+      </div>
+    </div>
+
+    <!--説明文-->
+    <div id="repodesc" class="mt15">
+      <div class="rtitle fl">Description</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton1" class="toggle-button" #descToggleObj (change)="descToggle = descToggleObj.checked"><label for="toggleButton1"></label>
+      </div>
+      <!--ここまで-->
+
+      <!--編集ボタン-->
+      <div class="edit-con">
+        <div class="editbtn">
+          edit
+        </div>
+      </div>
+      <!--ここまで-->
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="descToggle">
+        {{report.description}}
+      </div>
+    </div>
+
+    <!--作成された日時-->
+    <div id="repocreated" class="mt15">
+      <div class="rtitle fl">CreatedAt</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton2" class="toggle-button" #createdAtToggleObj (change)="createdAtToggle = createdAtToggleObj.checked"><label for="toggleButton2"></label>
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="createdAtToggle">
+        {{report.createdAt}}
+      </div>
+    </div>
+
+    <!--担当者-->
+    <div id="repocreated" class="mt15">
+      <div class="rtitle fl">Assign</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton3" class="toggle-button" #assignToggleObj (change)="assingToggle = assignToggleObj.checked"><label for="toggleButton3"></label>
+      </div>
+      <!--ここまで-->
+
+      <!--編集ボタン-->
+      <div class="edit-con">
+        <div class="editbtn">
+          edit
+        </div>
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="assingToggle">
+        {{report.assign.name}}
+      </div>
+    </div>
+
+    <!--アプリのバージョン-->
+    <div id="repoversion" class="mt15">
+      <div class="rtitle fl">Version</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton4" class="toggle-button" #versionToggleObj (change)="versionToggle = versionToggleObj.checked"><label for="toggleButton4"></label>
+        <!--
+            ON -> class="version-v"を"display: block;"へ
+            OFF-> class="version-v"を"display: none;"へ
+        -->
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="versionToggle">
+        {{report.version}}
+      </div>
+    </div>
+
+    <!--スタックトレース-->
+    <div id="repostacktrace" class="mt15">
+      <div class="rtitle fl">Stacktrace</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton5" class="toggle-button" #stacktraceToggleObj (change)="stacktraceToggle = stacktraceToggleObj.checked"><label for="toggleButton5"></label>
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="stacktraceToggle">
+        {{report.stacktrace}}
+      </div>
+    </div>
+
+    <!--ログ-->
+    <div id="repolog" class="mt15">
+      <div class="rtitle fl">Log</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton6" class="toggle-button" #logToggleObj (change)="logToggle = logToggleObj.checked"><label for="toggleButton6"></label>
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="logToggle">
+        {{report.log}}
+      </div>
+    </div>
+
+    <!--ランタイムの情報-->
+    <div id="reporuntimeinfo" class="mt15">
+      <div class="rtitle fl">RuntimeInfo</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton7" class="toggle-button" #runtimeToggleObj (change)="runtimeToggle = runtimeToggleObj.checked"><label for="toggleButton7"></label>
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="runtimeToggle">
+        {{report.runtimeInfo}}
+      </div>
+    </div>
+
+    <!--プロダクト-->
+    <div id="repoproduct" class="mt15">
+      <div class="rtitle fl">Product</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton8" class="toggle-button" #productToggleObj (change)="productToggle = productToggleObj.checked"><label for="toggleButton8"></label>
+        <!--
+            ON -> class="product-v"を"display: block;"へ
+            OFF-> class="product-v"を"display: none;"へ
+        -->
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="productToggle">
+        {{report.product.name}}
+      </div>
+    </div>
+
+    <!--レポートの状態-->
+    <div id="repostate" class="mt15">
+      <div class="rtitle fl">State</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton9" class="toggle-button" #stateToggleObj (change)="stateToggle = stateToggleObj "><label for="toggleButton9"></label>
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="stateToggle">
+        {{report.state}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -34,7 +34,7 @@
     <div class="ticket_area m0a">
 
       <!--レポート-->
-      <div *ngFor="let report of this.reports" class="ticket">
+      <div *ngFor="let report of this.reports" class="ticket" (click)="openDetails(report)">
         <div class="t_title">{{report.title}}</div>
         <div class="t_data">
           <table>
