@@ -24,6 +24,7 @@ class CreateReportRequest(
 class ReportUpdateRequest(
         val reportId: Int = 0,
         val newDescription: String = "",
+        val newTitle: String = "",
         val newAssignUserId: Int = 0
 )
 

@@ -20,13 +20,6 @@ export class ReportDetailsComponent implements OnInit {
 
   private titleToggle = false;
   private descToggle = false;
-  private createdAtToggle = false;
-  private assingToggle = false;
-  private versionToggle = false;
-  private stacktraceToggle = false;
-  private logToggle = false;
-  private runtimeToggle = false;
-  private productToggle = false;
   private stateToggle = false;
   constructor(
     private reportService: ReportService,
@@ -39,17 +32,56 @@ export class ReportDetailsComponent implements OnInit {
       this.productId = params['productId'];
       this.reportId = params['reportId'];
     });
-    this.updateReport();
+    this.reloadReport();
   }
 
-  updateReport() {
+  reloadReport() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.subscription = this.reportService.find(this.reportId).subscribe(it => this.report = it)
+    this.subscription = this.reportService.find(this.reportId
+    ).subscribe(it => {
+      this.report = it;
+      if (this.report.state === 'opened') {
+        this.stateToggle = true;
+      } else {
+        this.stateToggle = false;
+      }
+    });
   }
 
   back() {
     this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  toggleDescEdit() {
+    this.descToggle = !this.descToggle;
+  }
+
+  toggleTitleEdit() {
+    this.titleToggle = !this.titleToggle;
+  }
+
+  onStateChanged() {
+    this.report.state = this.stateToggle ? 'opened' : 'closed';
+    console.log(this.stateToggle);
+    if (this.stateToggle) {
+      this.reportService.open(this.report);
+    } else {
+      this.reportService.close(this.report);
+    }
+  }
+
+  updateReport() {
+    this.subscription = this.reportService.update(this.report)
+      .subscribe(it => {
+        this.report = it;
+        if (this.report.state === 'opened') {
+          this.stateToggle = true;
+        } else {
+          this.stateToggle = false;
+        }
+      });
+
   }
 }

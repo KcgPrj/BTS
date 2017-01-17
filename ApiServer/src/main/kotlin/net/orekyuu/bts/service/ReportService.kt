@@ -35,7 +35,7 @@ interface ReportService {
     /**
      * レポートの更新
      */
-    fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newAssignUserId: Int): ReportInfo
+    fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newTitle: String, newAssignUserId: Int): ReportInfo
 
     /**
      * レポートを取得
@@ -111,7 +111,7 @@ class ReportServiceImpl : ReportService {
         Report.find { ReportTable.product eq product.id }.map(::ofReportInfo)
     }
 
-    override fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newAssignUserId: Int): ReportInfo = transaction {
+    override fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newTitle: String, newAssignUserId: Int): ReportInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
         val team = report.product.team
@@ -119,6 +119,7 @@ class ReportServiceImpl : ReportService {
         val newAssignUser = getMember(newAssignUserId, team)
         report.description = newDescription
         report.assign = newAssignUser
+        report.title = newTitle
         ofReportInfo(report)
     }
 

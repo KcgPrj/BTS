@@ -38,16 +38,21 @@ export class ReportService {
     return this.http.post('/api/report/update', {
       reportId: report.reportId,
       newDescription: report.description,
-      newAssignUserId: report.assign
+      newAssignUserId: report.assign.id,
+      newTitle: report.title
     }).map(res => res.json() as Report);
   }
 
   open(report: Report): Observable<Report> {
-    return this.http.post('/api/report/open', {reportId: report.reportId}).map(res => res.json() as Report);
+    console.log('open');
+    return this.http.post('/api/report/open', {reportId: report.reportId})
+      .map(res => res.json() as Report);
   }
 
   close(report: Report): Observable<Report> {
-    return this.http.post('/api/report/close', {reportId: report.reportId}).map(res => res.json() as Report);
+    console.log('close');
+    return this.http.post('/api/report/close', {reportId: report.reportId})
+      .map(res => res.json() as Report);
   }
 
 }

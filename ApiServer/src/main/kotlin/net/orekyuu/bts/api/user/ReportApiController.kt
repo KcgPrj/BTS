@@ -52,7 +52,7 @@ class ReportApiController {
     @PostMapping(value = "/update")
     fun update(@RequestBody req: ReportUpdateRequest): ReportInfo {
         val user = appUserService.findAppUserFromSecurityContext()!!
-        return reportService.updateReport(user, req.reportId, req.newDescription, req.newAssignUserId)
+        return reportService.updateReport(user, req.reportId, req.newDescription, req.newTitle, req.newAssignUserId)
     }
 
     @PostMapping(value = "/open")

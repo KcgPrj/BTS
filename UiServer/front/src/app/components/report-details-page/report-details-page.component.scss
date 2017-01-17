@@ -32,7 +32,6 @@ $set-prefix: '' , -moz- , -webkit-;
 }
 
 #redeta-con{
-  @include size(100%,100%);
   background: rgba(33, 40, 54, 0.7);
   color: #fff;
   min-width: 800px;
@@ -62,6 +61,7 @@ $set-prefix: '' , -moz- , -webkit-;
   padding-top: 3px;
 }
 .editbtn{
+  margin-top:-10px;
   color: #fff;
   font-size: 15px;
   @include size(25px,50px);
@@ -174,4 +174,10 @@ $set-prefix: '' , -moz- , -webkit-;
 
 .state-v{
   display: none;
+}
+
+
+.editon{
+  background-color: rgba(16, 25, 45, 1);
+  border: 1px solid #68d6b8;
 }
