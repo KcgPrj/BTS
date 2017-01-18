@@ -44,13 +44,11 @@ export class ReportService {
   }
 
   open(report: Report): Observable<Report> {
-    console.log('open');
     return this.http.post('/api/report/open', {reportId: report.reportId})
       .map(res => res.json() as Report);
   }
 
   close(report: Report): Observable<Report> {
-    console.log('close');
     return this.http.post('/api/report/close', {reportId: report.reportId})
       .map(res => res.json() as Report);
   }

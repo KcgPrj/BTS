@@ -64,7 +64,6 @@ export class ReportDetailsComponent implements OnInit {
 
   onStateChanged() {
     this.report.state = this.stateToggle ? 'opened' : 'closed';
-    console.log(this.stateToggle);
     if (this.stateToggle) {
       this.reportService.open(this.report);
     } else {
