@@ -1,0 +1,183 @@
+@charset "utf-8" ;
+
+/*@Mixin*/
+$set-prefix: '' , -moz- , -webkit-;
+@mixin setPrefix($name, $value) {
+  @each $prefix in $set-prefix {
+    #{$prefix}#{$name}: $value;
+  }
+}
+@mixin size($h,$w){
+  height: $h;
+  width: $w;
+}
+@mixin position($top,$right,$bottom,$left){
+  top: $top;
+  left: $left;
+  bottom: $bottom;
+  right: $right;
+}
+
+#rebtn-con{
+  @include size(60px,100%);
+
+  .rebtn-inner{
+    @include size(60px,60px);
+    background: rgba(33, 40, 54, 0.7);
+  }
+
+  .rebtn-inner:hover{
+    background: rgba(33, 40, 54, 0.4);
+  }
+}
+
+#redeta-con{
+  background: rgba(33, 40, 54, 0.7);
+  color: #fff;
+  min-width: 800px;
+
+  .redeta-inner{
+    padding: 30px;
+  }
+  .rtitle{
+    font-size: 25px;
+  }
+  .tagsolid{
+    @include size(3px,90%);
+    background-color: rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    margin-bottom: 15px;
+  }
+  .vs{
+    background-color: rgba(33, 40, 54, 0.7);
+    width: 90%;
+    padding: 15px 30px;
+    word-wrap: break-word;
+  }
+}
+.edit-con{
+  @include size(30px,300px);
+  margin: -35px 0 5px -29px;
+  padding-top: 3px;
+}
+.editbtn{
+  margin-top:-10px;
+  color: #fff;
+  font-size: 15px;
+  @include size(25px,50px);
+  //border: 1px solid rgba(79,208,182,1);
+  background-color: rgba(16, 25, 45, 0.7);
+  float: right;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 10px;        /* CSS3草案 */
+  -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */
+  -moz-border-radius: 10px;   /* Firefox用 */
+  font-family: 'Fjalla One', sans-serif;
+  cursor:pointer;
+}
+
+.editbtn:hover{
+  background-color: rgba(16, 25, 45, 0.4);
+}
+
+/*トグル用*/
+
+
+.redeta-inner .toggle input[type="checkbox"].toggle-button {
+  appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  margin: 10px;
+  @include size(15px,50px);
+  border: 0px solid rgba(0,0,0,0.0);
+  border-radius: 50px;
+  background-color: #ddd;
+  transition: background-color .2s ease;
+  cursor:pointer;
+}
+
+.redeta-inner .toggle input[type="checkbox"].toggle-button:checked {
+  background-color: #bbb;
+}
+/*OFF*/
+.redeta-inner .toggle input[type="checkbox"].toggle-button + label {
+  position: relative;
+  display: inline-block;
+  @include position(-5px,0,0,-60px);
+  @include size(25px,25px);
+  border: 0px solid rgba(0,0,0,0.0);
+  border-radius: 50%;
+  background-color: #eee;
+  box-shadow: 0 0 4px rgba(0,0,0,0.4);
+  transition: left .4s ease, background-color .2s ease;
+  cursor:pointer;
+}
+/*ON*/
+.redeta-inner .toggle input[type="checkbox"].toggle-button:checked + label {
+  position: relative;
+  display: inline-block;
+  @include position(-5px,0,0,-35px);
+  @include size(25px,25px);
+  border: 0px solid rgba(0,0,0,0.0);
+  border-radius: 50%;
+  background-color: rgba(79,208,182,1);
+  box-shadow: 0 0 4px rgba(0,0,0,0.4);
+  cursor:pointer;
+}
+
+.redeta-inner .toggle input[type="checkbox"].toggle-button:focus {
+  outline: none;
+}
+
+/*ここまで*/
+
+
+/*トグル切り替え用*/
+
+.title-v{
+  display: none;
+}
+
+.description-v{
+  display: none;
+}
+
+.created-v{
+  display: none;
+}
+
+.assign-v{
+  display: none;
+}
+
+.version-v{
+  display: none;
+}
+
+.stacktrace-v{
+  display: none;
+}
+
+.log-v{
+  display: none;
+}
+
+.runtimeinfo-v{
+  display: none;
+}
+
+.product-v{
+  display: none;
+}
+
+.state-v{
+  display: none;
+}
+
+
+.editon{
+  background-color: rgba(16, 25, 45, 1);
+  border: 1px solid #68d6b8;
+}

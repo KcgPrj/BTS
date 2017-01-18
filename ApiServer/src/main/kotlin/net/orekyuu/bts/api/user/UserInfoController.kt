@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 class UserInfoController {
 
     @Autowired
@@ -18,6 +18,11 @@ class UserInfoController {
     @GetMapping
     fun showUserInfo(): UserInfo {
         return userService.findUserInfoFromSecurityContext() ?: throw UserNotFoundException()
+    }
+
+    @GetMapping("/all")
+    fun showAll(): List<UserInfo> {
+        return userService.findAll()
     }
 }
 

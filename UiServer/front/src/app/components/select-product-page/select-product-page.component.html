@@ -11,9 +11,7 @@
               PRODUCT
               <img src="/assets/img/arrow.png" alt="展開"/>
             </label>
-            <a (click)="createProduct()">
-              <span>＋</span>
-            </a>
+              <span (click)="modalService.openProductModalOpen()">＋</span>
           </div>
           <input type="checkbox" id="Panel1" class="on-off"/>
           <ol class="p_list">
@@ -29,12 +27,14 @@
               MEMBER
               <img src="/assets/img/arrow.png" alt="展開"/>
             </label>
-            <span>＋</span>
+            <span (click)="modalService.openMemberModal()">＋</span>
           </div>
           <input type="checkbox" id="Panel2" class="on-off"/>
           <ol class="m_list">
             <li *ngFor="let user of teamMembers">
               <a [routerLink]="">{{user.name}}</a>
+              <!--削除ボタン-->
+              <span style="float: right; margin-right: 20px;">×</span>
               <div className="mem_border"></div>
             </li>
           </ol>
@@ -45,6 +45,61 @@
       <div class="main_inner tal h100p">
         <!--こっちはコンテンツ-->
         <router-outlet></router-outlet>
+        <!--モーダルウィンドウここから-->
+        <section class="modal-window" [class.modal-open]="modalService._productModalOpen" id="modal-p01">
+          <div class="modal-inner">
+            <form (submit)="createProduct()">
+              <table>
+                <tr>
+                  <th>
+                    <label class="fr">Product name : </label>
+                  </th>
+                  <th>
+                    <input class="modal-input" name="productName" type="text"
+                           [(ngModel)]="productForm.productName"
+                           required
+                           minlength="3" maxlength="20"/>
+                  </th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th>
+                    <button type="submit">create</button>
+                  </th>
+                </tr>
+              </table>
+            </form>
+          </div>
+          <a class="modal-close" (click)="modalService.closeProductModal()">&times;</a>
+        </section>
+
+        <section class="modal-window" [class.modal-open]="modalService._memberModalOpen" id="modal-p02">
+          <div class="modal-inner">
+            <form (submit)="addMember()">
+              <table>
+                <tr>
+                  <th>
+                    <label class="fr">Member name : </label>
+                  </th>
+                  <th>
+                    <select required [(ngModel)]="memberForm" *ngIf="allUsers" name="user">
+                      <option *ngFor="let item of allUsers" [value]="item.id">{{item.name}}</option>
+                    </select>
+                  </th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th>
+                    <button type="submit">add to</button>
+                  </th>
+                </tr>
+              </table>
+            </form>
+          </div>
+          <a class="modal-close" (click)="modalService.closeMemberModal()">&times;</a>
+        </section>
+
+        <!--ここまで-->
       </div>
     </div>
   </div>

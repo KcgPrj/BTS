@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ReportService} from "../../domain/report/report.service";
 import {Report} from "../../domain/report/report";
 import {ProductService} from "../../domain/product/product.service";
@@ -26,6 +26,7 @@ export class ReportListComponent implements OnInit {
 
   constructor(private reportService: ReportService,
               private productService: ProductService,
+              private router: Router,
               private route: ActivatedRoute) {
   }
 
@@ -48,6 +49,10 @@ export class ReportListComponent implements OnInit {
 
   focusReportTab() {
     this.activeTab = 'report';
+  }
+
+  openDetails(report: Report) {
+    this.router.navigate([report.reportId], { relativeTo: this.route });
   }
 
 }

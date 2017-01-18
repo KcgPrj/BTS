@@ -28,9 +28,14 @@ interface ReportService {
     fun findFromProductToken(requestUser: AppUser, productToken: String): List<ReportInfo>
 
     /**
+     * レポートを見つける
+     */
+    fun findById(requestUser: AppUser, reportId: Int): ReportInfo?
+
+    /**
      * レポートの更新
      */
-    fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newAssignUserId: Int): ReportInfo
+    fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newTitle: String, newAssignUserId: Int): ReportInfo
 
     /**
      * レポートを取得
@@ -49,6 +54,16 @@ interface ReportService {
 }
 
 class ReportServiceImpl : ReportService {
+    override fun findById(requestUser: AppUser, reportId: Int): ReportInfo? = transaction {
+        logger.addLogger(StdOutSqlLogger())
+        val report = Report.findById(reportId)
+        if (report != null) {
+            checkAuthority(report.product.team, requestUser)
+            ofReportInfo(report)
+        } else {
+            null
+        }
+    }
 
     override fun createReport(reportInfo: ReportInfo): ReportInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
@@ -96,7 +111,7 @@ class ReportServiceImpl : ReportService {
         Report.find { ReportTable.product eq product.id }.map(::ofReportInfo)
     }
 
-    override fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newAssignUserId: Int): ReportInfo = transaction {
+    override fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newTitle: String, newAssignUserId: Int): ReportInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
         val team = report.product.team
@@ -104,6 +119,7 @@ class ReportServiceImpl : ReportService {
         val newAssignUser = getMember(newAssignUserId, team)
         report.description = newDescription
         report.assign = newAssignUser
+        report.title = newTitle
         ofReportInfo(report)
     }
 

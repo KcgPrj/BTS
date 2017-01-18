@@ -1,3 +1,173 @@
-<p>
-  report-details-page works!
-</p>
+<!--戻るボタン-->
+<div id="rebtn-con">
+  <a (click)="back()"><!--プロダクト一覧ページへ-->
+    <div class="rebtn-inner">
+      <img src="/assets/img/arrow2.png" alt="return"/>
+    </div>
+  </a>
+</div>
+
+<!--レポート詳細ここから。-->
+
+<div id="redeta-con" *ngIf="report">
+  <div class="redeta-inner">
+
+    <!--タイトル-->
+    <div id="repotitle">
+      <div class="rtitle fl">Title</div>
+      <div style="height: 50px;"></div>
+
+      <!--編集ボタン-->
+      <div class="edit-con" (click)="toggleTitleEdit()">
+        <div class="editbtn" [class.editon]="titleToggle">
+          edit
+        </div>
+      </div>
+      <!--ここまで-->
+
+
+      <div class="tagsolid"></div>
+
+      <div class="vs">
+        <div *ngIf="!titleToggle">{{report.title}}</div>
+        <input type="text" style="height: 20px; width: 80%;" [(ngModel)]="report.title" *ngIf="titleToggle" (change)="updateReport()"/>
+      </div>
+
+    </div>
+
+    <!--説明文-->
+    <div id="repodesc" class="mt15">
+      <div class="rtitle fl">Description</div>
+      <div style="height: 50px;"></div>
+
+      <!--編集ボタン-->
+      <div class="edit-con" (click)="toggleDescEdit()">
+        <div class="editbtn" [class.editon]="descToggle">
+          edit
+        </div>
+      </div>
+      <!--ここまで-->
+      <div class="tagsolid"></div>
+
+      <div class="vs">
+        <div *ngIf="!descToggle">{{report.description}}</div>
+        <textarea cols="30" rows="10" style="width: 80%; resize: vertical;" [(ngModel)]="report.description" *ngIf="descToggle" (change)="updateReport()"></textarea>
+      </div>
+
+    </div>
+
+    <!--作成された日時-->
+    <div id="repocreated" class="mt15">
+      <div class="rtitle fl">CreatedAt</div>
+      <div style="height: 50px;"></div>
+
+      <div class="tagsolid"></div>
+
+      <div class="vs">
+        {{report.createdAt}}
+      </div>
+    </div>
+
+    <!--担当者-->
+    <div id="repocreated" class="mt15">
+      <div class="rtitle fl">Assign</div>
+      <div style="height: 50px;"></div>
+
+
+      <div class="tagsolid"></div>
+
+      <div class="vs">
+        <!--{{report.assign.name}}-->
+        <select style="height: 40px; width: 25%; font-size: 20px;">
+          <option value="">A</option>
+          <option value="">B</option>
+          <option value="">B</option>
+          <option value="">B</option>
+          <option value="">B</option>
+        </select>
+      </div>
+    </div>
+
+    <!--アプリのバージョン-->
+    <div id="repoversion" class="mt15">
+      <div class="rtitle fl">Version</div>
+      <div style="height: 50px;"></div>
+
+      <div class="tagsolid"></div>
+
+      <div class="vs">
+        {{report.version}}
+      </div>
+    </div>
+
+    <!--スタックトレース-->
+    <div id="repostacktrace" class="mt15">
+      <div class="rtitle fl">Stacktrace</div>
+      <div style="height: 50px;"></div>
+
+      <div class="tagsolid"></div>
+
+      <div class="vs">
+        {{report.stacktrace}}
+      </div>
+    </div>
+
+    <!--ログ-->
+    <div id="repolog" class="mt15">
+      <div class="rtitle fl">Log</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" id="toggleButton6" class="toggle-button" #logToggleObj (change)="logToggle = logToggleObj.checked"><label for="toggleButton6"></label>
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs" *ngIf="logToggle">
+        {{report.log}}
+      </div>
+    </div>
+
+    <!--ランタイムの情報-->
+    <div id="reporuntimeinfo" class="mt15">
+      <div class="rtitle fl">RuntimeInfo</div>
+      <div style="height: 50px;"></div>
+
+      <div class="tagsolid"></div>
+
+      <div class="vs">
+        {{report.runtimeInfo}}
+      </div>
+    </div>
+
+    <!--プロダクト-->
+    <div id="repoproduct" class="mt15">
+      <div class="rtitle fl">Product</div>
+      <div style="height: 50px;"></div>
+
+      <div class="tagsolid"></div>
+
+      <div class="vs">
+        {{report.product.name}}
+      </div>
+    </div>
+
+    <!--レポートの状態-->
+    <div id="repostate" class="mt15">
+      <div class="rtitle fl">State</div>
+
+      <!--トグル-->
+      <div class="toggle">
+        <input type="checkbox" [(ngModel)]="stateToggle" id="toggleButton9" class="toggle-button" (change)="onStateChanged()"><label for="toggleButton9"></label>
+      </div>
+      <!--ここまで-->
+
+      <div class="tagsolid"></div>
+
+      <div class="vs">
+        {{report.state}}
+      </div>
+    </div>
+  </div>
+</div>

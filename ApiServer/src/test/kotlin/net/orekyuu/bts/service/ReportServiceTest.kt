@@ -228,26 +228,26 @@ class ReportServiceTest {
     fun updateReport() {
         val reportInfo1 = reportService.createReport(reportModel)
         val newDescription = "newDescription"
-        val reportInfo2 = reportService.updateReport(user1, reportInfo1.reportId, newDescription, user2.id.value)
+        val reportInfo2 = reportService.updateReport(user1, reportInfo1.reportId, newDescription, "a", user2.id.value)
         assertThat(reportInfo2.description).isEqualTo(newDescription)
         assertThat(reportInfo2.assign.id).isEqualTo(user2.id.value)
     }
 
     @Test(expected = ReportNotFoundException::class)
     fun updateReportThrownReportNotFoundException() {
-        reportService.updateReport(user1, 101022, "", user1.id.value)
+        reportService.updateReport(user1, 101022, "", "", user1.id.value)
     }
 
     @Test(expected = TeamAccessAuthorityNotException::class)
     fun updateReportThrownTeamAccessAuthorityNotException() {
         val reportId = reportService.createReport(reportModel).reportId
-        reportService.updateReport(user3, reportId, "", user1.id.value)
+        reportService.updateReport(user3, reportId, "", "", user1.id.value)
     }
 
     @Test(expected = NotJoinTeamMemberException::class)
     fun updateReportThrownNotJoinTeamMemberException() {
         val reportId = reportService.createReport(reportModel).reportId
-        reportService.updateReport(user1, reportId, "", user3.id.value)
+        reportService.updateReport(user1, reportId, "", "", user3.id.value)
     }
 
     @Test

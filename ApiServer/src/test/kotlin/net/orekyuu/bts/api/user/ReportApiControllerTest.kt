@@ -122,6 +122,24 @@ class ReportApiControllerTest {
     }
 
     @Test
+    fun show() {
+        mockSecurity.enableGithubMock(user1.userName)
+        val product = productService.registerToTeam(user1, team.teamId, "").product[0]
+        val report = reportService.createReport(ReportInfo(0, "test", "desc", "2017/1/1 00:00:00",
+                UserInfo(user1.id.value, user1.userName), "version", "stacktrace", "log", "runtime",
+                SimpleProductInfo(product.productId, product.productName, product.token)))
+
+        mock.perform(get("/api/report/show").param("reportId", report.reportId.toString())).
+                andDo(::printInfo)
+                .andExpect(status().isOk)
+
+        mockSecurity.enableGithubMock(user2.userName)
+        mock.perform(get("/api/report/show").param("reportId", report.reportId.toString())).
+                andDo(::printInfo)
+                .andExpect(status().isForbidden)
+    }
+
+    @Test
     fun update() {
         mockSecurity.enableGithubMock(user1.userName)
         val team = teamService.createTeam(user1, "hoge", "hoge")

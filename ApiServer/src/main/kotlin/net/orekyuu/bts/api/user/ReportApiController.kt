@@ -3,9 +3,7 @@ package net.orekyuu.bts.api.user
 import net.orekyuu.bts.message.product.SimpleProductInfo
 import net.orekyuu.bts.message.report.*
 import net.orekyuu.bts.message.user.UserInfo
-import net.orekyuu.bts.service.AppUserService
-import net.orekyuu.bts.service.BadRequestBodyException
-import net.orekyuu.bts.service.ReportService
+import net.orekyuu.bts.service.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -45,10 +43,16 @@ class ReportApiController {
         throw BadRequestBodyException("productId and productToken is null")
     }
 
+    @GetMapping(value = "/show")
+    fun show(@RequestParam("reportId") reportId: Int): ReportInfo {
+        val user = appUserService.findAppUserFromSecurityContext()!!
+        return reportService.findById(user, reportId) ?: throw ReportNotFoundException(reportId)
+    }
+
     @PostMapping(value = "/update")
     fun update(@RequestBody req: ReportUpdateRequest): ReportInfo {
         val user = appUserService.findAppUserFromSecurityContext()!!
-        return reportService.updateReport(user, req.reportId, req.newDescription, req.newAssignUserId)
+        return reportService.updateReport(user, req.reportId, req.newDescription, req.newTitle, req.newAssignUserId)
     }
 
     @PostMapping(value = "/open")

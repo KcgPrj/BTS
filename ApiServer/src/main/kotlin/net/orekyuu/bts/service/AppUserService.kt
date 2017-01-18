@@ -25,9 +25,15 @@ interface AppUserService {
      * idからユーザーを検索
      */
     fun findAppUserById(id: Int): AppUser?
+
+    /**
+     * すべてのユーザーを返す
+     */
+    fun findAll(): List<UserInfo>
 }
 
 class AppUserServiceImpl: AppUserService {
+
     @Autowired
     private lateinit var userService: UserService
 
@@ -53,6 +59,10 @@ class AppUserServiceImpl: AppUserService {
                 return UserInfo(user.id.value, user.userName, UserType.GITHUB)
             }
         }
+    }
+
+    override fun findAll(): List<UserInfo> = transaction {
+        AppUser.all().map { UserInfo(it.id.value, it.userName, UserType.GITHUB) }
     }
 
     override fun findAppUserById(id: Int) = transaction { AppUser.findById(id) }

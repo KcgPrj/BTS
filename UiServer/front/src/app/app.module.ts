@@ -15,6 +15,7 @@ import { SelectProductPageComponent } from './components/select-product-page/sel
 import { ReportListComponent } from './components/report-list/report-list.component';
 import { ProductTopPageComponent } from './components/product-top-page/product-top-page.component';
 import { ReportDetailsComponent } from './components/report-details-page/report-details-page.component';
+import {UserService} from "./domain/user/user.service";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ReportDetailsComponent } from './components/report-details-page/report-
     TeamService,
     ProductService,
     ReportService,
+    UserService,
     HttpWrapperService
   ],
   bootstrap: [AppComponent]
