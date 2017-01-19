@@ -23,6 +23,7 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.filter.CompositeFilter
 import javax.servlet.Filter
@@ -114,9 +115,9 @@ abstract class AbstractSuccessHandler(
         val userInfo: UserInfo = try {
             val userInfoEndpoint = "http://localhost:18080/user/"
             restTemplate.getForEntity(userInfoEndpoint, UserInfo::class.java).body
-        } catch(e: HttpServerErrorException) {
+        } catch(e: HttpClientErrorException) {
             //500エラーならユーザーが見つからなかったので新しく作成
-            if(e.statusCode.is5xxServerError) {
+            if(e.statusCode.is4xxClientError) {
                 logger.info("User not found")
                 val url = "http://localhost:18080/open/user/create/${endpointPostfix(userType)}"
                 val name = authentication.name

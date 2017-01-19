@@ -6,7 +6,7 @@
           <div class="site_logo"><img src="/assets/img/site_logo.png" alt="Site_logo"></div>
           <div class="border"></div>
           <div>
-            <div class="side_title ml50 mt30"><label for="">TEAM</label><a (click)="createTeam()"><span>+</span></a>
+            <div class="side_title ml50 mt30"><label for="">TEAM</label><span (click)="modalService.openTeamModal()">+</span>
             </div>
             <div id="teams">
               <ul class="t_list">
@@ -20,6 +20,42 @@
     <div id="main" class="fr h100p w100p">
       <div class="main_inner tal h100p">
         <div class="plz_select">Please select team.</div>
+
+        <section class="modal-window" id="modal-p01" [class.modal-open]="modalService._teamModalOpen">
+          <div class="modal-inner">
+            <form (submit)="createTeam()">
+              <table>
+                <tr>
+                  <th>
+                    <label class="fr" for="teamid">Team ID : </label>
+                  </th>
+                  <th>
+                    <input class="modal-input" type="text" id="Teamid" name="team_id"
+                           [(ngModel)]="teamForm.teamId"
+                           required minlength="3" maxlength="12" pattern="^[a-zA-Z0-9]+"/>
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                    <label class="fr">Team name : </label>
+                  </th>
+                  <th>
+                    <input class="modal-input" type="text" id="Tid" name="team_name"
+                           [(ngModel)]="teamForm.teamName"
+                           required minlength="3" maxlength="40"/>
+                  </th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th class="fl">
+                    <button type="submit">create</button>
+                  </th>
+                </tr>
+              </table>
+            </form>
+          </div>
+          <a class="modal-close" (click)="modalService.closeTeamModal()">&times;</a>
+        </section>
       </div>
     </div>
   </div>

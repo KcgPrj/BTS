@@ -1,8 +1,8 @@
 <div id="tab_menu">
-  <label (click)="focusTokenTab()"
-         [class.active-tab]="activeTab === 'token'">PRODUCT TOKEN</label>
   <label (click)="focusReportTab()"
          [class.active-tab]="activeTab === 'report'">REPORT</label>
+  <label (click)="focusTokenTab()"
+         [class.active-tab]="activeTab === 'token'">PRODUCT TOKEN</label>
 
   <article *ngIf="activeTab === 'token'" class="content">
     <h1>{{product?.token}}</h1>

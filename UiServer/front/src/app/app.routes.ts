@@ -13,7 +13,8 @@ const routerConfig: Routes = [
     path: ':teamId',
     component: SelectProductPageComponent,
     children: [
-      { path: ':productId', component: ProductTopPageComponent },
+      // { path: ':productId', component: ProductTopPageComponent },
+      { path: ':productId', redirectTo: ':productId/report', pathMatch: 'full' },
       { path: ':productId/report', component: ReportListComponent},
       { path: ':productId/report/:reportId', component: ReportDetailsComponent},
     ]
