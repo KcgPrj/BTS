@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, NavigationEnd} from "@angular/router";
 import {ReportService} from "../../domain/report/report.service";
 import {Report} from "../../domain/report/report";
 import {ProductService} from "../../domain/product/product.service";
@@ -22,7 +22,7 @@ export class ReportListComponent implements OnInit {
    * 現在開いているタブ
    * @type {string}
    */
-  private activeTab: string = 'token';
+  private activeTab: string = 'report';
 
   constructor(private reportService: ReportService,
               private productService: ProductService,
@@ -31,6 +31,16 @@ export class ReportListComponent implements OnInit {
   }
 
   ngOnInit() {
+    //プロダクトトップページからべつのプロダクトトップページへ移動した時にコンポーネントが作り直されないので
+    //routerのイベントをSubscribeして更新する
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationEnd) {
+        this.updateReportList();
+      }
+    });
+  }
+
+  updateReportList() {
     this.route.params.forEach(params => {
       this.teamId = params['teamId'];
       this.productId = params['productId'];
