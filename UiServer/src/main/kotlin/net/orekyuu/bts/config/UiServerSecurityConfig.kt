@@ -3,7 +3,6 @@ package net.orekyuu.bts.config
 import net.orekyuu.bts.message.user.CreateUserMessage
 import net.orekyuu.bts.message.user.UserInfo
 import net.orekyuu.bts.message.user.UserType
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties
@@ -24,7 +23,6 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import org.springframework.web.client.HttpClientErrorException
-import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.filter.CompositeFilter
 import javax.servlet.Filter
 import javax.servlet.http.Cookie
@@ -113,7 +111,7 @@ abstract class AbstractSuccessHandler(
         }
 
         val userInfo: UserInfo = try {
-            val userInfoEndpoint = "http://localhost:18080/user/"
+            val userInfoEndpoint = "http://localhost:18080/api/user/"
             restTemplate.getForEntity(userInfoEndpoint, UserInfo::class.java).body
         } catch(e: HttpClientErrorException) {
             //500エラーならユーザーが見つからなかったので新しく作成
