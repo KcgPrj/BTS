@@ -1,7 +1,7 @@
 package net.orekyuu.bts.service
 
+import net.orekyuu.bts.api.user.UserNotFoundException
 import net.orekyuu.bts.domain.AppUser
-import net.orekyuu.bts.domain.AppUserTable
 import net.orekyuu.bts.message.user.UserInfo
 import net.orekyuu.bts.message.user.UserType
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -41,7 +41,7 @@ class AppUserServiceImpl: AppUserService {
     private lateinit var githubClientId: String
 
     override fun findAppUserFromSecurityContext(): AppUser? {
-        val auth = SecurityContextHolder.getContext().authentication as? OAuth2Authentication ?: throw RuntimeException("invalid authentication.")
+        val auth = SecurityContextHolder.getContext().authentication as? OAuth2Authentication ?: throw UserNotFoundException()
         val type = findUserType(auth.oAuth2Request.clientId)
 
         return when(type) {
@@ -50,12 +50,12 @@ class AppUserServiceImpl: AppUserService {
     }
 
     override fun findUserInfoFromSecurityContext(): UserInfo? {
-        val auth = SecurityContextHolder.getContext().authentication as? OAuth2Authentication ?: throw RuntimeException("invalid authentication.")
+        val auth = SecurityContextHolder.getContext().authentication as? OAuth2Authentication ?: throw UserNotFoundException()
         val type = findUserType(auth.oAuth2Request.clientId)
 
         when(type) {
             UserType.GITHUB -> {
-                val user = userService.findAppUserFromGithub(auth.name)!!
+                val user = userService.findAppUserFromGithub(auth.name) ?: throw UserNotFoundException()
                 return UserInfo(user.id.value, user.userName, UserType.GITHUB)
             }
         }
