@@ -46,8 +46,8 @@ export class ReportListComponent implements OnInit {
     //routerのイベントをSubscribeして更新する
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
-        this.updateReportList();
         this.searchText = '';
+        this.updateReportList();
       }
     });
   }
