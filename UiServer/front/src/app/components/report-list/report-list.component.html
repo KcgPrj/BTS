@@ -17,7 +17,7 @@
             <span>Search </span>
           </th>
           <th>
-            <input type="search" class="search_box"/>
+            <input type="search" class="search_box" [(ngModel)]="searchText" (input)="filterReports()"/>
           </th>
           <th>
             <a href="">
@@ -34,7 +34,7 @@
     <div class="ticket_area m0a">
 
       <!--レポート-->
-      <div *ngFor="let report of reports" class="ticket" (click)="openDetails(report)">
+      <div *ngFor="let report of filteredReports" class="ticket" (click)="openDetails(report)">
         <div class="t_title">{{report.title}}</div>
         <div class="t_data">
           <table>
