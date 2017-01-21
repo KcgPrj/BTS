@@ -19,6 +19,17 @@ export class ReportListComponent implements OnInit {
   private reports: Report[] = [];
 
   /**
+   * 検索テキストに応じて絞り込まれたレポートの配列
+   * @type {Array}
+   */
+  private filteredReports: Report[] = [];
+  /**
+   * 検索テキストボックスの文字列
+   * @type {string}
+   */
+  private searchText: string = '';
+
+  /**
    * 現在開いているタブ
    * @type {string}
    */
@@ -35,6 +46,7 @@ export class ReportListComponent implements OnInit {
     //routerのイベントをSubscribeして更新する
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
+        this.searchText = '';
         this.updateReportList();
       }
     });
@@ -47,10 +59,26 @@ export class ReportListComponent implements OnInit {
     });
 
     this.reportService.list(this.productId)
-      .subscribe(it => this.reports = it);
+      .subscribe(it => {
+        this.reports = it;
+        this.filterReports();
+      });
 
     this.productService.showProduct(this.teamId, this.productId)
       .subscribe(it => this.product = it);
+  }
+
+  /**
+   * 検索文字列に応じてレポートを絞り込む
+   */
+  filterReports(): void {
+    if (this.searchText === '') {
+      this.filteredReports = this.reports.concat();
+    }
+
+    this.filteredReports = this.reports.filter((report: Report) => {
+      return report.title.includes(this.searchText);
+    });
   }
 
   focusTokenTab() {
@@ -62,7 +90,7 @@ export class ReportListComponent implements OnInit {
   }
 
   openDetails(report: Report) {
-    this.router.navigate([report.reportId], { relativeTo: this.route });
+    this.router.navigate([report.reportId], {relativeTo: this.route});
   }
 
 }
