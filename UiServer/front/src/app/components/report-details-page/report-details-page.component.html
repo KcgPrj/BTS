@@ -78,12 +78,8 @@
 
       <div class="vs">
         <!--{{report.assign.name}}-->
-        <select style="height: 40px; width: 25%; font-size: 20px;">
-          <option value="">A</option>
-          <option value="">B</option>
-          <option value="">B</option>
-          <option value="">B</option>
-          <option value="">B</option>
+        <select style="height: 40px; width: 25%; font-size: 20px;" name="assign" [(ngModel)]="report.assign">
+          <option [value]="item" *ngFor="let item of member">{{item.name}}</option>
         </select>
       </div>
     </div>

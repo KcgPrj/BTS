@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {ReportService} from "../../domain/report/report.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Report} from "../../domain/report/report";
 import {Subscription} from "rxjs";
+import {User} from "../../domain/user/user";
+import {TeamService} from "../../domain/team/team.service";
 
 @Component({
   selector: 'app-report-details-page',
@@ -17,20 +19,24 @@ export class ReportDetailsComponent implements OnInit {
 
   private report: Report;
   private subscription: Subscription;
+  private member: User[] = [];
 
   private titleToggle = false;
   private descToggle = false;
   private stateToggle = false;
   constructor(
     private reportService: ReportService,
+    private teamService: TeamService,
     private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.forEach(params => {
-      this.teamId = params['teamId'];
       this.productId = params['productId'];
       this.reportId = params['reportId'];
+    });
+    this.route.parent.params.forEach(params => {
+      this.teamId = params['teamId'];
     });
     this.reloadReport();
   }
@@ -39,15 +45,13 @@ export class ReportDetailsComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.subscription = this.reportService.find(this.reportId
-    ).subscribe(it => {
-      this.report = it;
-      if (this.report.state === 'opened') {
-        this.stateToggle = true;
-      } else {
-        this.stateToggle = false;
-      }
-    });
+    this.subscription = this.reportService.find(this.reportId)
+      .subscribe(it => {
+        this.report = it;
+        this.stateToggle = this.report.state === 'opened';
+      });
+    this.teamService.showMember(this.teamId)
+      .subscribe(it => this.member = it);
   }
 
   back() {
@@ -65,9 +69,9 @@ export class ReportDetailsComponent implements OnInit {
   onStateChanged() {
     this.report.state = this.stateToggle ? 'opened' : 'closed';
     if (this.stateToggle) {
-      this.reportService.open(this.report);
+      this.reportService.open(this.report).subscribe(() => {}, e => console.log(e));
     } else {
-      this.reportService.close(this.report);
+      this.reportService.close(this.report).subscribe(() => {}, e => console.log(e));
     }
   }
 
@@ -75,11 +79,7 @@ export class ReportDetailsComponent implements OnInit {
     this.subscription = this.reportService.update(this.report)
       .subscribe(it => {
         this.report = it;
-        if (this.report.state === 'opened') {
-          this.stateToggle = true;
-        } else {
-          this.stateToggle = false;
-        }
+        this.stateToggle = this.report.state === 'opened';
       });
 
   }
