@@ -88,7 +88,7 @@ class ReportServiceTest {
     fun createReport() {
         val reportInfo = reportService.createReport(reportModel)
         assertThat(reportInfo.title).isEqualTo(reportModel.title)
-        assertThat(reportInfo.assign.id).isEqualTo(reportModel.assign.id)
+        assertThat(reportInfo.assign?.id).isEqualTo(reportModel.assign?.id)
         assertThat(reportInfo.version).isEqualTo(reportModel.version)
         assertThat(reportInfo.description).isEqualTo(reportModel.description)
         assertThat(reportInfo.log).isEqualTo(reportModel.log)
@@ -230,7 +230,7 @@ class ReportServiceTest {
         val newDescription = "newDescription"
         val reportInfo2 = reportService.updateReport(user1, reportInfo1.reportId, newDescription, "a", user2.id.value)
         assertThat(reportInfo2.description).isEqualTo(newDescription)
-        assertThat(reportInfo2.assign.id).isEqualTo(user2.id.value)
+        assertThat(reportInfo2.assign?.id).isEqualTo(user2.id.value)
     }
 
     @Test(expected = ReportNotFoundException::class)
@@ -257,7 +257,7 @@ class ReportServiceTest {
         assertThat(reportInfo.reportId).isEqualTo(reportInfo2.reportId)
         assertThat(reportInfo.product.productId).isEqualTo(reportInfo2.product.productId)
         assertThat(reportInfo.description).isEqualTo(reportInfo2.description)
-        assertThat(reportInfo.assign.id).isEqualTo(reportInfo2.assign.id)
+        assertThat(reportInfo.assign?.id).isEqualTo(reportInfo2.assign?.id)
     }
 
     @Test(expected = ReportNotFoundException::class)

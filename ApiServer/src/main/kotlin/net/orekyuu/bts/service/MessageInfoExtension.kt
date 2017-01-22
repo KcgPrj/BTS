@@ -57,7 +57,7 @@ fun ofReportInfo(report: Report): ReportInfo {
             title = report.title,
             description = report.description,
             createdAt = report.createdAt.toString(),
-            assign = ofUserInfo(report.assign),
+            assign = if (report.assign == null) null else ofUserInfo(report.assign!!),
             version = report.version,
             stacktrace = report.stacktrace,
             log = report.log,
@@ -72,7 +72,7 @@ fun ofSimpleReportInfo(report: Report): SimpleReportInfo {
             reportId = report.id.value,
             title = report.title,
             createdAt = report.createdAt.toString(),
-            assign = ofUserInfo(report.assign),
+            assign = if (report.assign == null) null else ofUserInfo(report.assign!!),
             version = report.version,
             state = report.state.status
     )

@@ -4,7 +4,9 @@ import net.orekyuu.bts.domain.*
 import net.orekyuu.bts.message.report.ReportInfo
 import net.orekyuu.bts.message.report.SimpleReportInfo
 import org.jetbrains.exposed.dao.EntityID
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 import java.util.*
@@ -35,7 +37,7 @@ interface ReportService {
     /**
      * レポートの更新
      */
-    fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newTitle: String, newAssignUserId: Int): ReportInfo
+    fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newTitle: String, newAssignUserId: Int?): ReportInfo
 
     /**
      * レポートを取得
@@ -111,12 +113,12 @@ class ReportServiceImpl : ReportService {
         Report.find { ReportTable.product eq product.id }.map(::ofReportInfo)
     }
 
-    override fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newTitle: String, newAssignUserId: Int): ReportInfo = transaction {
+    override fun updateReport(requestUser: AppUser, reportId: Int, newDescription: String, newTitle: String, newAssignUserId: Int?): ReportInfo = transaction {
         logger.addLogger(StdOutSqlLogger())
         val report = Report.findById(reportId) ?: throw ReportNotFoundException(reportId)
         val team = report.product.team
         checkAuthority(team, requestUser)
-        val newAssignUser = getMember(newAssignUserId, team)
+        val newAssignUser = if (newAssignUserId == null) null else getMember(newAssignUserId, team)
         report.description = newDescription
         report.assign = newAssignUser
         report.title = newTitle

@@ -2,7 +2,6 @@ package net.orekyuu.bts.message.report
 
 import net.orekyuu.bts.message.product.SimpleProductInfo
 import net.orekyuu.bts.message.user.UserInfo
-import javax.swing.plaf.nimbus.State
 
 class ReportInfo(
         var reportId: Int = 0,
@@ -22,7 +21,7 @@ class SimpleReportInfo(
         var reportId: Int = 0,
         var title: String = "",
         var createdAt: String = "",
-        var assign: UserInfo = UserInfo(),
+        var assign: UserInfo? = UserInfo(),
         var version: String = "",
         val state: String
 )
