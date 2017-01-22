@@ -5,6 +5,7 @@ import net.orekyuu.bts.message.user.UserInfo
 import net.orekyuu.bts.message.user.UserType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices
 import org.springframework.boot.context.embedded.FilterRegistrationBean
@@ -34,6 +35,8 @@ open class UiServerSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Autowired
     private lateinit var oauth2ClientContext: OAuth2ClientContext
+    @Value("\${api.url}")
+    private lateinit var hostUrl: String
 
     override fun configure(http: HttpSecurity?) {
         http!!.authorizeRequests()
@@ -55,7 +58,7 @@ open class UiServerSecurityConfig : WebSecurityConfigurerAdapter() {
         val template = githubRestTemplate(resources)
 
         val filter = OAuth2ClientAuthenticationProcessingFilter("/login/github")
-        filter.setAuthenticationSuccessHandler(GithubSuccessHandler(template))
+        filter.setAuthenticationSuccessHandler(GithubSuccessHandler(template, hostUrl))
         filter.setRestTemplate(template)
         filter.setTokenServices(UserInfoTokenServices(resources.resource.userInfoUri, resources.client.clientId))
         return filter
@@ -85,7 +88,8 @@ open class UiServerSecurityConfig : WebSecurityConfigurerAdapter() {
 
 abstract class AbstractSuccessHandler(
         val restTemplate: OAuth2RestTemplate,
-        val userType: UserType
+        val userType: UserType,
+        val hostUrl: String
 ) : SavedRequestAwareAuthenticationSuccessHandler() {
 
     override fun handle(request: HttpServletRequest?, response: HttpServletResponse?, authentication: Authentication?) {
@@ -135,6 +139,8 @@ abstract class AbstractSuccessHandler(
         response.addCookie(createCookie("user_type", userType.name))
         response.addCookie(createCookie("user_id", userInfo.id.toString()))
         response.addCookie(createCookie("user_name", userInfo.name))
+        response.addCookie(createCookie("user_name", userInfo.name))
+        response.addCookie(createCookie("host", hostUrl))
 
         super.onAuthenticationSuccess(request, response, authentication)
     }
@@ -149,5 +155,6 @@ abstract class AbstractSuccessHandler(
 }
 
 class GithubSuccessHandler(
-        restTemplate: OAuth2RestTemplate
-): AbstractSuccessHandler(restTemplate, UserType.GITHUB)
+        restTemplate: OAuth2RestTemplate,
+        hostUrl: String
+): AbstractSuccessHandler(restTemplate, UserType.GITHUB, hostUrl)

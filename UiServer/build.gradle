@@ -24,10 +24,13 @@ apply plugin: "com.moowork.node"
 node {
     version = '6.7.0' //使用するnodeのバージョン
     download = true //各自の環境にダウンロードする
+    nodeModulesDir = file("${project.projectDir}/front")
 }
 
 // runs "gulp build" as part of your gradle build
-build.dependsOn npmInstall
+processResources.dependsOn nodeSetup
+processResources.dependsOn npm_install
+processResources.dependsOn npm_run_build
 
 jar {
     baseName = 'uiserver'

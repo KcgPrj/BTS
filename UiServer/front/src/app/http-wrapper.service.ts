@@ -1,32 +1,39 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 import {Http, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
+
 
 @Injectable()
 export class HttpWrapperService {
 
+  private _host: string;
+  private get host(): string {
+    if (!this._host) {
+      this._host = this.getCookie('host');
+    }
+    return this._host;
+  }
   constructor(private http: Http) { }
 
   get(url: string): Observable<Response> {
-    return this.http.get(url, this.createOption());
+    return this.http.get(this.host + url, this.createOption());
   }
 
   post(url: string, body: any): Observable<Response> {
-    return this.http.post(url, body, this.createOption());
+    return this.http.post(this.host + url, body, this.createOption());
   }
 
   delete(url: string): Observable<Response> {
-    return this.http.delete(url, this.createOption());
+    return this.http.delete(this.host + url, this.createOption());
   }
 
   put(url: string, body: any): Observable<Response> {
-    return this.http.put(url, body, this.createOption());
+    return this.http.put(this.host + url, body, this.createOption());
   }
 
   private createOption() {
     let headers = new Headers();
     var cookie = this.getCookie('access_token');
-    console.log(cookie);
     headers.append('Authorization', `Bearer ${cookie}`);
     return {
       headers: headers
