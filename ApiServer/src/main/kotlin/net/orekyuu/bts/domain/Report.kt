@@ -21,7 +21,7 @@ object ReportTable : IntIdTable() {
     /**
      * 担当者
      */
-    val assign = reference("assign", AppUserTable)
+    val assign = reference("assign", AppUserTable).nullable()
     /**
      * アプリのバージョン
      */
@@ -55,7 +55,7 @@ class Report(id: EntityID<Int>) : Entity<Int>(id) {
     var title by ReportTable.title
     var description by ReportTable.description
     var createdAt by ReportTable.createdAt
-    var assign by AppUser.referencedOn(ReportTable.assign)
+    var assign by AppUser.optionalReferencedOn(ReportTable.assign)
     var version by ReportTable.version
     var stacktrace by ReportTable.stacktrace
     var log by ReportTable.log

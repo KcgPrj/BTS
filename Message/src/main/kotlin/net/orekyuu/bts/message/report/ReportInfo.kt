@@ -9,7 +9,7 @@ class ReportInfo(
         var title: String = "",
         var description: String = "",
         var createdAt: String = "",
-        var assign: UserInfo = UserInfo(),
+        var assign: UserInfo? = UserInfo(),
         var version: String = "",
         var stacktrace: String = "",
         var log: String = "",

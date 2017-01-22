@@ -74,8 +74,8 @@ class ReportServiceImpl : ReportService {
                 }
                 .limit(1)
                 .singleOrNull() ?: throw ProductNotFoundException(productToken)
-        val assignUserId = reportInfo.assign.id
-        val assign = getMember(assignUserId, product.team)
+        val assignUserId = reportInfo.assign?.id
+        val assign = if (assignUserId == null) null else getMember(assignUserId, product.team)
         val report = Report.new {
             this.title = reportInfo.title
             this.description = reportInfo.description
