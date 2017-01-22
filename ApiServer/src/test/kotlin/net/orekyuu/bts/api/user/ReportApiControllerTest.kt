@@ -23,11 +23,11 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
-import java.util.*
 
 @RunWith(SpringJUnit4ClassRunner::class)
 @SpringBootTest
@@ -77,26 +77,6 @@ class ReportApiControllerTest {
         transaction {
             SchemaUtils.drop(*BtsApplicationConfig.TABLE_LIST)
         }
-    }
-
-    @Test
-    fun createReport() {
-        val token = productService.registerToTeam(user1, team.teamId, "").product[0].token
-        val createReq = """{"productToken":"$token","assignUserId":${user1.id},"title":"","description":"","version":"","stacktrace":"","log":"","runTimeInfo":""}"""
-        mock.perform(
-                post("/api/report/create")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(createReq))
-                .andDo(::printInfo)
-                .andExpect(status().isOk)
-
-        val createReq2 = """{"productToken":"${UUID.randomUUID().toString()}","assignUserId":${user1.id},"title":"","description":"","version":"","stacktrace":"","log":"","runTimeInfo":""}"""
-        mock.perform(
-                post("/api/report/create")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(createReq2))
-                .andDo(::printInfo)
-                .andExpect(status().isNotFound)
     }
 
     @Test
