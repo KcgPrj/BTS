@@ -12,7 +12,7 @@ package net.orekyuu.bts.message.report
  */
 class CreateReportRequest(
         val productToken: String = "",
-        val assignUserId: Int = 0,
+        val assignUserId: Int? = null,
         val title: String = "",
         val description: String = "",
         val version: String = "",
@@ -25,7 +25,7 @@ class ReportUpdateRequest(
         val reportId: Int = 0,
         val newDescription: String = "",
         val newTitle: String = "",
-        val newAssignUserId: Int = 0
+        val newAssignUserId: Int? = null
 )
 
 class ReportOpenRequest(
