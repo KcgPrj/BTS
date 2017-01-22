@@ -1,0 +1,85 @@
+@charset "UTF-8";
+/*@Mixin*/
+/*All content*/
+*::before,
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; }
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%; }
+
+/*link*/
+a:link,
+a:visited,
+a:hover,
+a:active {
+  font-family: 'Oswald', sans-serif; }
+
+/*background*/
+div#bg-image {
+  background-image: url(../img/Polygon_bg.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #464646; }
+
+/*フォーム本体*/
+#login_form {
+  margin: -300px 0 0 0;
+  top: 50%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 350px;
+  width: 100%;
+  /*サイトロゴ*/ }
+  #login_form .sitelogo {
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    top: 0px;
+    left: 50%;
+    bottom: 0;
+    right: 0;
+    background-image: url(../img/site_logo.png);
+    margin-left: -100px; }
+  #login_form .git_area {
+    padding: 10px;
+    margin-top: 230px;
+    background-color: rgba(255, 255, 255, 0.7);
+    height: 73px;
+    width: 100%; }
+    #login_form .git_area a,
+    #login_form .git_area a:before,
+    #login_form .git_area img {
+      height: 53px;
+      width: 305px;
+      display: block;
+      margin: 0 auto; }
+    #login_form .git_area a:before {
+      position: absolute;
+      margin-top: 10px;
+      content: ' ';
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      transition: 0.05s;
+      -moz-transition: 0.05s;
+      -webkit-transition: 0.05s; }
+    #login_form .git_area a:hover:before {
+      background: rgba(255, 255, 255, 0.3); }
+  #login_form #signup {
+    margin-top: 15px;
+    padding-top: 5px;
+    color: #fff;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.6); }
