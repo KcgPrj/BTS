@@ -2,7 +2,6 @@ package net.orekyuu.bts.message.report
 
 /**
  * @param productToken require
- * @param assignUserId require
  * @param title optional
  * @param description optional
  * @param version optional
@@ -12,7 +11,6 @@ package net.orekyuu.bts.message.report
  */
 class CreateReportRequest(
         val productToken: String = "",
-        val assignUserId: Int? = null,
         val title: String = "",
         val description: String = "",
         val version: String = "",
